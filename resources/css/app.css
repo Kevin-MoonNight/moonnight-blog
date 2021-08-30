@@ -1,0 +1,56 @@
+/*@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600&display=swap');*/
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+
+@layer base{
+    @font-face {
+        font-family: 'openhuninn';
+        src: url('../fonts/openhuninn.woff') format('woff');
+    }
+    body{
+        font-family: openhuninn;
+        /*font-family: 'Noto Serif TC',Serif;*/
+        @apply bg-gray-100 text-black;
+    }
+
+    /* width */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #fff;
+    }
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background:#D1D5DB;
+    }
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #6B7280;
+    }
+
+}
+@layer components{
+    @responsive{
+        .section{
+            @apply flex justify-center items-center h-screen;
+        }
+
+        .card{
+            @apply p-10 rounded-md shadow-xl bg-white;
+        }
+        .nav_btn{
+            @apply hidden md:flex py-4 px-2 group;
+        }
+    }
+}
+
+/*.fade-enter-active, .fade-leave-active {*/
+/*    transition: opacity .3s;*/
+/*}*/
+/*.fade-enter, .fade-leave-to !* .fade-leave-active below version 2.1.8 *! {*/
+/*    opacity: 0;*/
+/*}*/
