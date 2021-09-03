@@ -11,17 +11,26 @@ use App\Http\Controllers\MessagesController;
 //    return view('index');
 //})->where('path', '^((?!api).)*$');
 
-Route::get('/', [PagesController::class,'index'])->name('root');
+Route::get('/', function (){
+    return view('frontend.home');
+})->name('root');
 
 Route::resource('/articles',ArticlesController::class);
 
 Route::get('/articles/tag/{name}', [ArticlesController::class,'searchTag'])->name('articleTag');
 Route::post('/articles/search/', [ArticlesController::class,'search'])->name('articleSearch');
-//Route::get('/articleControl',[PagesController::class,'articleControl'])->name('articleControl');
+Route::get('/dashboard/articles',[ArticlesController::class,'control'])->name('articleControl');
+
+Route::get('/dashboard/messages',[MessagesController::class,'index'])->name('messageControl');
+Route::resource('/contact',MessagesController::class);
 
 Route::resource('/products',ProductsController::class);
 
-Route::resource('/contact',MessagesController::class);
 
-Route::get('/dashboard', [PagesController::class,'dashboard'])->name('dashboard');
+Route::get('/dashboard', function (){
+    return view('backend.dashboard');
+})->middleware('auth')->name('dashboard');
 
+Route::fallback(function (){
+    return redirect('/');
+});

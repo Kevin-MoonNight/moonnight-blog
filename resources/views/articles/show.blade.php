@@ -1,6 +1,4 @@
-@extends('layouts.index')
-
-@section('content')
+<x-frontend-layout>
         <div class="flex justify-center items-center py-10">
             <div class="w-full md:w-4/5 h-full min-h-screen max-w-screen-xl p-10 rounded-xl bg-white shadow-xl">
                 <div class="space-y-10">
@@ -12,12 +10,13 @@
                         <div class="text-gray-500">{{date_format($article->created_at,'Y-m-d') . "．" . $article->user->name}}</div>
                     </div>
 
+
                     <div class="min-h-screen">
                         <div class="text-5xl pb-10 break-words"> {{$article->title}} </div>
                         <div class="text-2xl">{!! $article->content !!}</div>
                     </div>
 
-                    <div  class="flex">
+                    <div class="flex">
                         @foreach ($article->tags as $tag)
                             <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm m-2">#{{$tag->name}}</span>
                         @endforeach
@@ -35,4 +34,4 @@
                 </div>
             </div>
         </div>
-@endsection
+</x-frontend-layout>

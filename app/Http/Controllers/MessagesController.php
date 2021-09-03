@@ -14,9 +14,9 @@ class MessagesController extends Controller
 
     public function index()
     {
-        $message = Message::orderBy('id','desc')->paginate(10);
+        $messages = Message::orderBy('id','desc')->paginate(10);
 
-        return view('backend.message')->with(['message'=>$message]);
+        return view('backend.messages')->with(['messages'=>$messages]);
     }
 
 
@@ -66,6 +66,6 @@ class MessagesController extends Controller
 
         $message->delete();
 
-        return redirect()->route('articles.index')->with(['notice'=>'訊息刪除成功!']);
+        return redirect()->route('contact.index')->with(['notice'=>'訊息刪除成功!']);
     }
 }

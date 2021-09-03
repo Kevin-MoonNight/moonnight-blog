@@ -1,61 +1,53 @@
-@extends('dashboard.index')
+<x-backend-layout>
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="h-screen w-full bg-white overflow-hidden shadow-md sm:rounded-lg">
 
-@section('content')
+            <form action="{{ route('articles.update',$article) }}" method="POST" class="h-full p-10 ">
+                @csrf
+                @method('patch')
+                <div class="h-4/5 space-y-5">
+                    <div class ="">
+                        <label for="title" class="block text-lg text-gray-700">標題</label>
+                        <input id="title" type="text" name="title" value="{{ $article->title }}" placeholder ="標題" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
 
-    {{-- 沒通過驗證的資料 --}}
-    @if ($errors->any())
-        @foreach ($errors->all() as $error)
-            <div class="errors bg-red-300 text-center text-xl">
-                {{$error}}
-            </div>
-        @endforeach
-    @endif
+                    <div class ="">
+                        <label for="url" class="block text-lg text-gray-700">封面</label>
+                        <input id="url" type="url" name="url" value="{{ $article->url }}" placeholder ="圖片url" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    <form action="{{ route('articles.update',$article) }}" method="post">
-                        @csrf
-                        @method('patch')
-                        <div class="space-y-5">
-                            <div class = "pb-2">
-                                <label for="titile" class="block text-lg text-gray-700">標題</label>
-                                <input type="text" name="title" value="{{ $article->title }}" placeholder ="標題" class="mt-1 text-md focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                            </div>
+                    <div class ="">
+                        <label for="content" class="block text-lg text-gray-700">內容</label>
+                        <textarea id="content" name="content" placeholder ="內容">{{ $article->content }}</textarea>
+                    </div>
 
-                            <div class = "pb-2">
-                                <label for="content" class="block text-lg text-gray-700">內容</label>
-                                <textarea name="content" placeholder ="內容" rows="10">{{ $article->content }}</textarea>
-                            </div>
-
-                            <div class="flex p-1 justify-between">
-                                <div>
-                                    <select class="pr-10 border-2 border-gray-300 border-r p-2 rounded-md" name="state">
-                                        <option value="published">Publish</option>
-                                        <option value="draft">Draft</option>
-                                    </select>
-
-                                    <select class="pr-10 border-2 border-gray-300 border-r p-2 rounded-md" name="tag">
-                                        @foreach ($tags as $tag)
-                                            <option value="{{$tag->id}}">{{$tag->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <button role="submit" class=" rounded-md p-3 bg-blue-500 text-white hover:bg-blue-400" required>更新文章</button>
-                            </div>
-                        </div>
-                    </form>
+                    <div class="">
+                        <label for="tags" class="block text-lg text-gray-700">標籤</label>
+                        <select name="tags[]" id="tags" size="10" class="w-1/5 rounded-md border-2 focus:outline-none" multiple >
+                            @foreach ($tags as $tag)
+                                <option value="{{$tag->id}}">{{$tag->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
-            </div>
+
+                <div class="h-1/5 flex justify-between items-end">
+                    <select class="p-3 rounded-md border-2 hover:border-black" name="state">
+                        <option value="published">Publish</option>
+                        <option value="draft">Draft</option>
+                    </select>
+
+                    <button role="submit" class=" rounded-md p-3 bg-blue-500 text-white hover:bg-blue-600">更新文章</button>
+                </div>
+
+            </form>
+
         </div>
     </div>
+</x-backend-layout>
 
-    <script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
+<script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace( 'content' );
+</script>
 
-    <script>
-        CKEDITOR.replace( 'content' );
-    </script>
-
-@endsection

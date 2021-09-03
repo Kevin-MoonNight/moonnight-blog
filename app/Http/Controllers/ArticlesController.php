@@ -9,7 +9,7 @@ use App\Models\Tag;
 class ArticlesController extends Controller
 {
     public function __construct(){
-        $this->middleware('auth')->except('index','show','search','addView','searchTag');
+        $this->middleware('auth')->except('index','show','search','searchTag');
     }
 
 
@@ -35,6 +35,7 @@ class ArticlesController extends Controller
         $content = $request->validate([
             'title' =>'required',
             'content'=>'required',
+            'url'=>'required',
             'state' =>'required'
         ]);
 
@@ -42,10 +43,18 @@ class ArticlesController extends Controller
         $article = auth()->user()->articles()->create($content);
 
         //儲存標籤
-        $tag = Tag::all()->find($request->tag);
-        $article->tags()->save($tag);
+        $tags = $request->input('tags');
 
-        return redirect('root')->with(['notice'=>'文章新增成功!']);
+        if($tags !== null){
+            foreach ($tags as $index){
+                $tag = Tag::find($index);
+
+                $article->tags()->attach($tag);
+            }
+        }
+
+
+        return redirect()->route('articleControl')->with(['notice'=>'文章新增成功!']);
     }
 
 
@@ -68,7 +77,7 @@ class ArticlesController extends Controller
 
     public function edit($id)
     {
-        $article = auth()->user()->articles()->find($id);
+        $article = Article::find($id);
         $tags = Tag::all();
 
         return view('articles.edit',['article' => $article,'tags'=> $tags]);
@@ -78,38 +87,50 @@ class ArticlesController extends Controller
     public function update(Request $request, $id)
     {
         //尋找文章
-        $article = auth()->user()->articles->find($id);
+        $article = Article::find($id);
 
         //驗證內容
         $content = $request->validate([
             'title' =>'required',
             'content'=>'required',
+            'url'=>'required',
             'state' =>'required'
         ]);
 
         //更新文章
         $article->update($content);
 
-        //更新tag
-        $tag = Tag::find($request->tag);
+        //刪除先前的標籤
+        $article->tags()->detach();
 
-        //判斷該tag有無重複
-        if ($article->tags->contains($tag) === false){
-            $article->tags()->save($tag);
+        //儲存標籤
+        $tags = $request->input('tags');
+
+        //更新tag
+        if($tags !== null){
+            foreach ($tags as $index){
+                $tag = Tag::find($index);
+
+                //判斷標籤有無重複
+                if (!$article->tags->contains($tag)){
+                    $article->tags()->attach($tag);
+                }
+            }
         }
 
-        return redirect('dashboard.articles')->with(['notice'=>'文章更新成功!']);
+        return redirect()->route('articleControl')->with(['notice'=>'文章更新成功!']);
     }
 
 
     public function destroy($id)
     {
         //判斷該文章是否屬於該使用者
-        $article = auth()->user()->articles->find($id);
+        $article =  Article::find($id);
 
         //刪除文章
         $article->delete();
-        return redirect('dashboard.articles')->with(['notice'=>'文章刪除成功!']);
+
+        return redirect()->route('articleControl')->with(['notice'=>'文章刪除成功!']);
     }
 
 
@@ -130,18 +151,26 @@ class ArticlesController extends Controller
         return view('frontend.articleList',['articles' => $articles]);
     }
 
+
     public function searchTag($name){
         //尋找標籤
-
         $tag = Tag::where('name',$name)->first();
 
         if($tag === null){
             //如果沒有找到標籤
-            return redirect()->route('articles.index')->with(['error'=>'尋找不到文章!']);
+            return redirect()->route('articles.index')->with(['error'=>'尋找不到標籤!']);
         }
 
         $articles = $tag->articles()->with('user','tags')->orderBy('id','desc')->paginate(9);
 
         return view('frontend.articleList',['articles' => $articles]);
+    }
+
+
+    public function control(){
+
+        $articles = Article::with('tags')->orderBy('id','desc')->paginate(10);
+
+        return view('backend.articles',['articles' => $articles]);
     }
 }

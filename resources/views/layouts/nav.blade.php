@@ -25,9 +25,9 @@
                 <a class="hidden md:flex py-4 px-2 group" href="{{route('login')}}">
                     <p class="px-2 border-red-200 group-hover:border-b-4">登入</p>
                 </a>
-                <a class="hidden md:flex py-4 px-2 group" href="{{route('register')}}">
-                    <p class="px-2 border-red-200 group-hover:border-b-4">註冊</p>
-                </a>
+{{--                <a class="hidden md:flex py-4 px-2 group" href="{{route('register')}}">--}}
+{{--                    <p class="px-2 border-red-200 group-hover:border-b-4">註冊</p>--}}
+{{--                </a>--}}
             @endguest
             @auth()
                 <a class="hidden md:flex py-4 px-2 group" href="{{route('dashboard')}}">

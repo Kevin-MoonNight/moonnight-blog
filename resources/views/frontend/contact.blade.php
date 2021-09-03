@@ -1,6 +1,4 @@
-@extends('layouts.index')
-
-@section('content')
+<x-frontend-layout>
 
     <div class="section">
         <div class="mt-10 sm:mt-0 w-full max-w-screen-xl">
@@ -47,7 +45,6 @@
                                         </select>
                                     </div>
 
-
                                 </div>
                             </div>
 
@@ -61,4 +58,5 @@
             </div>
         </div>
     </div>
-@endsection
+
+</x-frontend-layout>
