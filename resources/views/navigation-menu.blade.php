@@ -17,7 +17,7 @@
                     </x-jet-nav-link>
                 </div>
             </div>
-            <a class="py-4 px-4  text-xl" href="/">MoonNight</a>
+
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 <!-- Teams Dropdown -->
                 @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())

@@ -5,127 +5,163 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Validator;
 
 
 class ArticlesAPIController extends Controller
 {
     public function __construct(){
-        $this->middleware('auth')->except('index','show','search','addView','searchTag');
+        $this->middleware('auth:sanctum')->only('store','update','destroy');
     }
 
     public function index()
     {
-        //獲得所有文章
-        $articles = Article::all();
-
-        //獲得其他參數
-        foreach ($articles as $article){
-            $tags = $article->tags;
-            $user = $article->user;
-        }
+        $articles = Article::with('user','tags')->where('state','published')->latest()->paginate(10);
 
         return response($articles,200);
     }
 
     public function store(Request $request)
     {
-        //驗證內容
-        $content = $request->validate([
-            'title' =>'required',
-            'content'=>'required',
-            'state' =>'required'
+        //驗證資料
+        $validator = Validator::make($request->all(), [
+            'title' =>['required', 'string','max:255'],
+            'content'=>['required', 'string'],
+            'url'=>['url'],
+            'state'=>['required', 'string']
         ]);
 
+        //驗證失敗
+        if ($validator->fails()) {
+            return response(['errors'=>true,'data'=> $validator->errors()],200);
+        }
+
         //新增文章
-        $article = auth()->user()->articles()->create($content);
+        $article = auth()->user()->articles()->create($request->all());
 
         //儲存標籤
-        $tag = Tag::all()->find($request->tag);
-        $article->tags()->save($tag);
+        $tags = $request->input('tags');
 
-        return response($article,201);
+        if($tags !== null){
+            foreach ($tags as $index){
+                $tag = Tag::find($index);
+
+                if($tag !== null){
+                    $article->tags()->attach($tag);
+                }
+            }
+        }
+
+        return response(['errors'=>false],201);
     }
 
     public function show($id)
     {
-        //尋找文章
-        $article = Article::all()->find($id);
-
+        $article = Article::with('tags','user')->find($id);
 
         if($article === null){
-            return response('null',200);
+            return response(['errors'=>true],200);
         }
 
         //新增觀看數
         $article->views +=1;
-
         //更新文章
         $article->save();
-
-        //獲得其他參數
-        $tags = $article->tags;
-        $user = $article->user->name;
 
         return response($article,200);
     }
 
     public function update(Request $request, $id)
     {
-        //尋找文章
-        $article = auth()->user()->articles->find($id);
-
-        //驗證內容
-        $content = $request->validate([
-            'title' =>'required',
-            'content'=>'required',
-            'state' =>'required'
+        //驗證資料
+        $validator = Validator::make($request->all(), [
+            'title' =>['required', 'string','max:255'],
+            'content'=>['required', 'string'],
+            'url'=>['url'],
+            'state'=>['required', 'string']
         ]);
 
-        //更新文章
-        $article->update($content);
-
-        //更新tag
-        $tag = Tag::all()->find($request->tag);
-
-        //判斷該tag有無重複
-        if ($article->tags->contains($tag) === false){
-            $article->tags()->save($tag);
+        //驗證失敗
+        if ($validator->fails()) {
+            return response(['errors'=>true,'data'=> $validator->errors()],200);
         }
 
-        return $article;
+        //尋找文章
+        $article = Article::find($id);
+
+        //更新文章
+        $article->update($request->all());
+
+        //刪除先前的標籤
+        $article->tags()->detach();
+
+        //儲存標籤
+        $tags = $request->input('tags');
+
+        //更新tag
+        if($tags !== null){
+            foreach ($tags as $index){
+                $tag = Tag::find($index);
+
+                if($tag !== null){
+                    $article->tags()->attach($tag);
+                }
+            }
+        }
+
+        return response(['errors'=>false],200);
     }
 
     public function destroy($id)
     {
-        //判斷該文章是否屬於該使用者
-        $article = auth()->user()->articles->find($id);
+        $article = Article::find($id);
+
+        if($article === null){
+            return response(['errors'=>true],200);
+        }
 
         //刪除文章
         $article->delete();
+
+        return response(['errors'=> false],200);
     }
 
-    public function search($name)
+    public function search($text)
     {
-        return response(Article::all()->where('name','like', '%'.$name.'%')->first(),200);
+        $articles = Article::with('user','tags')->where('title','like', '%' . $text . '%')->latest()->paginate(10);
+
+        return response($articles,200);
     }
 
     public function searchTag($name){
-        //尋找標籤
-        $tag = Tag::all()->where('name',$name)->first();
+        //驗證資料
+        $validator = Validator::make(['name' => $name], [
+            'name' =>['required', 'string','exists:tags,name']
+        ]);
 
         //如果沒有找到標籤
-        if($tag === null){
-            return response('null',200);
+        if($validator->fails()){
+            return response(['errors'=>true,'data'=> $validator->errors()],200);
         }
 
-        $articles = $tag->articles;
+        $tag = Tag::where('name',$name)->first();
 
-        //獲得其他參數
-        foreach ($articles as $article){
-            $tags = $article->tags;
-            $user = $article->user;
-        }
+        $articles = $tag->articles()->with('user','tags')->latest()->paginate(10);
 
-        return response( $articles,200);
+        return response($articles,200);
+    }
+
+    public function popular(){
+        $articles = Article::with('user','tags')->where('state','published')->orderBy('views','desc')->take(10)->get();
+
+        return response($articles,200);
+    }
+
+    public function draft(){
+
+    }
+
+    public function softDelete(){
+
     }
 }

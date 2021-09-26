@@ -1,11 +1,10 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ArticlesAPIController;
+use App\Http\Controllers\MessagesAPIController;
 use App\Http\Controllers\TagsController;
-use App\Http\Controllers\ArticlesController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\MessageController;
+use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,18 +16,17 @@ use App\Http\Controllers\MessageController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
-//Route::resource('/tags',TagsController::class);
-//Route::get('/tags/search/{name}',[TagsController::class,'search']);
-//
-//Route::apiResource('/articles',ArticlesController::class);
-//Route::get('/articles/search/{name}',[ArticlesController::class,'search']);
-//Route::get('/articles/tag/{name}',[ArticlesController::class,'searchTag']);
-//
-//Route::apiResource('contact',MessageController::class);
-//
-////確認使用者登入狀態
-//Route::get('/authCheck',[AuthController::class,'authCheck']);
+Route::post('/login',[AuthController::class,'login']);
+Route::post('/logout',[AuthController::class,'logout'])->middleware('auth:sanctum');
+Route::post('/register',[AuthController::class,'register']);
+
+Route::get('/articles/popular',[ArticlesAPIController::class,'popular']);
+Route::apiResource('/articles',ArticlesAPIController::class);
+Route::get('/articles/search/{text}',[ArticlesAPIController::class,'search']);
+Route::get('/articles/tag/{name}',[ArticlesAPIController::class,'searchTag']);
+
+
+Route::apiResource('/messages',MessagesAPIController::class);
+
+Route::apiResource('/tags', TagsController::class);

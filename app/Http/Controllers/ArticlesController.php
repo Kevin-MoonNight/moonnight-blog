@@ -9,13 +9,15 @@ use App\Models\Tag;
 class ArticlesController extends Controller
 {
     public function __construct(){
-        $this->middleware('auth')->except('index','show','search','searchTag');
+        $this->middleware('auth')->only('store','update','destroy');
     }
 
 
     public function index()
     {
-        $articles = Article::with('user','tags')->orderBy('id','desc')->paginate(9);
+
+        $articles = Article::with('user','tags')->latest()->paginate(9);
+
 
         return view('frontend.articleList',['articles' => $articles]);
     }
@@ -125,7 +127,7 @@ class ArticlesController extends Controller
     public function destroy($id)
     {
         //判斷該文章是否屬於該使用者
-        $article =  Article::find($id);
+        $article = Article::find($id);
 
         //刪除文章
         $article->delete();
@@ -142,7 +144,7 @@ class ArticlesController extends Controller
 
         $text = $request->input('text');
 
-        $articles = Article::with('user','tags')->where('title','like', '%' . $text . '%')->orderBy("created_at", 'desc')->paginate(9);
+        $articles = Article::with('user','tags')->where('title','like', '%' . $text . '%')->latest()->paginate(9);
 
         if($articles->count() === 0){
             return redirect()->route('articles.index')->with(['error'=>'尋找不到文章!']);
@@ -161,7 +163,7 @@ class ArticlesController extends Controller
             return redirect()->route('articles.index')->with(['error'=>'尋找不到標籤!']);
         }
 
-        $articles = $tag->articles()->with('user','tags')->orderBy('id','desc')->paginate(9);
+        $articles = $tag->articles()->with('user','tags')->latest()->paginate(9);
 
         return view('frontend.articleList',['articles' => $articles]);
     }
@@ -169,7 +171,7 @@ class ArticlesController extends Controller
 
     public function control(){
 
-        $articles = Article::with('tags')->orderBy('id','desc')->paginate(10);
+        $articles = Article::with('tags')->latest()->paginate(10);
 
         return view('backend.articles',['articles' => $articles]);
     }

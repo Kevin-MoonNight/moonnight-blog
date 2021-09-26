@@ -1,37 +1,49 @@
-/*@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600&display=swap');*/
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-
 @layer base{
     @font-face {
-        font-family: 'openhuninn';
-        src: url('../fonts/openhuninn.woff') format('woff');
+        font-family: 'HunInn';
+        src: url(https://cdn.jsdelivr.net/gh/marsnow/open-huninn-font@1.1/font/jf-openhuninn.eot); /* IE9 Compat Modes */
+        src: url(https://cdn.jsdelivr.net/gh/marsnow/open-huninn-font@1.1/font/jf-openhuninn.eot?#iefix) format("embedded-opentype"), /* IE6-IE8 */
+        url(https://cdn.jsdelivr.net/gh/marsnow/open-huninn-font@1.1/font/jf-openhuninn.woff) format("woff"), /* Modern Browsers */
+        url(https://cdn.jsdelivr.net/gh/marsnow/open-huninn-font@1.1/font/jf-openhuninn.ttf) format("truetype"), /* Safari, Android, iOS */
+        url(https://cdn.jsdelivr.net/gh/marsnow/open-huninn-font@1.1/font/jf-openhuninn.svg#SealmemoryHeader) format("svg"); /* Legacy iOS */
     }
     body{
-        font-family: openhuninn;
-        /*font-family: 'Noto Serif TC',Serif;*/
+        font-family: HunInn,sans-serif;
         @apply bg-gray-100 text-black;
     }
 
     /* width */
     ::-webkit-scrollbar {
         width: 8px;
+        height: 8px;
     }
     /* Track */
     ::-webkit-scrollbar-track {
+        background: #1E293B;
+    }
+    ::-webkit-scrollbar-track:horizontal {
         background: #fff;
     }
     /* Handle */
     ::-webkit-scrollbar-thumb {
         background:#D1D5DB;
+        border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:horizontal{
+        background: #D1D5DB;
+        border-radius: 10px;
     }
     /* Handle on hover */
     ::-webkit-scrollbar-thumb:hover {
         background: #6B7280;
     }
-
+    ::-webkit-scrollbar-thumb:hover:horizontal {
+        background: #6B7280;
+    }
 }
 @layer components{
     @responsive{
@@ -45,12 +57,55 @@
         .nav_btn{
             @apply hidden md:flex py-4 px-2 group;
         }
+        .input-style{
+            @apply mt-1 block w-full py-2 px-3 border-2 border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm;
+        }
     }
 }
 
-/*.fade-enter-active, .fade-leave-active {*/
-/*    transition: opacity .3s;*/
-/*}*/
-/*.fade-enter, .fade-leave-to !* .fade-leave-active below version 2.1.8 *! {*/
-/*    opacity: 0;*/
-/*}*/
+.fade-enter-active,
+.fade-leave-active {
+    transition: all 0.5s;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+
+.fade-enter-to,
+.fade-leave-from {
+    opacity: 1;
+}
+
+
+.list-enter-active,
+.list-leave-active,
+.list-move {
+    transition: all 0.2s;
+}
+
+.list-enter-from {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+.list-leave-to {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+.slide-leave-active,
+.slide-enter-active {
+    transition:all 0.3s;
+}
+
+.slide-enter-from,
+.slide-leave-to {
+    transform: translateX(-100%);
+}
+
+.ck-editor__editable_inline {
+    /* 設定最低高度 */
+    min-height: 500px;
+}

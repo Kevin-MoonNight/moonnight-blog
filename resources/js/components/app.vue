@@ -1,18 +1,24 @@
 <template>
-    <div>
-        <navbar></navbar>
-        <router-view></router-view>
-        <footerComponent></footerComponent>
-    </div>
+    <router-view></router-view>
 </template>
 
 <script>
-    import navbar from './shared/navbarComponent.vue';
-    import footerComponent from "./shared/footerComponent.vue";
+    import {watchEffect} from "vue";
+    import {useStore} from "vuex";
+    import {addToken,deleteToken} from "../api/https";
+
     export default {
-        components: {
-            navbar,
-            footerComponent
+        setup(){
+            const store = useStore()
+            //更新TOKEN
+            watchEffect(()=>{
+                const token = store.state.auth.token;
+                if(token !== null){
+                    addToken(token);
+                }else{
+                    deleteToken();
+                }
+            })
         }
     }
 </script>
