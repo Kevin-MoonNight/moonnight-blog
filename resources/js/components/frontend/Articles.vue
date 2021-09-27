@@ -3,7 +3,7 @@
         <div class="w-full max-w-screen-xl h-auto min-h-screen py-10 px-5 lg:px-10">
 
             <div class="flex justify-center mb-10">
-                <search-input :update-url="updateUrl" />
+                <search-input />
             </div>
 
             <p class="text-xl text-center" v-show="(articles.length === 0 || errors) && isShow">
@@ -33,7 +33,7 @@
     </div>
 
     <div class="flex justify-center bg-white">
-        <paginator class="w-full max-w-screen-xl" :items="response" :update-url="updateUrl" />
+        <paginator class="w-full max-w-screen-xl" :items="response" :change-page="changePage" />
     </div>
 </template>
 
@@ -56,20 +56,32 @@
             TagsSideBox
         },
         setup(){
+            const route = useRoute();
+            const apiUrl = ref('/articles');
+            const page =ref(null);
+            const judgeUrl = () => {
+                if(route.query.tag != null) {
+                    apiUrl.value ='/articles/tag/' + route.query.tag;
+                }else if(route.query.search != null){
+                    apiUrl.value ='/articles/search/' + route.query.search;
+                }else{
+                    apiUrl.value = '/articles';
+                }
+
+                if(page.value !== null){
+                    apiUrl.value = apiUrl.value.split('?page=')[0];
+                    apiUrl.value += '?page=' + page.value;
+                }
+            }
+
             const articles = ref([]);
             const response = ref({});
             const isShow = ref(false);
-            const url = ref('/articles');
-            const route = useRoute();
             const errors = ref(false);
             watchEffect(async () => {
                 isShow.value = false;
-
-                if(route.params.text != null) {
-                    url.value ='/articles/tag/' + route.params.text;
-                }
-
-                await Promise.all([apiArticles(url.value)])
+                judgeUrl();
+                await Promise.all([apiArticles(apiUrl.value)])
                     .then((results) => {
                         errors.value = results[0].data.errors;
 
@@ -79,23 +91,21 @@
                         response.value = results[0].data;
                         isShow.value= true;
                     });
-
             });
 
-
-            function updateUrl(newUrl){
-                if(newUrl !== null && newUrl !== url.value){
-                    url.value = newUrl;
+            const changePage = (newValue)=>{
+                if(page.value !== newValue){
+                    page.value = newValue;
                 }
-            };
+            }
 
             return {
                 articles,
                 response,
-                updateUrl,
                 isShow,
-                url,
-                errors
+                errors,
+                apiUrl,
+                changePage
             }
         }
     }

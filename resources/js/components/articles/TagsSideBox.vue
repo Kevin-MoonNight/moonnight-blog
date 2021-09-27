@@ -34,7 +34,7 @@
             const router = useRouter();
 
             const changeUrl = (tag) => {
-                router.push({name:'articlesTag',params:{text:tag}})
+                router.push({name:'articles',query:{tag:tag}})
             }
 
             return {

@@ -15,17 +15,17 @@
 </template>
 
 <script>
-    import {ref, toRefs} from "vue";
+    import {ref} from "vue";
+    import {useRouter} from "vue-router";
 
     export default {
-        props:['updateUrl'],
-        setup(props){
-            const {updateUrl} = toRefs(props)
-
+        setup(){
             const text = ref('');
+            const router = useRouter();
+
             function search(text){
                 if(text.length !== 0){
-                    updateUrl.value("/articles/search/" + text);
+                    router.push({name:'articles',query:{search:text}})
                 }
             }
 

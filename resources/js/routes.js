@@ -32,11 +32,10 @@ const routes = [
                 path: 'articles',
                 component: Articles,
                 name:'articles',
-            },
-            {
-                path: 'articles/tag/:text',
-                component: Articles,
-                name:'articlesTag',
+                query:{
+                    search:null,
+                    tag:null
+                }
             },
             {
                 path: 'articles/:id',

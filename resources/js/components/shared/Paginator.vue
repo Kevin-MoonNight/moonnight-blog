@@ -32,16 +32,21 @@
 
 <script>
     import {toRefs} from "vue";
+
     export default {
-        props:['items','updateUrl'],
+        props:['items','changePage'],
         setup(props){
-            const {items,updateUrl} = toRefs(props)
+            const {items,changePage} = toRefs(props)
 
             function prevPage(){
-                updateUrl.value(items.value.prev_page_url);
+                if(items.value.prev_page_url !== null){
+                    changePage.value(items.value.prev_page_url.split('?page=')[1]);
+                }
             }
             function nextPage(){
-                updateUrl.value(items.value.next_page_url);
+                if(items.value.next_page_url !== null){
+                    changePage.value(items.value.next_page_url.split('?page=')[1]);
+                }
             }
 
             return {
@@ -50,5 +55,4 @@
             }
         }
     }
-
 </script>
