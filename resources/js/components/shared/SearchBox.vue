@@ -22,8 +22,7 @@
         setup(){
             const text = ref('');
             const router = useRouter();
-
-            function search(text){
+            const search = (text) => {
                 if(text.length !== 0){
                     router.push({name:'articles',query:{search:text}})
                 }

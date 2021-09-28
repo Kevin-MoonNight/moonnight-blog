@@ -35,25 +35,23 @@
 <script>
     import moment from "moment";
     import { useRouter } from "vue-router";
-    import { ref } from 'vue';
 
     export default {
         props:['article'],
-        setup(props){
-            const article = ref(props.article);
+        setup(){
             const router = useRouter();
+            //導航到文章
             function showArticle(id){
                 router.push({name: 'showArticle', params: {id:id}});
             }
-
-            function date(created_at){
-                return moment(created_at).fromNow()
-            }
+            //格式化日期
+            const date = (created_at) => {
+                return moment(created_at).fromNow();
+            };
 
             return {
                 date,
-                showArticle,
-                article
+                showArticle
             }
         }
     }

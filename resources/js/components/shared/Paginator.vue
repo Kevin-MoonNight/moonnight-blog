@@ -26,26 +26,35 @@
 
         </div>
     </div>
-
-
 </template>
 
 <script>
     import {toRefs} from "vue";
+    import {useRouter,useRoute} from "vue-router";
 
     export default {
-        props:['items','changePage'],
+        props:['items'],
         setup(props){
-            const {items,changePage} = toRefs(props)
+            const {items} = toRefs(props)
+            const router = useRouter()
+            const route = useRoute();
 
-            function prevPage(){
-                if(items.value.prev_page_url !== null){
-                    changePage.value(items.value.prev_page_url.split('?page=')[1]);
+            const prevPage = () => {
+                if(items.value.prev_page_url != null){
+                    const page = items.value.prev_page_url.split('?page=')[1];
+                    //將先前有的參數一並傳回去
+                    const tag = route.query.tag;
+                    const search = route.query.search;
+                    router.push({name:'articles',query:{page:page,tag:tag,search:search}});
                 }
             }
-            function nextPage(){
-                if(items.value.next_page_url !== null){
-                    changePage.value(items.value.next_page_url.split('?page=')[1]);
+            const nextPage = () => {
+                if(items.value.next_page_url != null){
+                    const page = items.value.next_page_url.split('?page=')[1];
+                    //將先前有的參數一並傳回去
+                    const tag = route.query.tag;
+                    const search = route.query.search;
+                    router.push({name:'articles',query:{page:page,tag:tag,search:search}});
                 }
             }
 

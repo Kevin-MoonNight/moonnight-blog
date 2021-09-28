@@ -1,7 +1,7 @@
 <template>
     <transition name="fade">
         <side-box v-show="isShow" :name="'熱門文章'">
-            <p v-for="article in articles" :key="article.title" @click="show(article.id)"
+            <p v-for="article in articles" :key="'PopularSideBox ' + article.id" @click="show(article.id)"
                class="w-auto px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-full text-sm cursor-pointer">
 
                 {{ article.title }}

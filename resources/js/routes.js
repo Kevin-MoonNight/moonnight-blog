@@ -34,7 +34,8 @@ const routes = [
                 name:'articles',
                 query:{
                     search:null,
-                    tag:null
+                    tag:null,
+                    page:null
                 }
             },
             {

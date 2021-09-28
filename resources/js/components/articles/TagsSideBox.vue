@@ -1,7 +1,7 @@
 <template>
     <transition name="fade">
         <side-box v-show="isShow" :name="'所有標籤'">
-            <p v-for="tag in tags" :key="tag.name" @click="changeUrl(tag.name)"
+            <p v-for="tag in tags" :key="'TagsSideBox ' + tag.id" @click="queryTag(tag.name)"
                class="w-auto px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-full text-sm cursor-pointer">
 
                 {{ tag.name }}
@@ -12,7 +12,7 @@
 <script>
     import SideBox from "../shared/SideBox";
     import {apiGetTags} from "../../api/tag";
-    import {ref, onBeforeMount, toRefs} from "vue";
+    import {ref, onBeforeMount} from "vue";
     import {useRouter} from "vue-router";
 
     export default {
@@ -22,7 +22,7 @@
         setup(){
             const tags = ref([]);
             const isShow = ref(false);
-            onBeforeMount(async ()=>{
+            onBeforeMount(async () => {
                 isShow.value = false;
                 await Promise.all([apiGetTags()])
                     .then((results) => {
@@ -32,15 +32,15 @@
             })
 
             const router = useRouter();
-
-            const changeUrl = (tag) => {
+            //搜尋擁有該標籤的文章
+            const queryTag = (tag) => {
                 router.push({name:'articles',query:{tag:tag}})
             }
 
             return {
                 tags,
                 isShow,
-                changeUrl
+                queryTag
             }
         }
     }
