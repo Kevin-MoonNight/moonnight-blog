@@ -4,34 +4,39 @@ namespace App\Http\Controllers;
 
 use App\Models\Message;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class MessagesAPIController extends Controller
 {
     public function __construct(){
-        $this->middleware('auth')->only('index','destroy');
+        $this->middleware('auth:sanctum')->except('create','store');
     }
 
     public function index()
     {
-        return Message::all();
+        $messages = Message::latest()->paginate(10);
+
+        return response($messages,200);
     }
 
     public function store(Request $request)
     {
-        $msg = '訊息發送成功，請留意信箱!';
-
-        //驗證內容
-        $request->validate([
-            'name' =>'required',
-            'email'=>'required',
-            'caseType'=>'required'
+        //驗證資料
+        $validator = Validator::make($request->all(), [
+            'name' =>['required', 'string','max:255'],
+            'email'=>['required','email', 'string','max:255'],
+            'remark'=>['max:500'],
+            'caseType'=>['required', 'string']
         ]);
 
-        //新增訊息
+        //驗證失敗
+        if ($validator->fails()) {
+            return response(['errors'=>true,'data'=> $validator->errors()],200);
+        }
+
         Message::Create($request->all());
 
-
-        return response($msg,200);
+        return response(['errors'=>false,'notice'=>'訊息發送成功，請留意信箱!'],201);
     }
 
     /**
@@ -40,9 +45,21 @@ class MessagesAPIController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id)
     {
+        //驗證資料是否存在於資料庫
+        $validator = Validator::make([$id], [
+            ['required', 'numeric','exists:messages,id'],
+        ]);
 
+        //驗證失敗
+        if ($validator->fails()) {
+            return response(['errors'=> true,'data'=> $validator->errors()],200);
+        }
+
+        $message = Message::find($id);
+
+        return response(['errors'=>false,'message'=>$message], 200);
     }
 
     /**
@@ -52,9 +69,37 @@ class MessagesAPIController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,int $id)
     {
+        //驗證資料是否存在於資料庫
+        $validator = Validator::make([$id], [
+            ['required', 'numeric','exists:messages,id'],
+        ]);
 
+        //驗證失敗
+        if ($validator->fails()) {
+            return response(['errors'=> true,'data'=> $validator->errors()],200);
+        }
+
+        $message = Message::find($id);
+
+
+        //驗證資料
+        $validator = Validator::make($request->all(), [
+            'name' =>['required', 'string','max:255'],
+            'email'=>['required','email', 'string','max:255'],
+            'remark'=>['string','max:500'],
+            'caseType'=>['required', 'string']
+        ]);
+
+        //驗證失敗
+        if ($validator->fails()) {
+            return response(['errors'=>true,'data'=> $validator->errors()],200);
+        }
+
+       $message->update($request->all());
+
+        return response(['errors'=>false,'notice'=>'訊息更新成功!'],200);
     }
 
     /**
@@ -63,22 +108,22 @@ class MessagesAPIController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
-        $ok=true;
-        $msg = '訊息刪除成功!';
-        $error='';
+        //驗證資料是否存在於資料庫
+        $validator = Validator::make([$id], [
+            ['required', 'numeric','exists:messages,id'],
+        ]);
 
-        try{
-            $message = Message::find($id);
-
-            $message->delete();
-        }catch (Exception $e){
-            $ok = false;
-            $msg = '訊息刪除失敗!';
-            $error = $e;
+        //驗證失敗
+        if ($validator->fails()) {
+            return response(['errors'=> true,'data'=> $validator->errors()],200);
         }
 
-        return response()->json(['ok' => $ok, 'msg' => $msg,'error'=>$error], 200);
+        //刪除資料
+        $message = Message::find($id);
+        $message->delete();
+
+        return response(['errors'=>false,'notice'=>'訊息刪除成功!'], 200);
     }
 }

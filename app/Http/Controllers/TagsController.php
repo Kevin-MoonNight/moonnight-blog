@@ -8,12 +8,14 @@ use App\Models\Tag;
 class TagsController extends Controller
 {
     public function __construct(){
-        $this->middleware('auth')->except('index','show');
+        $this->middleware('auth:sanctum');
     }
 
     public function index()
     {
-        return Tag::all();
+        $tags = Tag::all();
+
+        return response($tags,200);
     }
 
     public function store(Request $request)

@@ -8,44 +8,21 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>演算法程式設計｜MoonNight</title>
-        <meta name="discription" content="演算法程式設計｜MoonNight">
-        <meta name="keywords" content="演算法,外包,網頁,MoonNight,程式">
-        <meta name="author" content="MoonNight">
-        <meta name="copyright" content="MoonNight">
+        <meta name="description" content="演算法程式外包｜MoonNight">
+        <meta name="keywords" content="演算法,外包,網頁,MoonNight,程式,設計,網頁,軟體,鄭政文">
+        <meta name="author" content="鄭政文">
+        <meta name="copyright" content="鄭政文">
 
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-        <link href="{{ mix('css/app.css') }}">
         <link rel="shortcut icon" href="{{ asset('image/cat.png') }}">
+        <script src="{{ mix('/js/app.js') }}" defer></script>
 
     </head>
     <body class="">
+        <div id="app">
 
-        @include('layouts.nav')
-
-        @if(session()->has('notice'))
-            <div class="bg-green-400 text-center">
-                {{session()->get('notice')}}
-            </div>
-        @endif
-
-        @if(session()->has('error'))
-            <div class="bg-red-400 text-center">
-                {{session()->get('error')}}
-            </div>
-        @endif
-        @if($errors->any())
-            <div class="bg-red-400 text-center">
-                @foreach($errors->all() as $error)
-                    <p>{{$error}}</p>
-                @endforeach
-
-            </div>
-        @endif
-
-        @yield('content')
-
-        @include('layouts.footer')
+        </div>
     </body>
 </html>
-<script src="{{asset('/js/app.js')}}"></script>
+
 

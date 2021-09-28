@@ -20,7 +20,7 @@ class CreateArticlesTable extends Migration
             $table->bigInteger('views')->default(0);
             $table->string('url');
             $table->enum('state',['draft','published'])->default('draft');
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -1,55 +1,113 @@
-import Vue from 'vue';
-import Router from 'vue-router';
+import Home from './components/frontend/Home';
+import Articles from './components/frontend/Articles';
+import Article from './components/articles/Show';
+import Products from './components/frontend/Products';
+import Contact from './components/frontend/Contact';
+import Login from './components/auth/Login';
+import Register from './components/auth/Register';
+import Dashboard from './components/backend/Dashboard';
+import ArticlesManager from './components/backend/Articles';
+import ArticlesEdit from './components/articles/Edit';
+import ArticlesCreate from  './components/articles/Create';
+import Messages from './components/backend/Messages';
+import Backend from "./components/layouts/Backend";
+import Frontend from "./components/layouts/Frontend";
+import {createRouter,createWebHistory} from 'vue-router';
+import { store } from './store/index';
 
-// 引用頁面的 Component
-import Home from './components/pages/home.vue';
-import ArticleList from './components/pages/article/index.vue';
-import Contact from './components/pages/contact.vue';
-import Article from './components/pages/article/show.vue';
-import Articles from './components/pages/article/articles.vue';
-// 使用 Vue Router
-Vue.use(Router);
+const routes = [
+    {
+        path: '/',
+        component: Frontend,
+        meta:{
+            requiresAuth:false
+        },
+        children:[
+            {
+                path: '',
+                component: Home,
+                name:'home'
+            },
+            {
+                path: 'articles',
+                component: Articles,
+                name:'articles',
+                query:{
+                    search:null,
+                    tag:null,
+                    page:null
+                }
+            },
+            {
+                path: 'articles/:id',
+                component: Article,
+                name:'showArticle',
+            },
+            {
+                path: 'product',
+                component: Products,
+                name:'product'
+            },
+            {
+                path: 'contact',
+                component: Contact,
+                name:'contact'
+            },
+        ]
+    },
+    {
+        path: '/dashboard',
+        component: Backend,
+        meta:{
+            requiresAuth:true
+        },
+        children:[
+            {
+                path: '',
+                component: Dashboard,
+                name:'dashboard',
+            },
+            {
+                path: 'articles',
+                component: ArticlesManager,
+                name:'articlesManager',
+            },
+            {
+                path: 'articles/create',
+                component: ArticlesCreate,
+                name:'articlesCreate',
+            },
+            {
+                path: 'articles/:id/edit',
+                component: ArticlesEdit,
+                name:'articlesEdit',
+            },
+            {
+                path: 'messages',
+                component: Messages,
+                name:'messagesManager',
+            },
+        ]
+    },
+    {
+        path: '/login',
+        component: Login,
+        name:'login'
+    },
+    {
+        path: '/register',
+        component: Register,
+        name:'register'
+    },
+]
 
-// 建立 Vue Router instance
-export const router = new Router({
-    mode: 'history',
-    routes:[
-        {
-            path: '/',
-            component: Home,
-            name:'home'
-        },
-        {
-            path: '/articles',
-            component: ArticleList,
-            name:'articleList'
-        },
-        {
-            path: '/articles/:id',
-            component: Article,
-            name:'article'
-        },
-        {
-            path: '/articles/tag/:name',
-            component: Articles,
-            name:'articleTag'
-        },
-        {
-            path: '/product',
-            component: ArticleList,
-            name:'product'
-        },
-        {
-            path: '/contact',
-            component: Contact,
-            name:'contact'
-        },
-        //其他路徑都會引導到首頁
-        {
-            path: '*',
-            redirect: '/'
-        }
-    ]
+export const router = createRouter({
+    history: createWebHistory(),
+    routes:routes,
 });
 
-
+router.beforeEach((to,from,next)=>{
+    const isAuthenticated = store.state.auth.isAuth;
+    if(!isAuthenticated && to.meta.requiresAuth) next('Login')
+    else next();
+})
