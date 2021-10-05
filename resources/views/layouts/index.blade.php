@@ -9,7 +9,7 @@
 
         <title>演算法程式設計｜MoonNight</title>
         <meta name="description" content="演算法程式外包｜MoonNight">
-        <meta name="keywords" content="演算法,外包,網頁,MoonNight,程式,設計,網頁,軟體,鄭政文">
+        <meta name="keywords" content="演算法設計,網頁設計,軟體設計,外包,程式">
         <meta name="author" content="鄭政文">
         <meta name="copyright" content="鄭政文">
 
