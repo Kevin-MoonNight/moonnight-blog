@@ -16,6 +16,10 @@
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
         <link rel="shortcut icon" href="{{ asset('image/cat.png') }}">
         <script src="{{ mix('/js/app.js') }}" defer></script>
+        <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined"
+              rel="stylesheet">
+        <link href="https://cdn.iconmonstr.com/1.3.0/css/iconmonstr-iconic-font.min.css"
+              rel="stylesheet">
 
     </head>
     <body class="">

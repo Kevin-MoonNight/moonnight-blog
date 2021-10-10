@@ -16,7 +16,7 @@
         @apply bg-gray-100 text-black;
     }
     section{
-        @apply flex justify-center items-center h-screen;
+        @apply flex justify-center items-center min-h-screen;
     }
 
     /* width */
@@ -52,9 +52,7 @@
 
 @layer components{
     @responsive{
-        .section{
-            @apply flex justify-center items-center h-screen;
-        }
+
         .card{
             @apply p-10 rounded-md shadow-xl bg-white;
         }
