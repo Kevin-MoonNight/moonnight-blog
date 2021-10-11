@@ -13,6 +13,7 @@
     }
     body{
         font-family: HunInn,sans-serif;
+        scroll-behavior: smooth;
         @apply bg-gray-100 text-black;
     }
     section{
