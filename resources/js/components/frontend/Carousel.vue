@@ -8,11 +8,14 @@
             <div id="card" data-tilt data-tilt-reverse="true" data-tilt-max="5"
                  class="flex flex-col justify-center items-center w-full max-w-3xl h-2/3 bg-white rounded-md shadow-md">
 
-                <p class="mb-5 text-2xl md:text-3xl">{{item.title}}</p>
-                <p class="mb-12 text-lg md:text-xl text-gray-600">{{item.content}}</p>
-                <router-link to="/contact">
-                    <p class="py-3 px-10 text-lg md:text-xl bg-white border-2 border-black rounded-2xl">聯絡我們</p>
-                </router-link>
+                <div class="text-center">
+                    <p class="mb-5 text-2xl md:text-3xl">{{item.title}}</p>
+                    <p class="mb-12 text-lg md:text-xl text-gray-600">{{item.content}}</p>
+                    <router-link to="/contact">
+                        <p class="py-3 px-10 text-lg md:text-xl bg-white border-2 border-black rounded-2xl">聯絡我們</p>
+                    </router-link>
+                </div>
+
             </div>
         </swiper-slide>
     </swiper>

@@ -22248,16 +22248,13 @@ __webpack_require__.r(__webpack_exports__);
     return {
       slides: [{
         title: "演算法程式設計",
-        content: "專門解決論文所需要的演算法程式",
-        imgSrc: '/image/algorithm.jpg'
+        content: "專門解決論文所需要的演算法程式"
       }, {
         title: "網站設計",
-        content: "開發出符合您需求的網站",
-        imgSrc: '/image/website.jpg'
+        content: "開發出符合您需求的網站"
       }, {
         title: "桌面應用程式設計",
-        content: "設計出您喜歡的軟體",
-        imgSrc: '/image/desktop.jpg'
+        content: "設計出您喜歡的軟體"
       }]
     };
   },
@@ -22289,7 +22286,7 @@ __webpack_require__.r(__webpack_exports__);
         // 旋轉角度
         opacity: 0,
         // 透明度
-        scale: 0.9,
+        scale: 1,
         // 縮放比例
         easing: "ease-in-out",
         // 動畫速度曲線
@@ -22332,15 +22329,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm-bundler.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm-bundler.js");
 /* harmony import */ var _api_auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../api/auth */ "./resources/js/api/auth.js");
+/* harmony import */ var headroom_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! headroom.js */ "./node_modules/headroom.js/dist/headroom.js");
+/* harmony import */ var headroom_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(headroom_js__WEBPACK_IMPORTED_MODULE_3__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
 
 
 
@@ -22362,8 +22363,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   setup: function setup() {
-    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_3__.useStore)();
-    var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_4__.useRouter)();
+    var store = (0,vuex__WEBPACK_IMPORTED_MODULE_4__.useStore)();
+    var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_5__.useRouter)();
 
     function logout() {
       return _logout.apply(this, arguments);
@@ -22395,6 +22396,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
     var isAuth = (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
       return store.state.auth.isAuth;
+    });
+    (0,vue__WEBPACK_IMPORTED_MODULE_1__.onMounted)(function () {
+      var myElement = document.querySelector("header");
+      var headroom = new (headroom_js__WEBPACK_IMPORTED_MODULE_3___default())(myElement);
+      headroom.init();
     });
     return {
       isAuth: isAuth,
@@ -24328,13 +24334,16 @@ var _hoisted_1 = {
   "class": "flex flex-col justify-center items-center w-full max-w-3xl h-2/3 bg-white rounded-md shadow-md"
 };
 var _hoisted_2 = {
-  "class": "mb-5 text-2xl md:text-3xl"
+  "class": "text-center"
 };
 var _hoisted_3 = {
+  "class": "mb-5 text-2xl md:text-3xl"
+};
+var _hoisted_4 = {
   "class": "mb-12 text-lg md:text-xl text-gray-600"
 };
 
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
   "class": "py-3 px-10 text-lg md:text-xl bg-white border-2 border-black rounded-2xl"
 }, "聯絡我們", -1
 /* HOISTED */
@@ -24365,20 +24374,20 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "class": "flex justify-center items-center p-5"
         }, {
           "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-            return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.title), 1
+            return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.title), 1
             /* TEXT */
-            ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.content), 1
+            ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.content), 1
             /* TEXT */
             ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
               to: "/contact"
             }, {
               "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-                return [_hoisted_4];
+                return [_hoisted_5];
               }),
               _: 1
               /* STABLE */
 
-            })])];
+            })])])];
           }),
           _: 2
           /* DYNAMIC */
@@ -24706,82 +24715,85 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "sticky top-0 z-50 h-14 bg-white shadow-md flex justify-center"
+  "class": "sticky top-0 z-50 h-14 w-full bg-white shadow-md"
 };
 var _hoisted_2 = {
-  "class": "flex justify-between max-w-screen-xl w-full"
+  "class": "flex justify-center"
 };
 var _hoisted_3 = {
-  "class": "flex text-md"
+  "class": "flex justify-between max-w-screen-xl w-full"
+};
+var _hoisted_4 = {
+  "class": "flex"
 };
 
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
   href: '/',
   "class": "py-4 px-4 text-xl cursor-pointer"
 }, "MoonNight", -1
 /* HOISTED */
 );
 
-var _hoisted_5 = ["href"];
-var _hoisted_6 = {
+var _hoisted_6 = ["href"];
+var _hoisted_7 = {
   "class": "px-2 transform duration-75 border-indigo-500 group-hover:border-b-4"
 };
 
-var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
   "class": "animate-bounce"
 }, "聯絡我們", -1
 /* HOISTED */
 );
 
-var _hoisted_8 = {
+var _hoisted_9 = {
   "class": "hidden md:flex text-md"
 };
-var _hoisted_9 = {
+var _hoisted_10 = {
   key: 0,
   "class": "hidden md:flex py-4 px-2 group",
   href: '/login'
 };
 
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
   "class": "px-2 transform duration-75 border-indigo-500 group-hover:border-b-4"
 }, "登入", -1
 /* HOISTED */
 );
 
-var _hoisted_11 = [_hoisted_10];
-var _hoisted_12 = {
+var _hoisted_12 = [_hoisted_11];
+var _hoisted_13 = {
   key: 1,
   "class": "hidden md:flex py-4 px-2 group",
   href: '/dashboard'
 };
 
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
   "class": "px-2 transform duration-75 border-indigo-500 group-hover:border-b-4"
 }, "後台", -1
 /* HOISTED */
 );
 
-var _hoisted_14 = [_hoisted_13];
+var _hoisted_15 = [_hoisted_14];
 
-var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
   "class": "px-2 transform duration-75 border-indigo-500 group-hover:border-b-4"
 }, "登出", -1
 /* HOISTED */
 );
 
-var _hoisted_16 = [_hoisted_15];
+var _hoisted_17 = [_hoisted_16];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("nav", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.pages, function (page) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("header", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("nav", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_hoisted_5, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.pages, function (page) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       href: page.link,
       "class": "hidden md:flex py-4 px-2 group"
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(page.name), 1
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(page.name), 1
     /* TEXT */
     )], 8
     /* PROPS */
-    , _hoisted_5)]);
+    , _hoisted_6)]);
   }), 256
   /* UNKEYED_FRAGMENT */
   )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
@@ -24789,18 +24801,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "py-4 px-2"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_7];
+      return [_hoisted_8];
     }),
     _: 1
     /* STABLE */
 
-  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [!$setup.isAuth ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", _hoisted_9, _hoisted_11)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.isAuth ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", _hoisted_12, _hoisted_14)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.isAuth ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [!$setup.isAuth ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", _hoisted_10, _hoisted_12)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.isAuth ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", _hoisted_13, _hoisted_15)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.isAuth ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
     key: 2,
     onClick: _cache[0] || (_cache[0] = function () {
       return $setup.logout && $setup.logout.apply($setup, arguments);
     }),
     "class": "hidden md:flex py-4 px-2 group"
-  }, _hoisted_16)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]);
+  }, _hoisted_17)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])]);
 }
 
 /***/ }),
@@ -26030,6 +26042,452 @@ module.exports = function (cssWithMappingToString) {
 
   return list;
 };
+
+/***/ }),
+
+/***/ "./node_modules/headroom.js/dist/headroom.js":
+/*!***************************************************!*\
+  !*** ./node_modules/headroom.js/dist/headroom.js ***!
+  \***************************************************/
+/***/ (function(module) {
+
+/*!
+ * headroom.js v0.12.0 - Give your page some headroom. Hide your header until you need it
+ * Copyright (c) 2020 Nick Williams - http://wicky.nillia.ms/headroom.js
+ * License: MIT
+ */
+
+(function (global, factory) {
+   true ? module.exports = factory() :
+  0;
+}(this, function () { 'use strict';
+
+  function isBrowser() {
+    return typeof window !== "undefined";
+  }
+
+  /**
+   * Used to detect browser support for adding an event listener with options
+   * Credit: https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
+   */
+  function passiveEventsSupported() {
+    var supported = false;
+
+    try {
+      var options = {
+        // eslint-disable-next-line getter-return
+        get passive() {
+          supported = true;
+        }
+      };
+      window.addEventListener("test", options, options);
+      window.removeEventListener("test", options, options);
+    } catch (err) {
+      supported = false;
+    }
+
+    return supported;
+  }
+
+  function isSupported() {
+    return !!(
+      isBrowser() &&
+      function() {}.bind &&
+      "classList" in document.documentElement &&
+      Object.assign &&
+      Object.keys &&
+      requestAnimationFrame
+    );
+  }
+
+  function isDocument(obj) {
+    return obj.nodeType === 9; // Node.DOCUMENT_NODE === 9
+  }
+
+  function isWindow(obj) {
+    // `obj === window` or `obj instanceof Window` is not sufficient,
+    // as the obj may be the window of an iframe.
+    return obj && obj.document && isDocument(obj.document);
+  }
+
+  function windowScroller(win) {
+    var doc = win.document;
+    var body = doc.body;
+    var html = doc.documentElement;
+
+    return {
+      /**
+       * @see http://james.padolsey.com/javascript/get-document-height-cross-browser/
+       * @return {Number} the scroll height of the document in pixels
+       */
+      scrollHeight: function() {
+        return Math.max(
+          body.scrollHeight,
+          html.scrollHeight,
+          body.offsetHeight,
+          html.offsetHeight,
+          body.clientHeight,
+          html.clientHeight
+        );
+      },
+
+      /**
+       * @see http://andylangton.co.uk/blog/development/get-viewport-size-width-and-height-javascript
+       * @return {Number} the height of the viewport in pixels
+       */
+      height: function() {
+        return win.innerHeight || html.clientHeight || body.clientHeight;
+      },
+
+      /**
+       * Gets the Y scroll position
+       * @return {Number} pixels the page has scrolled along the Y-axis
+       */
+      scrollY: function() {
+        if (win.pageYOffset !== undefined) {
+          return win.pageYOffset;
+        }
+
+        return (html || body.parentNode || body).scrollTop;
+      }
+    };
+  }
+
+  function elementScroller(element) {
+    return {
+      /**
+       * @return {Number} the scroll height of the element in pixels
+       */
+      scrollHeight: function() {
+        return Math.max(
+          element.scrollHeight,
+          element.offsetHeight,
+          element.clientHeight
+        );
+      },
+
+      /**
+       * @return {Number} the height of the element in pixels
+       */
+      height: function() {
+        return Math.max(element.offsetHeight, element.clientHeight);
+      },
+
+      /**
+       * Gets the Y scroll position
+       * @return {Number} pixels the element has scrolled along the Y-axis
+       */
+      scrollY: function() {
+        return element.scrollTop;
+      }
+    };
+  }
+
+  function createScroller(element) {
+    return isWindow(element) ? windowScroller(element) : elementScroller(element);
+  }
+
+  /**
+   * @param element EventTarget
+   */
+  function trackScroll(element, options, callback) {
+    var isPassiveSupported = passiveEventsSupported();
+    var rafId;
+    var scrolled = false;
+    var scroller = createScroller(element);
+    var lastScrollY = scroller.scrollY();
+    var details = {};
+
+    function update() {
+      var scrollY = Math.round(scroller.scrollY());
+      var height = scroller.height();
+      var scrollHeight = scroller.scrollHeight();
+
+      // reuse object for less memory churn
+      details.scrollY = scrollY;
+      details.lastScrollY = lastScrollY;
+      details.direction = scrollY > lastScrollY ? "down" : "up";
+      details.distance = Math.abs(scrollY - lastScrollY);
+      details.isOutOfBounds = scrollY < 0 || scrollY + height > scrollHeight;
+      details.top = scrollY <= options.offset[details.direction];
+      details.bottom = scrollY + height >= scrollHeight;
+      details.toleranceExceeded =
+        details.distance > options.tolerance[details.direction];
+
+      callback(details);
+
+      lastScrollY = scrollY;
+      scrolled = false;
+    }
+
+    function handleScroll() {
+      if (!scrolled) {
+        scrolled = true;
+        rafId = requestAnimationFrame(update);
+      }
+    }
+
+    var eventOptions = isPassiveSupported
+      ? { passive: true, capture: false }
+      : false;
+
+    element.addEventListener("scroll", handleScroll, eventOptions);
+    update();
+
+    return {
+      destroy: function() {
+        cancelAnimationFrame(rafId);
+        element.removeEventListener("scroll", handleScroll, eventOptions);
+      }
+    };
+  }
+
+  function normalizeUpDown(t) {
+    return t === Object(t) ? t : { down: t, up: t };
+  }
+
+  /**
+   * UI enhancement for fixed headers.
+   * Hides header when scrolling down
+   * Shows header when scrolling up
+   * @constructor
+   * @param {DOMElement} elem the header element
+   * @param {Object} options options for the widget
+   */
+  function Headroom(elem, options) {
+    options = options || {};
+    Object.assign(this, Headroom.options, options);
+    this.classes = Object.assign({}, Headroom.options.classes, options.classes);
+
+    this.elem = elem;
+    this.tolerance = normalizeUpDown(this.tolerance);
+    this.offset = normalizeUpDown(this.offset);
+    this.initialised = false;
+    this.frozen = false;
+  }
+  Headroom.prototype = {
+    constructor: Headroom,
+
+    /**
+     * Start listening to scrolling
+     * @public
+     */
+    init: function() {
+      if (Headroom.cutsTheMustard && !this.initialised) {
+        this.addClass("initial");
+        this.initialised = true;
+
+        // defer event registration to handle browser
+        // potentially restoring previous scroll position
+        setTimeout(
+          function(self) {
+            self.scrollTracker = trackScroll(
+              self.scroller,
+              { offset: self.offset, tolerance: self.tolerance },
+              self.update.bind(self)
+            );
+          },
+          100,
+          this
+        );
+      }
+
+      return this;
+    },
+
+    /**
+     * Destroy the widget, clearing up after itself
+     * @public
+     */
+    destroy: function() {
+      this.initialised = false;
+      Object.keys(this.classes).forEach(this.removeClass, this);
+      this.scrollTracker.destroy();
+    },
+
+    /**
+     * Unpin the element
+     * @public
+     */
+    unpin: function() {
+      if (this.hasClass("pinned") || !this.hasClass("unpinned")) {
+        this.addClass("unpinned");
+        this.removeClass("pinned");
+
+        if (this.onUnpin) {
+          this.onUnpin.call(this);
+        }
+      }
+    },
+
+    /**
+     * Pin the element
+     * @public
+     */
+    pin: function() {
+      if (this.hasClass("unpinned")) {
+        this.addClass("pinned");
+        this.removeClass("unpinned");
+
+        if (this.onPin) {
+          this.onPin.call(this);
+        }
+      }
+    },
+
+    /**
+     * Freezes the current state of the widget
+     * @public
+     */
+    freeze: function() {
+      this.frozen = true;
+      this.addClass("frozen");
+    },
+
+    /**
+     * Re-enables the default behaviour of the widget
+     * @public
+     */
+    unfreeze: function() {
+      this.frozen = false;
+      this.removeClass("frozen");
+    },
+
+    top: function() {
+      if (!this.hasClass("top")) {
+        this.addClass("top");
+        this.removeClass("notTop");
+
+        if (this.onTop) {
+          this.onTop.call(this);
+        }
+      }
+    },
+
+    notTop: function() {
+      if (!this.hasClass("notTop")) {
+        this.addClass("notTop");
+        this.removeClass("top");
+
+        if (this.onNotTop) {
+          this.onNotTop.call(this);
+        }
+      }
+    },
+
+    bottom: function() {
+      if (!this.hasClass("bottom")) {
+        this.addClass("bottom");
+        this.removeClass("notBottom");
+
+        if (this.onBottom) {
+          this.onBottom.call(this);
+        }
+      }
+    },
+
+    notBottom: function() {
+      if (!this.hasClass("notBottom")) {
+        this.addClass("notBottom");
+        this.removeClass("bottom");
+
+        if (this.onNotBottom) {
+          this.onNotBottom.call(this);
+        }
+      }
+    },
+
+    shouldUnpin: function(details) {
+      var scrollingDown = details.direction === "down";
+
+      return scrollingDown && !details.top && details.toleranceExceeded;
+    },
+
+    shouldPin: function(details) {
+      var scrollingUp = details.direction === "up";
+
+      return (scrollingUp && details.toleranceExceeded) || details.top;
+    },
+
+    addClass: function(className) {
+      this.elem.classList.add.apply(
+        this.elem.classList,
+        this.classes[className].split(" ")
+      );
+    },
+
+    removeClass: function(className) {
+      this.elem.classList.remove.apply(
+        this.elem.classList,
+        this.classes[className].split(" ")
+      );
+    },
+
+    hasClass: function(className) {
+      return this.classes[className].split(" ").every(function(cls) {
+        return this.classList.contains(cls);
+      }, this.elem);
+    },
+
+    update: function(details) {
+      if (details.isOutOfBounds) {
+        // Ignore bouncy scrolling in OSX
+        return;
+      }
+
+      if (this.frozen === true) {
+        return;
+      }
+
+      if (details.top) {
+        this.top();
+      } else {
+        this.notTop();
+      }
+
+      if (details.bottom) {
+        this.bottom();
+      } else {
+        this.notBottom();
+      }
+
+      if (this.shouldUnpin(details)) {
+        this.unpin();
+      } else if (this.shouldPin(details)) {
+        this.pin();
+      }
+    }
+  };
+
+  /**
+   * Default options
+   * @type {Object}
+   */
+  Headroom.options = {
+    tolerance: {
+      up: 0,
+      down: 0
+    },
+    offset: 0,
+    scroller: isBrowser() ? window : null,
+    classes: {
+      frozen: "headroom--frozen",
+      pinned: "headroom--pinned",
+      unpinned: "headroom--unpinned",
+      top: "headroom--top",
+      notTop: "headroom--not-top",
+      bottom: "headroom--bottom",
+      notBottom: "headroom--not-bottom",
+      initial: "headroom"
+    }
+  };
+
+  Headroom.cutsTheMustard = isSupported();
+
+  return Headroom;
+
+}));
+
 
 /***/ }),
 

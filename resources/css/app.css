@@ -14,10 +14,20 @@
     body{
         font-family: HunInn,sans-serif;
         scroll-behavior: smooth;
-        @apply bg-gray-100 text-black;
+        @apply bg-gray-100;
     }
     section{
         @apply flex justify-center items-center min-h-screen;
+    }
+    .headroom {
+        will-change: transform;
+        transition: transform 200ms linear;
+    }
+    .headroom--pinned {
+        transform: translateY(0%);
+    }
+    .headroom--unpinned {
+        transform: translateY(-100%);
     }
 
     /* width */
@@ -53,7 +63,6 @@
 
 @layer components{
     @responsive{
-
         .card{
             @apply p-10 rounded-md shadow-xl bg-white;
         }

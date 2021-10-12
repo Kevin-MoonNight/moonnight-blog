@@ -22,7 +22,6 @@
     import ScrollReveal from "scrollreveal";
     // import CanvasNest from 'canvas-nest.js';
 
-
     export default {
         components: {
             Carousel,
@@ -33,18 +32,15 @@
                 slides:[
                     {
                         title:"演算法程式設計",
-                        content:"專門解決論文所需要的演算法程式",
-                        imgSrc:'/image/algorithm.jpg'
+                        content:"專門解決論文所需要的演算法程式"
                     },
                     {
                         title:"網站設計",
-                        content:"開發出符合您需求的網站",
-                        imgSrc:'/image/website.jpg'
+                        content:"開發出符合您需求的網站"
                     },
                     {
                         title:"桌面應用程式設計",
-                        content:"設計出您喜歡的軟體",
-                        imgSrc:'/image/desktop.jpg'
+                        content:"設計出您喜歡的軟體"
                     },
                 ],
             }
@@ -67,7 +63,7 @@
                     delay: 300,  // 動畫延遲時間
                     rotate: { x: 0, y: 0, z: 0 },  // 旋轉角度
                     opacity: 0,  // 透明度
-                    scale: 0.9, // 縮放比例
+                    scale: 1, // 縮放比例
                     easing: "ease-in-out", // 動畫速度曲線
                     container: document.documentElement, // 外層
                     mobile: true, // 支援行動裝置
