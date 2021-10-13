@@ -1,21 +1,23 @@
 <template>
-    <swiper :loop="true" :pagination='{"clickable": true}' :autoplay='{ "delay": 3000, "disableOnInteraction": false}'
-            class="w-full h-full">
+    <swiper :modules="modules" :slides-per-view="1" :loop="true" :pagination='{"clickable": true}' :autoplay='{ "delay": 3000, "disableOnInteraction": false}'
+            class="w-full h-full border">
 
         <swiper-slide v-for="item in items" :key="item"
                       class="flex justify-center items-center p-5">
 
             <div id="card" data-tilt data-tilt-reverse="true" data-tilt-max="5"
-                 class="flex flex-col justify-center items-center w-full max-w-3xl h-2/3 bg-white rounded-md shadow-md">
+                 class="flex flex-col justify-center items-center p-5 w-full max-w-3xl h-2/3 bg-white rounded-md shadow-md">
+                <div class="h-full text-center">
+                    <div class="h-2/3">
+                        <img :src="item.imgSrc" :alt="item.title"
+                             class="object-contain h-full bg-white">
+                    </div>
 
-                <div class="text-center">
-                    <p class="mb-5 text-2xl md:text-3xl">{{item.title}}</p>
-                    <p class="mb-12 text-lg md:text-xl text-gray-600">{{item.content}}</p>
-                    <router-link to="/contact">
-                        <p class="py-3 px-10 text-lg md:text-xl bg-white border-2 border-black rounded-2xl">聯絡我們</p>
-                    </router-link>
+                    <div class="p-2 h-1/3">
+                        <p class="mb-5 text-2xl md:text-3xl">{{item.title}}</p>
+                        <p class="text-lg text-gray-600 md:text-xl">{{item.content}}</p>
+                    </div>
                 </div>
-
             </div>
         </swiper-slide>
     </swiper>
@@ -24,14 +26,11 @@
     import {onMounted} from "vue";
     import VanillaTilt from 'vanilla-tilt';
     import { Swiper, SwiperSlide } from 'swiper/vue';
+    import {Autoplay,Pagination,Navigation} from 'swiper';
     import 'swiper/css';
     import "swiper/css/pagination"
     import "swiper/css/navigation"
-    import SwiperCore, {
-        Autoplay,Pagination,Navigation
-    } from 'swiper';
-    // install Swiper modules
-    SwiperCore.use([Autoplay,Pagination,Navigation]);
+
     export default {
         props:['items'],
         components: {
@@ -44,6 +43,10 @@
                 cards = document.querySelectorAll("#card");
                 VanillaTilt.init(cards);
             });
+
+            return {
+                modules: [Navigation, Pagination, Autoplay],
+            };
         }
     }
 </script>

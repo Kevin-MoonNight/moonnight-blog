@@ -14,7 +14,7 @@
         <meta name="copyright" content="鄭政文">
 
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-        <link rel="shortcut icon" href="{{ asset('image/cat.png') }}">
+        <link rel="shortcut icon" href="{{mix('images/catIcon.ico')}}">
         <script src="{{ mix('/js/app.js') }}" defer></script>
         <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined"
               rel="stylesheet">
@@ -24,7 +24,6 @@
     </head>
     <body class="">
         <div id="app">
-
         </div>
     </body>
 </html>

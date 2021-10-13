@@ -1,13 +1,13 @@
 <template>
-    <div id="area" class="select-none">
+    <div class="select-none">
         <section>
-            <div class="flex flex-col items-center w-full max-w-screen-xl h-full min-h-screen p-5">
+            <div class="flex flex-col items-center p-5 w-full max-w-screen-xl h-full min-h-screen">
                 <h1 class="my-10 text-3xl md:text-4xl">關於我</h1>
                 <about class="about" />
             </div>
         </section>
         <section>
-            <div class="flex flex-col items-center w-full max-w-screen-xl h-full h-screen">
+            <div class="flex flex-col items-center w-full max-w-screen-xl h-full h-screen border">
                 <h1 class="mt-20 text-3xl md:text-4xl">我們所提供的服務</h1>
                 <carousel :items="slides" />
             </div>
@@ -20,7 +20,7 @@
     import Carousel from "./Carousel";
     import About from "./About";
     import ScrollReveal from "scrollreveal";
-    // import CanvasNest from 'canvas-nest.js';
+    import Rellax from 'rellax/rellax.min';
 
     export default {
         components: {
@@ -32,29 +32,24 @@
                 slides:[
                     {
                         title:"演算法程式設計",
-                        content:"專門解決論文所需要的演算法程式"
+                        content:"專門解決論文所需要的演算法程式",
+                        imgSrc:"../../../images/algorithm.jpg"
                     },
                     {
                         title:"網站設計",
-                        content:"開發出符合您需求的網站"
+                        content:"開發出符合您需求的網站",
+                        imgSrc:"../../../images/website.jpg"
                     },
                     {
                         title:"桌面應用程式設計",
-                        content:"設計出您喜歡的軟體"
+                        content:"設計出您喜歡的軟體",
+                        imgSrc:"../../../images/desktop.jpg"
                     },
                 ],
             }
         },
         setup(){
-            // let cn;
-            //
             onMounted(()=>{
-                // const config = {
-                //     color: '0,0,0',
-                //     count: 88,
-                // };
-                // const element = document.querySelector("#area");
-                // cn = new CanvasNest(element, config);
                 ScrollReveal({
                     // 參數設定[註1]
                     origin: "right",  // 起始位置
@@ -73,9 +68,6 @@
                     viewOffset: { top: 0, right: 0, bottom: 0, left: 0 }, // 當外層有設定間隔造成偏移，則請設定在此維持精準度
                 }).reveal('.about');
             });
-            // onUnmounted(()=>{
-            //     cn.destroy();
-            // })
         }
     }
 </script>

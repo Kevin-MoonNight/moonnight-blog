@@ -1,4 +1,9 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/js/app.js": "/js/app.js?id=cf84dca6b5f62164ed87",
+    "/css/app.css": "/css/app.css?id=e9740035172d7e9c8227",
+    "/images/algorithm.jpg": "/images/algorithm.jpg?id=9fec02c84c7584c43094",
+    "/images/catIcon.ico": "/images/catIcon.ico?id=64d7836e72f161924b8e",
+    "/images/desktop.jpg": "/images/desktop.jpg?id=7108e352a64b9dad2089",
+    "/images/headshot.jpg": "/images/headshot.jpg?id=fa1ed0b881634ff4ddc9",
+    "/images/website.jpg": "/images/website.jpg?id=7b3391e8465d9a867bbd"
 }
