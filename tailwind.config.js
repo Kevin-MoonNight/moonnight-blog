@@ -15,9 +15,7 @@ module.exports = {
     darkMode: false, // or 'media' or 'class'
     theme: {
         extend: {
-            fontFamily:{
 
-            },
         },
         screens: {
         sm: '640px',

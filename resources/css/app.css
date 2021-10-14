@@ -11,11 +11,25 @@
         url(https://cdn.jsdelivr.net/gh/marsnow/open-huninn-font@1.1/font/jf-openhuninn.ttf) format("truetype"), /* Safari, Android, iOS */
         url(https://cdn.jsdelivr.net/gh/marsnow/open-huninn-font@1.1/font/jf-openhuninn.svg#SealmemoryHeader) format("svg"); /* Legacy iOS */
     }
+
     body{
         font-family: HunInn,sans-serif;
-        @apply bg-gray-100 text-black;
+        background-image: linear-gradient(120deg, #a6c0fe 0%, #f68084 100%);
     }
 
+    section{
+        @apply flex justify-center items-center min-h-screen;
+    }
+    .headroom {
+        will-change: transform;
+        transition: transform 200ms linear;
+    }
+    .headroom--pinned {
+        transform: translateY(0%);
+    }
+    .headroom--unpinned {
+        transform: translateY(-100%);
+    }
     /* width */
     ::-webkit-scrollbar {
         width: 8px;
@@ -44,21 +58,13 @@
     ::-webkit-scrollbar-thumb:hover:horizontal {
         background: #6B7280;
     }
+
 }
+
 @layer components{
     @responsive{
-        .section{
-            @apply flex justify-center items-center h-screen;
-        }
-
-        .card{
-            @apply p-10 rounded-md shadow-xl bg-white;
-        }
-        .nav_btn{
-            @apply hidden md:flex py-4 px-2 group;
-        }
         .input-style{
-            @apply mt-1 block w-full py-2 px-3 border-2 border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm;
+            @apply block px-3 py-2 mt-1 w-full bg-white rounded-md border-2 border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm;
         }
     }
 }

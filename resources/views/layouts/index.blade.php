@@ -9,18 +9,21 @@
 
         <title>演算法程式設計｜MoonNight</title>
         <meta name="description" content="演算法程式外包｜MoonNight">
-        <meta name="keywords" content="演算法,外包,網頁,MoonNight,程式,設計,網頁,軟體,鄭政文">
+        <meta name="keywords" content="演算法設計,網頁設計,軟體設計,外包,程式">
         <meta name="author" content="鄭政文">
         <meta name="copyright" content="鄭政文">
 
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-        <link rel="shortcut icon" href="{{ asset('image/cat.png') }}">
+        <link rel="shortcut icon" href="{{mix('images/catIcon.ico')}}">
         <script src="{{ mix('/js/app.js') }}" defer></script>
+        <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined"
+              rel="stylesheet">
+        <link href="https://cdn.iconmonstr.com/1.3.0/css/iconmonstr-iconic-font.min.css"
+              rel="stylesheet">
 
     </head>
     <body class="">
         <div id="app">
-
         </div>
     </body>
 </html>
