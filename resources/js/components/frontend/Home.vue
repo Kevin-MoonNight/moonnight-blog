@@ -7,7 +7,7 @@
             </div>
         </section>
         <section>
-            <div class="flex flex-col items-center w-full max-w-screen-xl h-full h-screen border">
+            <div class="flex flex-col items-center w-full max-w-screen-xl h-full h-screen">
                 <h1 class="mt-20 text-3xl md:text-4xl">我們所提供的服務</h1>
                 <carousel :items="slides" />
             </div>
@@ -20,7 +20,6 @@
     import Carousel from "./Carousel";
     import About from "./About";
     import ScrollReveal from "scrollreveal";
-    import Rellax from 'rellax/rellax.min';
 
     export default {
         components: {
@@ -62,7 +61,7 @@
                     easing: "ease-in-out", // 動畫速度曲線
                     container: document.documentElement, // 外層
                     mobile: true, // 支援行動裝置
-                    reset: true, // 每次都啟動動畫
+                    reset: false, // 每次都啟動動畫
                     useDelay: "always", // 延遲動畫次數
                     viewFactor: 0.2, // 當該物件在可視範圍內，則顯示此物件(0.2表示可視範圍20%)
                     viewOffset: { top: 0, right: 0, bottom: 0, left: 0 }, // 當外層有設定間隔造成偏移，則請設定在此維持精準度

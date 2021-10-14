@@ -17,9 +17,9 @@
                 </div>
 
                 <div class="hidden md:flex text-md">
-                    <a v-if="!isAuth" class="hidden px-2 py-4 md:flex group" :href="'/login'">
+                    <router-link v-if="!isAuth" :to="{name:'login'}" class="hidden px-2 py-4 md:flex group">
                         <p class="px-2 border-indigo-500 duration-75 transform group-hover:border-b-4">登入</p>
-                    </a>
+                    </router-link>
                     <a v-if="isAuth" class="hidden px-2 py-4 md:flex group" :href="'/dashboard'">
                         <p class="px-2 border-indigo-500 duration-75 transform group-hover:border-b-4">後台</p>
                     </a>

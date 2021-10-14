@@ -1,6 +1,6 @@
 <template>
     <swiper :modules="modules" :slides-per-view="1" :loop="true" :pagination='{"clickable": true}' :autoplay='{ "delay": 3000, "disableOnInteraction": false}'
-            class="w-full h-full border">
+            class="w-full h-full">
 
         <swiper-slide v-for="item in items" :key="item"
                       class="flex justify-center items-center p-5">
@@ -10,7 +10,7 @@
                 <div class="h-full text-center">
                     <div class="h-2/3">
                         <img :src="item.imgSrc" :alt="item.title"
-                             class="object-contain h-full bg-white">
+                             class="object-contain h-full">
                     </div>
 
                     <div class="p-2 h-1/3">
