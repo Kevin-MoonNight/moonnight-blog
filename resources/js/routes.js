@@ -14,6 +14,7 @@ import Backend from "./components/layouts/Backend";
 import Frontend from "./components/layouts/Frontend";
 import {createRouter,createWebHistory} from 'vue-router';
 import { store } from './store/index';
+import {apiLogout} from "./api/auth";
 
 const routes = [
     {
@@ -95,11 +96,24 @@ const routes = [
         name:'login'
     },
     {
+        path: '/logout',
+        name:'logout',
+        beforeEnter:[logout]
+    },
+    {
         path: '/register',
         component: Register,
         name:'register'
     },
 ]
+
+async function logout(){
+    await Promise.all([apiLogout()])
+        .then((results) => {
+            store.dispatch('logout');
+            router.push({name:'home'});
+        });
+}
 
 export const router = createRouter({
     history: createWebHistory(),
