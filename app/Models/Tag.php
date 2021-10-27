@@ -10,14 +10,23 @@ class Tag extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name'
+        'name',
+        'slug'
     ];
 
-    /**
-     * Get all of the articles for the Tag
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
+    protected $hidden = [
+        'id',
+        'created_at',
+        'updated_at'
+    ];
+
+    public function scopeFilter($query, array $filter)
+    {
+        $query->when(isset($filter['search']), function ($query, $search) {
+            $query->where('slug', 'like', '%' . $search . '%');
+        });
+    }
+
     public function articles()
     {
         return $this->belongsToMany(Article::class);

@@ -16,12 +16,9 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description');
-            $table->string('url');
-            $table->enum('state',['draft','published'])->default('draft');
-            $table->foreignId('user_id')->constrained('users');
+            $table->string('excerpt');
+            $table->string('thumbnail')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

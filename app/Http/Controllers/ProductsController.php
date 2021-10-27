@@ -2,84 +2,78 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 
 class ProductsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct()
+    {
+        $this->middleware(['auth:sanctum', 'can:admin'])->except('index');
+    }
+
     public function index()
     {
-        $products = Product::orderBy('id','desc')->paginate(9);
-
-        return view('frontend.productList',['products'=> $products]);
+        return Product::latest()->paginate(12);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function store(StoreProductRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $validated['thumbnail'] = $this->saveThumbnail($validated['thumbnail']);
+
+        return Product::create($validated);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+        return Product::findOrFail($id);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function update(UpdateProductRequest $request, $id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        $validated = $request->validated();
+
+        $validated['thumbnail'] = $this->saveThumbnail($validated['thumbnail'], $product);
+
+        return $product->update($validated);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        return $product->delete();
+    }
+
+    private function saveThumbnail($thumbnail, $product = null)
+    {
+        if (isset($thumbnail)) {
+            if (isset($product)) {
+                $this->deleteThumbnail($product);
+            }
+            $imagePath = "storage/" . $thumbnail->store('thumbnail');
+            $resizeImage = Image::make(public_path($imagePath))->resize(300, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $resizeImage->save(public_path($imagePath), 60);
+            $resizeImage->save();
+        } else {
+            $imagePath = $product->thumbnail;
+        }
+
+        return $imagePath;
+    }
+
+    private function deleteThumbnail($product)
+    {
+        Storage::delete(Str::of($product->thumbnail)->remove('storage/'));
     }
 }

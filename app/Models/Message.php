@@ -8,7 +8,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Message extends Model
 {
-    use HasFactory,HasApiTokens;
+    use HasFactory, HasApiTokens;
 
     protected $fillable = [
         'name',
@@ -16,4 +16,19 @@ class Message extends Model
         'remark',
         'caseType'
     ];
+
+    protected $hidden = [
+        'id',
+        'updated_at',
+    ];
+
+    public function scopeFilter($query, array $filter)
+    {
+        $query->when(isset($filter['search']), function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query->where('title', 'like', '%' . $search . '%')
+                    ->orWhere('content', 'like', '%' . $search . '%');
+            });
+        });
+    }
 }

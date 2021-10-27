@@ -7,27 +7,27 @@
                         <label for="title" class="block text-lg text-gray-700">標題</label>
                         <input v-model="article.title" id="title" type="text" name="title" placeholder ="標題" class="input-style">
 
-                        <div v-if="errors" class="text-red-600 mt-2 text-sm">
-                            <p v-for="error in res.title">{{error}}</p>
-                        </div>
+                        <p v-for="error in errors.title"
+                           class="text-red-600 mt-2 text-sm"
+                        >{{error}}</p>
                     </div>
 
                     <div class ="">
-                        <label for="url" class="block text-lg text-gray-700">封面</label>
-                        <input v-model="article.url" id="url" name="url" placeholder ="圖片url" class="input-style">
+                        <label for="thumbnail" class="block text-lg text-gray-700">縮圖</label>
+                        <input type="file" @change="previewFiles($event)" id="thumbnail" name="thumbnail" placeholder ="縮圖">
 
-                        <div v-if="errors" class="text-red-600 mt-2 text-sm">
-                            <p v-for="error in res.url">{{error}}</p>
-                        </div>
+                        <p v-for="error in errors.thumbnail"
+                           class="text-red-600 mt-2 text-sm"
+                        >{{error}}</p>
                     </div>
 
                     <div class ="">
                         <label class="block text-lg text-gray-700">內容</label>
                         <ckeditor :editor="editor" v-model="article.content" @ready="onReady"></ckeditor>
 
-                        <div v-if="errors" class="text-red-600 mt-2 text-sm">
-                            <p v-for="error in res.content">{{error}}</p>
-                        </div>
+                        <p v-for="error in errors.content"
+                           class="text-red-600 mt-2 text-sm"
+                        >{{error}}</p>
                     </div>
 
                     <div class="">
@@ -41,13 +41,14 @@
 
                 <div class="flex justify-between items-end p-5">
                     <select v-model="article.state" class="p-3 rounded-md border-2 hover:border-black" name="state">
-                        <option value="published">發布</option>
-                        <option value="draft">草稿</option>
+                        <option value="1">發布</option>
+                        <option value="0">草稿</option>
                     </select>
 
-                    <div v-if="errors" class="text-red-600 mt-2 text-sm">
-                        <p v-for="error in res.state">{{error}}</p>
-                    </div>
+
+                    <p v-for="error in errors.state"
+                       class="text-red-600 mt-2 text-sm"
+                    >{{error}}</p>
 
                     <button @click="addArticle" class="rounded-md p-3 bg-blue-500 text-white hover:bg-blue-600">新增文章</button>
                 </div>
@@ -84,38 +85,44 @@
             }
 
             onBeforeMount(getData);
-
+            let data = new FormData();
             const article = ref({
                 title:'test1',
                 content:'test',
-                url:'https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
+                thumbnail:null,
                 tags:[],
-                state:'draft'
+                state:0
             });
 
-            const errors = ref(false);
-            const res = ref({
+            const errors = ref({
                 title:[],
                 content:[],
-                url:[],
+                thumbnail:[],
                 state:[],
             });
             const router = useRouter();
             const store = useStore();
             const addArticle = async () => {
-                await Promise.all([apiCreateArticle(article.value)])
-                    .then((results) => {
-                        errors.value = results[0].data.errors;
+                data.append('title',article.value.title);
+                data.append('content',article.value.content);
 
-                        if(errors.value){
-                            res.value = results[0].data.data;
-                        }else{
-                            store.dispatch('addNotice',{name:'提醒',message:'文章新增成功!'});
-                            router.push({name:'articlesManager'});
-                        }
+                for (let i = 0; i < article.value.tags.length; i++) {
+                    data.append('tags[]', article.value.tags[i]);
+                }
+
+                data.append('state', article.value.state);
+                await Promise.all([apiCreateArticle(data)])
+                    .then((response) => {
+                        console.log(response);
+                        store.dispatch('addNotice',{name:'提醒',message:'文章新增成功!'});
+                        router.push({name:'articlesManager'});
+                    }).catch((errors)=>{
+                        console.log(errors.response.data);
                     });
             };
-
+            function previewFiles(event) {
+                data.append('thumbnail', event.target.files[0]);
+            }
 
             function onReady(editor)  {
                 // Insert the toolbar before the editable area.
@@ -129,10 +136,10 @@
                 article,
                 addArticle,
                 tagList,
-                res,
                 onReady,
                 isShow,
-                errors
+                errors,
+                previewFiles
             }
         }
     }

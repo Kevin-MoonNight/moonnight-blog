@@ -2,177 +2,145 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\UpdateArticleRequest;
+use App\Http\Requests\StoreArticleRequest;
 use App\Models\Article;
+use Illuminate\Http\Request;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
+
 
 class ArticlesController extends Controller
 {
-    public function __construct(){
-        $this->middleware('auth')->only('store','update','destroy');
+    public function __construct()
+    {
+        $this->middleware(['auth:sanctum', 'can:admin'])->except('index','show','popular');
     }
 
-
-    public function index()
+    public function index(Request $request)
     {
-
-        $articles = Article::with('user','tags')->latest()->paginate(9);
-
-
-        return view('frontend.articleList',['articles' => $articles]);
+        return Article::published()->filter($request->all())->latest()->paginate(10)->withQueryString();
     }
 
-
-    public function create()
+    public function store(StoreArticleRequest $request)
     {
-        $tags = Tag::all();
+        $validated = $request->validated();
 
-        return view('articles.create',['tags' => $tags]);
-    }
+        $validated['thumbnail'] = $this->saveThumbnail($validated['thumbnail']);
 
+        $validated['user_id'] = auth()->id();
 
-    public function store(Request $request)
-    {
-        //驗證內容
-        $content = $request->validate([
-            'title' =>'required',
-            'content'=>'required',
-            'url'=>'required',
-            'state' =>'required'
-        ]);
+        $article = Article::create($validated);
 
-        //新增文章
-        $article = auth()->user()->articles()->create($content);
-
-        //儲存標籤
-        $tags = $request->input('tags');
-
-        if($tags !== null){
-            foreach ($tags as $index){
-                $tag = Tag::find($index);
-
-                $article->tags()->attach($tag);
-            }
+        if (isset($validated['tags'])) {
+            $this->attachTag($article, $validated['tags']);
         }
 
-
-        return redirect()->route('articleControl')->with(['notice'=>'文章新增成功!']);
+        return $article;
     }
-
 
     public function show($id)
     {
-        $article = Article::find($id);
-
-        if($article === null){
-            return redirect()->route('articles.index')->with(['error'=>'尋找不到文章!']);
-        }
+        $article = Article::findOrFail($id);
 
         //新增觀看數
-        $article->views +=1;
+        $article->views += 1;
         //更新文章
         $article->save();
 
-        return view('articles.show',['article'=>$article]);
+        return $article;
     }
 
-
-    public function edit($id)
+    public function update(UpdateArticleRequest $request, $id)
     {
-        $article = Article::find($id);
-        $tags = Tag::all();
+        $article = Article::findOrFail($id);
 
-        return view('articles.edit',['article' => $article,'tags'=> $tags]);
-    }
+        $validated = $request->validated();
 
+        $validated['thumbnail'] = $this->saveThumbnail($validated['thumbnail'], $article);
 
-    public function update(Request $request, $id)
-    {
-        //尋找文章
-        $article = Article::find($id);
+        $validated['user_id'] = auth()->id();
 
-        //驗證內容
-        $content = $request->validate([
-            'title' =>'required',
-            'content'=>'required',
-            'url'=>'required',
-            'state' =>'required'
-        ]);
+        $article->update($validated);
 
-        //更新文章
-        $article->update($content);
-
-        //刪除先前的標籤
-        $article->tags()->detach();
-
-        //儲存標籤
-        $tags = $request->input('tags');
-
-        //更新tag
-        if($tags !== null){
-            foreach ($tags as $index){
-                $tag = Tag::find($index);
-
-                //判斷標籤有無重複
-                if (!$article->tags->contains($tag)){
-                    $article->tags()->attach($tag);
-                }
-            }
+        if (isset($validated['tags'])) {
+            $this->attachTag($article, $validated['tags']);
         }
 
-        return redirect()->route('articleControl')->with(['notice'=>'文章更新成功!']);
+        return $article;
     }
-
 
     public function destroy($id)
     {
-        //判斷該文章是否屬於該使用者
-        $article = Article::find($id);
+        $article = Article::findOrFail($id);
 
-        //刪除文章
-        $article->delete();
-
-        return redirect()->route('articleControl')->with(['notice'=>'文章刪除成功!']);
+        return $article->delete();
     }
 
-
-    public function search(Request $request)
+    public function popular()
     {
-        $request->validate([
-            'text'=>'required'
-        ]);
-
-        $text = $request->input('text');
-
-        $articles = Article::with('user','tags')->where('title','like', '%' . $text . '%')->latest()->paginate(9);
-
-        if($articles->count() === 0){
-            return redirect()->route('articles.index')->with(['error'=>'尋找不到文章!']);
-        }
-
-        return view('frontend.articleList',['articles' => $articles]);
+        return Article::popular()->take(10)->get();
     }
 
-
-    public function searchTag($name){
-        //尋找標籤
-        $tag = Tag::where('name',$name)->first();
-
-        if($tag === null){
-            //如果沒有找到標籤
-            return redirect()->route('articles.index')->with(['error'=>'尋找不到標籤!']);
-        }
-
-        $articles = $tag->articles()->with('user','tags')->latest()->paginate(9);
-
-        return view('frontend.articleList',['articles' => $articles]);
+    public function draft(Request $request)
+    {
+        return Article::draft()->filter($request->all())->latest()->paginate(10)->withQueryString();
     }
 
+    public function trashed(Request $request)
+    {
+        return Article::onlyTrashed()->filter($request->all())->paginate(10)->withQueryString();
+    }
 
-    public function control(){
+    public function restore($id)
+    {
+        return Article::onlyTrashed()->findOrFail($id)->restore();
+    }
 
-        $articles = Article::with('tags')->latest()->paginate(10);
+    public function deleteTrashed($id)
+    {
+        $article = Article::onlyTrashed()->findOrFail($id);
 
-        return view('backend.articles',['articles' => $articles]);
+        $this->deleteThumbnail($article);
+
+        return $article->forceDelete();
+    }
+
+    private function saveThumbnail($thumbnail, $article = null)
+    {
+        if (isset($thumbnail)) {
+            if (isset($article)) {
+                $this->deleteThumbnail($article);
+            }
+            $imagePath = "storage/" . $thumbnail->store('thumbnail');
+            $resizeImage = Image::make(public_path($imagePath))->resize(300, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $resizeImage->save(public_path($imagePath), 60);
+            $resizeImage->save();
+        } else {
+            $imagePath = $article->thumbnail;
+        }
+
+        return $imagePath;
+    }
+
+    private function deleteThumbnail($article)
+    {
+        Storage::delete(Str::of($article->thumbnail)->remove('storage/'));
+    }
+
+    private function attachTag($article, $tags)
+    {
+        //刪除先前的標籤
+        $article->tags()->detach();
+
+        collect($tags)
+            ->map(function ($tag) use ($article) {
+                $tag = Tag::findOrFail($tag);
+                $article->tags()->attach($tag);
+            });
     }
 }

@@ -2,67 +2,59 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\TagRequest;
 use App\Models\Tag;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class TagsController extends Controller
 {
     public function __construct(){
-        $this->middleware('auth:sanctum')->except('index');
+        $this->middleware(['auth:sanctum','can:admin'])->except('index','show');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $tags = Tag::all();
-
-        return response($tags,200);
+        return Tag::filter($request->all())->get();
     }
 
-    public function store(Request $request)
+    public function store(TagRequest $request)
     {
-        $ok=true;
-        $msg = '標籤新增成功!';
-        $error='';
-        try{
-            //驗證內容
-            $content = $request->validate([
-                'name'=>'required'
-            ]);
+        $validated = $request->validated();
 
-            Tag::create($content);
-        }catch (Exception $e){
-            $ok = false;
-            $msg = '標籤新增失敗!';
-            $error = $e;
+        if(!isset($validated['slug'])) {
+            $validated['slug'] = $validated['name'];
         }
 
-        return response()->json(['ok' => $ok, 'msg' => $msg,'error'=>$error], 200);;
+        $validated['slug'] = Str::lower($validated['slug']);
+
+        return Tag::create($validated);
     }
 
     public function show($id)
     {
-        return Tag::all()->find($id);
+        return Tag::findOrFail($id);
     }
 
-    public function update(Request $request, $id)
+    public function update(TagRequest $request, $id)
     {
-        $content = $request->validate([
-            'name'=>'required'
-        ]);
+        $tag = Tag::findOrFail($id);
 
-        $tag = Tag::all()->find($id);
-        $tag->update($content);
+        $validated = $request->validated();
 
-        return $tag;
+        if(!isset($validated['slug'])) {
+            $validated['slug'] = $validated['name'];
+        }
+
+        $validated['slug'] = Str::lower($validated['slug']);
+
+        return $tag->update($validated);
     }
 
     public function destroy($id)
     {
-        return Tag::destroy($id);
-    }
+        $tag = Tag::findOrFail($id);
 
-    public function search($name)
-    {
-        return Tag::where('name','like', '%'.$name.'%')->get();
+        return $tag->delete();
     }
 }
