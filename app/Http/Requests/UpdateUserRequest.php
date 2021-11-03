@@ -2,13 +2,14 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
-
-class RegisterRequest extends FormRequest
+class UpdateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -17,7 +18,9 @@ class RegisterRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        $user = User::find($this->route('user'));
+
+        return Gate::allows('update-user', $user);
     }
 
     /**
@@ -29,8 +32,8 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string', 'max:255', Rule::unique('users', 'username')],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users', 'email')],
+            'username' => ['required', 'string', 'max:255', Rule::unique('users', 'username')->ignore($this->route('user'))],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users', 'email')->ignore($this->route('user'))],
             'password' => ['required', 'string', 'confirmed'],
         ];
     }

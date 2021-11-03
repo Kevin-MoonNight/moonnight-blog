@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Http\UploadedFile;
 
 class ProductFactory extends Factory
 {
@@ -21,10 +22,13 @@ class ProductFactory extends Factory
      */
     public function definition()
     {
+        $image = new UploadedFile(storage_path('app/test-files/thumbnail.jpg'), 'thumbnail.jpg', null, null, true);
+        $imagePath = "storage/" . $image->store('thumbnail');
+
         return [
             'name'=> $this->faker->sentence,
             'excerpt'=> $this->faker->sentence,
-            'thumbnail'=> $this->faker->imageUrl(300,300),
+            'thumbnail'=> $imagePath,
         ];
     }
 }

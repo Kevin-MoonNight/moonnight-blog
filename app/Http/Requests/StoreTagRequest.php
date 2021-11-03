@@ -5,8 +5,11 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
-class StoreMessageRequest extends FormRequest
+class StoreTagRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,7 +18,7 @@ class StoreMessageRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Gate::allows('admin');
     }
 
     /**
@@ -26,23 +29,23 @@ class StoreMessageRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'max:255'],
-            'email' => ['required', 'email', 'max:255'],
-            'remark' => ['max:500'],
-            'caseType' => ['required']
+            'name' => ['required'],
+            'slug' => [Rule::unique('articles', 'slug')]
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'slug' => Str::slug($this->slug ?: $this->name)
+        ]);
     }
 
     public function messages()
     {
         return [
-            "name.required" => "姓名為必填資料",
-            "name.max" => '姓名必須小於255',
-            "email.required" => "電子信箱為必填資料",
-            "email.max" => '電子信箱必須小於255',
-            "email.email" => '必須為電子信箱',
-            'remark' => '備註必須小於500個字',
-            "caseType.required" => '委託類型為必填資料',
+            "name.required" => "名稱為必填資料",
+            "slug.unique" => "slug重複"
         ];
     }
 

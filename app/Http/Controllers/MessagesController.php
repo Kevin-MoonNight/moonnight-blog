@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 
 class MessagesController extends Controller
 {
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware('auth:sanctum')->except('store');
     }
 
@@ -30,7 +31,7 @@ class MessagesController extends Controller
         return Message::findOrFail($id);
     }
 
-    public function update(UpdateMessageRequest $request,$id)
+    public function update(UpdateMessageRequest $request, $id)
     {
         $message = Message::findOrFail($id);
 

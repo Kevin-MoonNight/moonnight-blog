@@ -5,7 +5,6 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
@@ -18,7 +17,7 @@ class StoreArticleRequest extends FormRequest
      */
     public function authorize()
     {
-        return Gate::allows('admin');
+        return true;
     }
 
     /**
@@ -41,7 +40,9 @@ class StoreArticleRequest extends FormRequest
 
     protected function prepareForValidation()
     {
-        $this->attributes['slug'] = Str::slug($this->attributes['slug']?? $this->attributes['title']);
+        $this->merge([
+            'slug' => Str::slug($this->slug ?: $this->title)
+        ]);
     }
 
     public function messages()

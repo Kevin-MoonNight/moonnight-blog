@@ -5,26 +5,32 @@ namespace Tests\Feature;
 use App\Models\Article;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class UpdateArticleTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_article_can_be_updated(){
+    public function test_article_can_be_updated()
+    {
+        $user = User::factory(['is_admin' => 1])->create();
 
-        $user = User::factory()->create();
-        $article = Article::factory()->make();
+        $token = $user->createToken('myapptoken')->plainTextToken;
 
-        Article::create($article);
+        $article = Article::factory(['user_id' => $user->id])->create();
 
-        $article->title = '123';
-        $article->content = '123';
+        $this->withHeaders(['Authorization' => 'Bearer ' . $token])
+            ->post(route('articles.update', ['article' => $article->slug]), [
+                'title' => 'test2',
+                'slug' => 'test',
+                'excerpt' => 'test',
+                'content' => 'test',
+                'state' => 1,
+            ])
+            ->assertStatus(200);
 
-        $article->update();
+        $this->assertEquals('test2', $article->fresh()->title);
 
-        $this->assertEquals($article->title, Article::first()->title);
-        $this->assertEquals($article->content, Article::first()->content);
+        $article->forceDelete();
     }
 }

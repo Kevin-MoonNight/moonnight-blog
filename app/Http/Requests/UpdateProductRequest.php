@@ -28,7 +28,7 @@ class UpdateProductRequest extends FormRequest
     {
         return [
             'name' => ['required', 'max:255'],
-            'excerpt' => ['required','max:255'],
+            'excerpt' => ['required', 'max:255'],
             'thumbnail' => ['image'],
         ];
     }
@@ -46,6 +46,6 @@ class UpdateProductRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response($this->validator->errors(),400));
+        throw new HttpResponseException(response($this->validator->errors(), 400));
     }
 }

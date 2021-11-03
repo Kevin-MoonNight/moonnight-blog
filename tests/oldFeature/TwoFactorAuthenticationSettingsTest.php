@@ -8,7 +8,7 @@ use Laravel\Jetstream\Http\Livewire\TwoFactorAuthenticationForm;
 use Livewire\Livewire;
 use Tests\TestCase;
 
-class TwoFactorAuthenticationSettingsTest extends TestCase
+class woFactorAuthenticationSettingsTest extends TestCase
 {
     use RefreshDatabase;
 

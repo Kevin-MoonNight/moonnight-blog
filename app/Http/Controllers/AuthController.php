@@ -10,28 +10,31 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    public function login(LoginRequest $request){
+    public function login(LoginRequest $request)
+    {
         $validated = $request->validated();
 
         //透過email尋找使用者
-        $user = User::firstWhere('email',$validated['email']);
+        $user = User::firstWhere('email', $validated['email']);
 
         //判斷密碼是否正確
-        if(!$user || !Hash::check($validated['password'],$user->password)){
+        if (!$user || !Hash::check($validated['password'], $user->password)) {
             abort(400);
         }
 
         //獲取token
         $token = $user->createToken('myapptoken')->plainTextToken;
 
-        return response(['user'=> $user ,'token'=> $token],200);
+        return response(['user' => $user, 'token' => $token], 200);
     }
 
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
         return auth()->user()->tokens()->delete();
     }
 
-    public function register(RegisterRequest $request){
+    public function register(RegisterRequest $request)
+    {
 
         $validated = $request->validated();
 
@@ -44,6 +47,6 @@ class AuthController extends Controller
         //獲取token
         $token = $user->createToken('myapptoken')->plainTextToken;
 
-        return response(['user'=> $user , 'token'=> $token],201);
+        return response(['user' => $user, 'token' => $token], 201);
     }
 }

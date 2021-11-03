@@ -27,10 +27,10 @@ class UpdateMessageRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' =>['required','max:255'],
-            'email'=>['required','email','max:255'],
-            'remark'=>['max:500'],
-            'caseType'=>['required']
+            'name' => ['required', 'max:255'],
+            'email' => ['required', 'email', 'max:255'],
+            'remark' => ['max:500'],
+            'caseType' => ['required']
         ];
     }
 
@@ -42,13 +42,13 @@ class UpdateMessageRequest extends FormRequest
             "email.required" => "電子信箱為必填資料",
             "email.max" => '電子信箱必須小於255',
             "email.email" => '必須為電子信箱',
-            'remark' =>'備註必須小於500個字',
+            'remark' => '備註必須小於500個字',
             "caseType.required" => '委託類型為必填資料',
         ];
     }
 
     protected function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response($this->validator->errors(),400));
+        throw new HttpResponseException(response($this->validator->errors(), 400));
     }
 }

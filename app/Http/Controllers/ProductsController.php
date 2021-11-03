@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use Intervention\Image\Facades\Image;
+
 
 class ProductsController extends Controller
 {
@@ -41,7 +39,7 @@ class ProductsController extends Controller
 
         $validated = $request->validated();
 
-        $validated['thumbnail'] = $this->saveThumbnail($validated['thumbnail'], $product);
+        $validated['thumbnail'] = isset($validated['thumbnail']) ? $this->saveThumbnail($validated['thumbnail'], $product) : $product->thumbnail;
 
         return $product->update($validated);
     }
@@ -55,25 +53,10 @@ class ProductsController extends Controller
 
     private function saveThumbnail($thumbnail, $product = null)
     {
-        if (isset($thumbnail)) {
-            if (isset($product)) {
-                $this->deleteThumbnail($product);
-            }
-            $imagePath = "storage/" . $thumbnail->store('thumbnail');
-            $resizeImage = Image::make(public_path($imagePath))->resize(300, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $resizeImage->save(public_path($imagePath), 60);
-            $resizeImage->save();
-        } else {
-            $imagePath = $product->thumbnail;
+        if (isset($product)) {
+            (new ImagesController)->destroy($product->thumbnail);
         }
 
-        return $imagePath;
-    }
-
-    private function deleteThumbnail($product)
-    {
-        Storage::delete(Str::of($product->thumbnail)->remove('storage/'));
+        return (new ImagesController)->create($thumbnail);
     }
 }

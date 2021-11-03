@@ -2,80 +2,54 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth:sanctum', 'can:admin']);
     }
 
-
-    public function index(){
-
-        $users = User::all();
-
-        return $users;
+    public function index()
+    {
+        return User::all()->makeVisible(['id', 'username', 'email', 'is_admin']);
     }
 
+    public function store(CreateUserRequest $request)
+    {
+        $validated = $request->validated();
 
-    public function create(){
+        //密碼加密
+        $validated['password'] = Hash::make($validated['password']);
 
-
+        return User::create($validated);
     }
 
-
-    public function store(Request $request){
-        $content = $request->validate([
-            'name'=>'required',
-            'email'=>'required',
-            'password'=>'required'
-        ]);
-
-        $user = User::create($content);
-
-        return $user;
+    public function show($id)
+    {
+        return User::findOrFail($id)->makeVisible(['id', 'username', 'email', 'is_admin']);
     }
 
+    public function update(UpdateUserRequest $request, $id)
+    {
+        $user = User::findOrFail($id);
 
-    public function show($id){
-        $user = User::find($id);
+        $validated = $request->validated();
 
-        if($user === null){
-            return "尋找不到使用者";
-        }
+        //密碼加密
+        $validated['password'] = Hash::make($validated['password']);
 
-        return $user;
+        return $user->update($validated);
     }
 
+    public function destory($id)
+    {
+        $user = User::findOrFail($id);
 
-    public function update(Request $request,$id){
-        $content = $request->validate([
-            'name'=>'required',
-            'email'=>'required',
-            'password'=>'required'
-        ]);
-
-        $user = User::find($id);
-
-        $user->update($content);
-
-        return $user;
-    }
-
-
-    public function destory($id){
-
-        return User::destroy($id);
-    }
-
-
-    public function search($name){
-
-        $users = User::where('name','like','%'.$name.'%')->get();
-
-        return $users;
+        return $user->delete();
     }
 }

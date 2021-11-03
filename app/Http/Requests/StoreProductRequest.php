@@ -16,7 +16,7 @@ class StoreProductRequest extends FormRequest
      */
     public function authorize()
     {
-        return Gate::allows('admin');
+        return Gate::allows('admin', $this->user());
     }
 
     /**
@@ -47,6 +47,6 @@ class StoreProductRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response($this->validator->errors(),400));
+        throw new HttpResponseException(response($this->validator->errors(), 400));
     }
 }

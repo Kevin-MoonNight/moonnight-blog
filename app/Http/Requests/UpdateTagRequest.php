@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
-class TagRequest extends FormRequest
+class UpdateTagRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,13 +30,16 @@ class TagRequest extends FormRequest
     {
         return [
             'name' => ['required'],
-            'slug' => [Rule::unique('articles', 'slug')]
+            'slug' => [Rule::unique('articles', 'slug')->ignore($this->route('tag'))]
         ];
     }
 
     protected function prepareForValidation()
     {
-        $this->attributes['slug'] = Str::slug($this->attributes['slug'] ?? $this->attributes['name']);
+        $this->merge([
+
+            'slug' => Str::slug($this->slug ?: $this->name)
+        ]);
     }
 
     public function messages()

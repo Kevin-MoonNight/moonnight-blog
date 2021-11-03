@@ -64,7 +64,12 @@ class Article extends Model
 
     public function scopePopular($query)
     {
-        return $query->where('state', true)->orderBy('views', 'desc');
+        return $query->orderBy('views','desc');
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 
     public function author()

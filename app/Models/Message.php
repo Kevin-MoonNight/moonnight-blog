@@ -18,7 +18,6 @@ class Message extends Model
     ];
 
     protected $hidden = [
-        'id',
         'updated_at',
     ];
 

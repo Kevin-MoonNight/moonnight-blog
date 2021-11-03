@@ -4,38 +4,69 @@ namespace Tests\Feature;
 
 use App\Models\Article;
 use App\Models\User;
-use http\Env\Response;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ArticleTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_article_screen_can_be_rendered()
+    public function test_articles_can_be_get()
     {
-        $response = $this->get('/articles');
+        $article = Article::factory(['state' => 1])->create();
 
-        $response->assertStatus(200);
+        $response = $this->get(route('articles.index'))
+            ->assertStatus(200);
+
+        $this->assertCount(1, $response->json('data'));
+
+        $article->forceDelete();
     }
 
-    public function test_show_article_screen_can_be_rendered()
+    public function test_popular_articles_can_be_get()
     {
-        $user = User::factory(1)->create();
-        $article = Article::factory(1)->create()->first();
+        $article = Article::factory(['state' => 1])->create();
 
+        $response = $this->get(route('articles.popular'))
+            ->assertStatus(200);
 
-        $response = $this->get("/articles/{$article->id}");
+        $this->assertCount(1, $response->json());
 
-        $response->assertStatus(200);
+        $article->forceDelete();
     }
-//    public function test_create_article_screen_can_be_rendered()
-//    {
-//        $response = $this->get('/articles');
-//
-//        $response->assertStatus(200);
-//    }
 
+    public function test_draft_articles_can_be_get()
+    {
+        $article = Article::factory(['state' => 0])->create();
 
+        $user = User::factory(['is_admin' => 1])->create();
+        $token = $user->createToken('myapptoken')->plainTextToken;
+
+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $token])
+            ->get(route('articles.draft'))
+            ->assertStatus(200);
+
+        $this->assertCount(1, $response->json('data'));
+
+        $article->forceDelete();
+    }
+
+    public function test_trashed_articles_can_be_get()
+    {
+        $article = Article::factory()->create();
+
+        $article->delete();
+
+        $user = User::factory(['is_admin' => 1])->create();
+        $token = $user->createToken('myapptoken')->plainTextToken;
+
+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $token])
+            ->get(route('articles.trashed'))
+            ->assertStatus(200);
+
+        $this->assertCount(1, $response->json('data'));
+
+        $article->forceDelete();
+    }
 }
+

@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Article;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class UpdateArticleRequest extends FormRequest
@@ -17,7 +19,7 @@ class UpdateArticleRequest extends FormRequest
      */
     public function authorize()
     {
-        return Gate::allows('admin');
+        return Gate::allows('update-article', $this->route('article'));
     }
 
     /**
@@ -30,12 +32,19 @@ class UpdateArticleRequest extends FormRequest
         return [
             'title' => ['required', 'max:255'],
             'content' => ['required'],
-            'slug' => [Rule::unique('articles', 'slug')],
+            'slug' => [Rule::unique('articles', 'slug')->ignore($this->route('article'))],
             'excerpt' => ['required'],
             'thumbnail' => ['image'],
             'state' => ['required'],
             'tags' => []
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'slug' => Str::slug($this->slug ?: $this->title)
+        ]);
     }
 
     public function messages()
