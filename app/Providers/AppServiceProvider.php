@@ -33,15 +33,15 @@ class AppServiceProvider extends ServiceProvider
         Product::observe(ProductObserver::class);
 
         Gate::define('admin', function (User $user) {
-            return $user->is_admin;
+            return $user->getAttribute('is_admin');
         });
 
-        Gate::define('update-user', function (User $user, User $updatedUser) {
-            return $user->is_admin || ($user->id === $updatedUser->id);
+        Gate::define('user', function (User $user, User $editUser) {
+            return ($user->getAttribute('id') === $editUser->getAttribute('id'));
         });
 
-        Gate::define('update-article', function (User $user, Article $article) {
-            return $user->is_admin || ($user->id === $article->user_id);
+        Gate::define('article', function (User $user, Article $article) {
+            return ($user->getAttribute('id') === $article->getAttribute('user_id'));
         });
     }
 }

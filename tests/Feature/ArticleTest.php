@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Article;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class ArticleTest extends TestCase
@@ -16,7 +17,7 @@ class ArticleTest extends TestCase
         $article = Article::factory(['state' => 1])->create();
 
         $response = $this->get(route('articles.index'))
-            ->assertStatus(200);
+            ->assertOk();
 
         $this->assertCount(1, $response->json('data'));
 
@@ -28,7 +29,7 @@ class ArticleTest extends TestCase
         $article = Article::factory(['state' => 1])->create();
 
         $response = $this->get(route('articles.popular'))
-            ->assertStatus(200);
+            ->assertOk();
 
         $this->assertCount(1, $response->json());
 
@@ -37,14 +38,13 @@ class ArticleTest extends TestCase
 
     public function test_draft_articles_can_be_get()
     {
-        $article = Article::factory(['state' => 0])->create();
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
 
-        $user = User::factory(['is_admin' => 1])->create();
-        $token = $user->createToken('myapptoken')->plainTextToken;
+        $article = Article::factory(['user_id' => $user->getAttribute('id'), 'state' => 0])->create();
 
-        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $token])
-            ->get(route('articles.draft'))
-            ->assertStatus(200);
+        $response = $this->get(route('articles.draft'))
+            ->assertOk();
 
         $this->assertCount(1, $response->json('data'));
 
@@ -53,16 +53,15 @@ class ArticleTest extends TestCase
 
     public function test_trashed_articles_can_be_get()
     {
-        $article = Article::factory()->create();
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+
+        $article = Article::factory(['user_id' => $user->getAttribute('id'), 'state' => 1])->create();
 
         $article->delete();
 
-        $user = User::factory(['is_admin' => 1])->create();
-        $token = $user->createToken('myapptoken')->plainTextToken;
-
-        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $token])
-            ->get(route('articles.trashed'))
-            ->assertStatus(200);
+        $response = $this->get(route('articles.trashed'))
+            ->assertOk();
 
         $this->assertCount(1, $response->json('data'));
 

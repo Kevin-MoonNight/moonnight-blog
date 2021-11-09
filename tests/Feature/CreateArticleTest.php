@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class CreateArticleTest extends TestCase
@@ -14,8 +15,7 @@ class CreateArticleTest extends TestCase
     public function test_article_can_be_created()
     {
         $user = User::factory(['is_admin' => 1])->create();
-
-        $token = $user->createToken('myapptoken')->plainTextToken;
+        Sanctum::actingAs($user);
 
         $article = [
             'title' => 'test',
@@ -26,9 +26,8 @@ class CreateArticleTest extends TestCase
             'state' => 1,
         ];
 
-        $this->withHeaders(['Authorization' => 'Bearer ' . $token])
-            ->post(route('articles.store'), $article)
-            ->assertStatus(201);
+        $this->post(route('articles.store'), $article)
+            ->assertCreated();
 
 
         $this->assertDatabaseCount('articles', 1);

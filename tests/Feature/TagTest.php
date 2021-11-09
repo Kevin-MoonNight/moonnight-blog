@@ -15,6 +15,7 @@ class TagTest extends TestCase
         $this->seed(TagSeeder::class);
 
         $this->get(route('tags.index'))
-            ->assertStatus(200);
+            ->assertJsonCount(10)
+            ->assertOk();
     }
 }

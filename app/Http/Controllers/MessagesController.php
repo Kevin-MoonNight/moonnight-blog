@@ -11,12 +11,12 @@ class MessagesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:sanctum')->except('store');
+        $this->middleware(['auth:sanctum', 'can:admin'])->except('store');
     }
 
     public function index(Request $request)
     {
-        return Message::filter($request->all())->latest()->paginate(10);
+        return Message::filter($request->all())->latest()->paginate(10)->withQueryString();
     }
 
     public function store(StoreMessageRequest $request)
@@ -26,26 +26,20 @@ class MessagesController extends Controller
         return Message::Create($validated);
     }
 
-    public function show($id)
+    public function show(Message $message)
     {
-        return Message::findOrFail($id);
-    }
-
-    public function update(UpdateMessageRequest $request, $id)
-    {
-        $message = Message::findOrFail($id);
-
-        $validated = $request->validated();
-
-        $message->update($validated);
-
         return $message;
     }
 
-    public function destroy($id)
+    public function update(UpdateMessageRequest $request, Message $message)
     {
-        $message = Message::findOrFail($id);
+        $validated = $request->validated();
 
+        return  $message->update($validated);
+    }
+
+    public function destroy(Message $message)
+    {
         return $message->delete();
     }
 }

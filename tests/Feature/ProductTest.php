@@ -14,11 +14,9 @@ class ProductTest extends TestCase
     {
         $product = Product::factory()->create();
 
-        $response = $this->get(route('products.index'))
-            ->assertStatus(200);
-
-        $this->assertCount(1, $response->json('data'));
-        $this->assertDatabaseCount('products', 1);
+        $this->get(route('products.index'))
+            ->assertJsonCount(1, 'data')
+            ->assertOk();
 
         $product->delete();
     }

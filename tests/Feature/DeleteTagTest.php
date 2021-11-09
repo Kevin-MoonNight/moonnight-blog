@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class DeleteTagTest extends TestCase
@@ -13,14 +14,13 @@ class DeleteTagTest extends TestCase
 
     public function test_tag_can_be_deleted()
     {
+        $user = User::factory(['is_admin' => 1])->create();
+        Sanctum::actingAs($user);
+
         $tag = Tag::factory()->create();
 
-        $user = User::factory(['is_admin' => 1])->create();
-        $token = $user->createToken('myapptoken')->plainTextToken;
-
-        $this->withHeaders(['Authorization' => 'Bearer ' . $token])
-            ->delete(route('tags.destroy', ['tag' => $tag->slug]))
-            ->assertStatus(200);
+        $this->delete(route('tags.destroy', ['tag' => $tag->getAttribute('slug')]))
+            ->assertOk();
 
         $this->assertDeleted($tag);
     }

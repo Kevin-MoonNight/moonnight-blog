@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Message;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -11,20 +12,14 @@ class CreateMessageTest extends TestCase
 
     public function test_message_can_be_created()
     {
-        $message = [
-            'name' => 'test',
-            'email' => 'test@example.com',
-            'remark' => '',
-            'caseType' => '演算法'
-        ];
+        $message = Message::factory(['email' => 'test@example.com'])->make();
 
-        $this->post(route('messages.store'), $message)
-            ->assertStatus(201);
-
+        $this->post(route('messages.store'), $message->getAttributes())
+            ->assertCreated();
 
         $this->assertDatabaseCount('messages', 1);
         $this->assertDatabaseHas('messages', [
-            'email' => 'test@example.com'
+            'email' => $message->getAttribute('email')
         ]);
     }
 }

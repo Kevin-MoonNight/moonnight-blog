@@ -18,9 +18,7 @@ class UpdateUserRequest extends FormRequest
      */
     public function authorize()
     {
-        $user = User::find($this->route('user'));
-
-        return Gate::allows('update-user', $user);
+        return Gate::any(['user', 'admin'], $this->route('user'));
     }
 
     /**
@@ -34,7 +32,6 @@ class UpdateUserRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255', Rule::unique('users', 'username')->ignore($this->route('user'))],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users', 'email')->ignore($this->route('user'))],
-            'password' => ['required', 'string', 'confirmed'],
         ];
     }
 
@@ -52,9 +49,6 @@ class UpdateUserRequest extends FormRequest
             "email.string" => "電子信箱必須為字串",
             "email.max" => "電子信箱必需小於255",
             "email.unique" => "電子信箱已經被註冊了",
-            "password.required" => '密碼為必填資料',
-            "password.string" => '密碼必須為字串',
-            "password.confirmed" => '密碼不一樣',
         ];
     }
 

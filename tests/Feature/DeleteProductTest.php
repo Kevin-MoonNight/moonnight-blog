@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class DeleteProductTest extends TestCase
@@ -14,13 +15,12 @@ class DeleteProductTest extends TestCase
     public function test_product_can_be_deleted()
     {
         $user = User::factory(['is_admin' => 1])->create();
-        $token = $user->createToken('myapptoken')->plainTextToken;
+        Sanctum::actingAs($user);
 
         $product = Product::factory()->create();
 
-        $this->withHeaders(['Authorization' => 'Bearer ' . $token])
-            ->delete(route('products.destroy', ['product' => $product->id]))
-            ->assertStatus(200);
+        $this->delete(route('products.destroy', ['product' => $product->getAttribute('id')]))
+            ->assertOk();
 
         $this->assertDeleted($product);
         $this->assertDatabaseCount('products', 0);

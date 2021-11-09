@@ -6,7 +6,6 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 
-
 class ProductsController extends Controller
 {
     public function __construct()
@@ -28,15 +27,13 @@ class ProductsController extends Controller
         return Product::create($validated);
     }
 
-    public function show($id)
+    public function show(Product $product)
     {
-        return Product::findOrFail($id);
+        return $product;
     }
 
-    public function update(UpdateProductRequest $request, $id)
+    public function update(UpdateProductRequest $request, Product $product)
     {
-        $product = Product::findOrFail($id);
-
         $validated = $request->validated();
 
         $validated['thumbnail'] = isset($validated['thumbnail']) ? $this->saveThumbnail($validated['thumbnail'], $product) : $product->thumbnail;
@@ -44,10 +41,8 @@ class ProductsController extends Controller
         return $product->update($validated);
     }
 
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        $product = Product::findOrFail($id);
-
         return $product->delete();
     }
 

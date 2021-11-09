@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class UpdateTagTest extends TestCase
@@ -13,18 +14,15 @@ class UpdateTagTest extends TestCase
 
     public function test_tag_can_be_updated()
     {
-        $tag = Tag::factory()->create();
-
         $user = User::factory(['is_admin' => 1])->create();
-        $token = $user->createToken('myapptoken')->plainTextToken;
+        Sanctum::actingAs($user);
 
-        $this->withHeaders(['Authorization' => 'Bearer ' . $token])
-            ->put(route('tags.update', ['tag' => $tag->slug]), [
-                'name' => 'TestTag',
-                'slug' => 'test-tag'
-            ])
-            ->assertStatus(200);
+        $tag = Tag::factory(['name' => 'test1'])->create();
+        $tag->setAttribute('name', 'test2');
 
-        $this->assertEquals('test-tag', $tag->fresh()->slug);
+        $this->put(route('tags.update', ['tag' => $tag->getAttribute('slug')]), $tag->getAttributes())
+            ->assertOk();
+
+        $this->assertEquals($tag->getAttribute('name'), $tag->fresh()->getAttribute('name'));
     }
 }

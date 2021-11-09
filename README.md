@@ -2,7 +2,7 @@
 
 # 這是我的Blog網站
 
-###前後端分離架構前端使用Vue透過Axios接收Laravel後端的API
+### 前後端分離架構前端使用Vue透過Axios接收Laravel後端的API
 
 ## 前端使用到的套件
 - <a href="https://github.com/hustcc/canvas-nest.js/">canvas-nest.js</a> 蜘蛛網背景特效

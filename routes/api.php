@@ -17,7 +17,7 @@ Route::get('/articles/popular', [ArticlesController::class, 'popular'])->name('a
 Route::get('/articles/draft', [ArticlesController::class, 'draft'])->name('articles.draft');
 Route::get('/articles/trashed', [ArticlesController::class, 'trashed'])->name('articles.trashed');
 Route::get('/articles/restore/{trashed_article}', [ArticlesController::class, 'restore'])->name('articles.restore');
-Route::delete('/articles/deleteTrashed/{trashed_article}', [ArticlesController::class, 'deleteTrashed'])->name('articles.deleteTrashed');
+Route::delete('/articles/deleteTrashed/{trashed_article}', [ArticlesController::class, 'deleteTrashed'])->name('articles.delete-trashed');
 
 //由於php的限制put/patch 不法使用form-data獲得資料 所以只能用post再傳送
 Route::post('/articles/{article:slug}', [ArticlesController::class, 'update'])->name('articles.update');
@@ -26,11 +26,10 @@ Route::apiResource('/articles', ArticlesController::class)->except('update');
 //由於php的限制put/patch 不法使用form-data獲得資料 所以只能用post再傳送
 Route::post('/products/{product}', [ProductsController::class, 'update'])->name('products.update');
 Route::apiResource('/products', ProductsController::class)->except('update');
-
+Route::put('/user/{user}',[UsersController::class,'updatePassword'])->name('users.update-password');
 
 Route::apiResources([
     'tags' => TagsController::class,
     '/messages' => MessagesController::class,
-//    '/products' => ProductsController::class,
     'users' => UsersController::class
 ]);

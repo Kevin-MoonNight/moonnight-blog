@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class CreateProductTest extends TestCase
@@ -15,7 +16,7 @@ class CreateProductTest extends TestCase
     public function test_product_can_be_created()
     {
         $user = User::factory(['is_admin' => 1])->create();
-        $token = $user->createToken('myapptoken')->plainTextToken;
+        Sanctum::actingAs($user);
 
         $product = [
             'name' => 'test',
@@ -23,9 +24,8 @@ class CreateProductTest extends TestCase
             'thumbnail' => new UploadedFile(storage_path('app/test-files/thumbnail.jpg'), 'thumbnail.jpg', null, null, true)
         ];
 
-        $this->withHeaders(['Authorization' => 'Bearer ' . $token])
-            ->post(route('products.store'), $product)
-            ->assertStatus(201);
+        $this->post(route('products.store'), $product)
+            ->assertCreated();
 
         $this->assertDatabaseCount('products', 1);
         $this->assertDatabaseHas('products', [

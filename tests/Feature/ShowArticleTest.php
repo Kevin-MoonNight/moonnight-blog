@@ -12,12 +12,12 @@ class ShowArticleTest extends TestCase
 
     public function test_article_can_be_show()
     {
-        $article = Article::factory()->create();
+        $article = Article::factory(['state' => 1])->create();
 
-        $response = $this->get(route('articles.show', ['article' => $article->slug]))
-            ->assertStatus(200);
+        $response = $this->get(route('articles.show', ['article' => $article->getAttribute('slug')]))
+            ->assertOk();
 
-        $this->assertEquals($article->slug, $response->json('slug'));
+        $this->assertEquals($article->getAttribute('slug'), $response->json('slug'));
 
         $article->forceDelete();
     }

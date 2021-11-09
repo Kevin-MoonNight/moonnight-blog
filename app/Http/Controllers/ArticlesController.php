@@ -6,12 +6,13 @@ use App\Http\Requests\UpdateArticleRequest;
 use App\Http\Requests\StoreArticleRequest;
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ArticlesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth:sanctum', 'can:admin'])->except('index', 'show', 'popular');
+        $this->middleware(['auth:sanctum'])->except('index', 'show', 'popular');
     }
 
     public function index(Request $request)
@@ -38,12 +39,16 @@ class ArticlesController extends Controller
 
     public function show(Article $article)
     {
-        //新增觀看數
-        $article->views += 1;
-        //更新文章
-        $article->save();
+        if ($article->getAttribute('state')) {
+            //新增觀看數
+            $article->views += 1;
+            //更新文章
+            $article->save();
 
-        return $article;
+            return $article;
+        } else {
+            abort(404);
+        }
     }
 
     public function update(UpdateArticleRequest $request, Article $article)
@@ -66,7 +71,11 @@ class ArticlesController extends Controller
 
     public function destroy(Article $article)
     {
-        return $article->delete();
+        if (Gate::any(['admin', 'article'], $article)) {
+            return $article->delete();
+        } else {
+            abort(404);
+        }
     }
 
     public function popular()
@@ -76,24 +85,38 @@ class ArticlesController extends Controller
 
     public function draft(Request $request)
     {
-        return Article::draft()->filter($request->all())->latest()->paginate(10)->withQueryString();
+        if (Gate::allows('admin')) {
+            return Article::draft()->filter($request->all())->latest()->paginate(10)->withQueryString();
+        } else {
+            return auth()->user()->articles()->draft()->filter($request->all())->latest()->paginate(10)->withQueryString();
+        }
     }
 
     public function trashed(Request $request)
     {
-        return Article::onlyTrashed()->filter($request->all())->paginate(10)->withQueryString();
+        if (Gate::allows('admin')) {
+            return Article::onlyTrashed()->filter($request->all())->paginate(10)->withQueryString();
+        } else {
+            return auth()->user()->articles()->onlyTrashed()->filter($request->all())->paginate(10)->withQueryString();
+        }
     }
 
     public function restore(Article $article)
     {
-        return Article::onlyTrashed()->findOrFail($article->id)->restore();
+        if (Gate::any(['admin', 'article'], $article)) {
+            return Article::onlyTrashed()->findOrFail($article->id)->restore();
+        } else {
+            abort(404);
+        }
     }
 
     public function deleteTrashed(Article $article)
     {
-        $article = Article::onlyTrashed()->findOrFail($article->id);
-
-        return $article->forceDelete();
+        if (Gate::any(['admin', 'article'], $article)) {
+            return Article::onlyTrashed()->findOrFail($article->id)->forceDelete();
+        } else {
+            abort(404);
+        }
     }
 
     private function saveThumbnail($thumbnail, $article = null)

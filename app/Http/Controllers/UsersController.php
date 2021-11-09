@@ -3,19 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth:sanctum', 'can:admin']);
+        $this->middleware(['auth:sanctum'])->except('store');
     }
 
     public function index()
     {
+        if (Gate::denies('admin')) {
+            abort(403);
+        }
+
         return User::all()->makeVisible(['id', 'username', 'email', 'is_admin']);
     }
 
@@ -29,15 +35,24 @@ class UsersController extends Controller
         return User::create($validated);
     }
 
-    public function show($id)
+    public function show(User $user)
     {
-        return User::findOrFail($id)->makeVisible(['id', 'username', 'email', 'is_admin']);
+        if (!Gate::any(['user', 'admin'], $user)) {
+            abort(403);
+        }
+
+        return $user->makeVisible(['id', 'username', 'email', 'is_admin']);
     }
 
-    public function update(UpdateUserRequest $request, $id)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        $user = User::findOrFail($id);
+        $validated = $request->validated();
 
+        return $user->update($validated);
+    }
+
+    public function updatePassword(UpdatePasswordRequest $request, User $user)
+    {
         $validated = $request->validated();
 
         //密碼加密
@@ -46,9 +61,11 @@ class UsersController extends Controller
         return $user->update($validated);
     }
 
-    public function destory($id)
+    public function destroy(User $user)
     {
-        $user = User::findOrFail($id);
+        if (!Gate::any(['user', 'admin'], $user)) {
+            abort(403);
+        }
 
         return $user->delete();
     }

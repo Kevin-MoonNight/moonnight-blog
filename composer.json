@@ -1,10 +1,16 @@
 {
-    "name": "laravel/laravel",
+    "name": "moonnight/blog",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "My blog",
+    "authors": [
+        {
+            "name": "Moon Night",
+            "email": "k0937477331@gmail.com"
+        }
+    ],
     "keywords": [
-        "framework",
-        "laravel"
+        "moonnight",
+        "blog"
     ],
     "license": "MIT",
     "require": {
@@ -65,5 +71,4 @@
             "@php artisan key:generate --ansi"
         ]
     }
-
 }

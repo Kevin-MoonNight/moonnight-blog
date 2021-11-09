@@ -14,9 +14,9 @@ class ShowTagTest extends TestCase
     {
         $tag = Tag::factory()->create();
 
-        $response = $this->get(route('tags.show', ['tag' => $tag->slug]))
-            ->assertStatus(200);
+        $response = $this->get(route('tags.show', ['tag' => $tag->getAttribute('slug')]))
+            ->assertOk();
 
-        $this->assertEquals($tag->slug , $response->json('slug'));
+        $this->assertEquals($tag->getAttribute('slug'), $response->json('slug'));
     }
 }

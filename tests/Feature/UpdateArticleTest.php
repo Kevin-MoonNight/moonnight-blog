@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Article;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class UpdateArticleTest extends TestCase
@@ -13,24 +14,20 @@ class UpdateArticleTest extends TestCase
 
     public function test_article_can_be_updated()
     {
-        $user = User::factory(['is_admin' => 1])->create();
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
 
-        $token = $user->createToken('myapptoken')->plainTextToken;
+        $article = Article::factory(['user_id' => $user->getAttribute('id')])->create();
 
-        $article = Article::factory(['user_id' => $user->id])->create();
+        $this->post(route('articles.update', ['article' => $article->getAttribute('slug')]), [
+            'title' => 'test2',
+            'slug' => 'test',
+            'excerpt' => 'test',
+            'content' => 'test',
+            'state' => 1,
+        ])->assertOk();
 
-        $this->withHeaders(['Authorization' => 'Bearer ' . $token])
-            ->post(route('articles.update', ['article' => $article->slug]), [
-                'title' => 'test2',
-                'slug' => 'test',
-                'excerpt' => 'test',
-                'content' => 'test',
-                'state' => 1,
-            ])
-            ->assertStatus(200);
-
-        $this->assertEquals('test2', $article->fresh()->title);
-
+        $this->assertEquals('test2', $article->fresh()->getAttribute('title'));
         $article->forceDelete();
     }
 }

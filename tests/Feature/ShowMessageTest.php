@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class ShowMessageTest extends TestCase
@@ -16,12 +17,11 @@ class ShowMessageTest extends TestCase
         $message = Message::factory()->create();
 
         $user = User::factory(['is_admin' => 1])->create();
-        $token = $user->createToken('myapptoken')->plainTextToken;
+        Sanctum::actingAs($user);
 
-        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $token])
-            ->get(route('messages.show', ['message' => $message->id]))
-            ->assertStatus(200);
+        $response = $this->get(route('messages.show', ['message' => $message->getAttribute('id')]))
+            ->assertOk();
 
-        $this->assertEquals($message->id , $response->json('id'));
+        $this->assertEquals($message->getAttribute('id'), $response->json('id'));
     }
 }

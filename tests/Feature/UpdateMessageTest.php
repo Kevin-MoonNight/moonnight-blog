@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class UpdateMessageTest extends TestCase
@@ -13,20 +14,15 @@ class UpdateMessageTest extends TestCase
 
     public function test_message_can_be_updated()
     {
+        $user = User::factory(['is_admin' => 1])->create();
+        Sanctum::actingAs($user);
+
         $message = Message::factory()->create();
 
-        $user = User::factory(['is_admin' => 1])->create();
-        $token = $user->createToken('myapptoken')->plainTextToken;
+        $message->setAttribute('name', 'test2');
+        $this->put(route('messages.update', ['message' => $message->getAttribute('id')]), $message->getAttributes())
+            ->assertOk();
 
-        $this->withHeaders(['Authorization' => 'Bearer ' . $token])
-            ->put(route('messages.update', ['message' => $message->id]), [
-                'name' => 'test2',
-                'email' => 'test@example.com',
-                'remark' => '',
-                'caseType' => '演算法'
-            ])
-            ->assertStatus(200);
-
-        $this->assertEquals('test2', $message->fresh()->name);
+        $this->assertEquals($message->getAttribute('name'), $message->fresh()->getAttribute('name'));
     }
 }

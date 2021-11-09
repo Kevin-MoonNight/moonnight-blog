@@ -31,7 +31,7 @@ class TagsController extends Controller
         return $tag;
     }
 
-    public function update(UpdateTagRequest $request,Tag $tag)
+    public function update(UpdateTagRequest $request, Tag $tag)
     {
         $validated = $request->validated();
 

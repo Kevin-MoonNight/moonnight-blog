@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\User;
 use Database\Seeders\MessageSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class MessageTest extends TestCase
@@ -16,10 +17,9 @@ class MessageTest extends TestCase
         $this->seed(MessageSeeder::class);
 
         $user = User::factory(['is_admin' => 1])->create();
-        $token = $user->createToken('myapptoken')->plainTextToken;
+        Sanctum::actingAs($user);
 
-        $this->withHeaders(['Authorization' => 'Bearer ' . $token])
-            ->get(route('messages.index'))
-            ->assertStatus(200);
+        $this->get(route('messages.index'))
+            ->assertOk();
     }
 }

@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class ShowProductTest extends TestCase
@@ -14,15 +15,14 @@ class ShowProductTest extends TestCase
     public function test_product_can_be_show()
     {
         $user = User::factory(['is_admin' => 1])->create();
-        $token = $user->createToken('myapptoken')->plainTextToken;
+        Sanctum::actingAs($user);
 
         $product = Product::factory()->create();
 
-        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $token])
-            ->get(route('products.show', ['product' => $product->id]))
-            ->assertStatus(200);
+        $response = $this->get(route('products.show', ['product' => $product->id]))
+            ->assertOk();
 
-        $this->assertEquals($product->name, $response->json('name'));
+        $this->assertEquals($product->getAttribute('name'), $response->json('name'));
 
         $product->delete();
     }
