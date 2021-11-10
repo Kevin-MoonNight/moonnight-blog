@@ -2,82 +2,51 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use Laravel\Fortify\Rules\Password;
-
 
 class AuthController extends Controller
 {
+    public function login(LoginRequest $request)
+    {
+        $validated = $request->validated();
 
+        //透過email尋找使用者
+        $user = User::firstWhere('email', $validated['email']);
 
-    public function login(Request $request){
-
-        //驗證資料
-        $validator = Validator::make($request->all(), [
-            'email' => ['required', 'string', 'email', 'max:255'],
-            'password' => ['required', 'string'],
-        ]);
-
-
-        //驗證失敗
-        if ($validator->fails()) {
-            return response(['errors'=>true,'data'=>$validator->errors(),'res'=>$request->all()],200);
+        //判斷密碼是否正確
+        if (!$user || !Hash::check($validated['password'], $user->password)) {
+            abort(400);
         }
-
-        //創建使用者
-        $user = User::where('email',$request->input('email'))->first();
-
-        if(!$user || !Hash::check($request->input('password'),$user->password)){
-            return response(['errors'=>true,'notice'=>'帳號或密碼有誤!' ],200);
-        }
-
 
         //獲取token
         $token = $user->createToken('myapptoken')->plainTextToken;
 
-
-        return response(['errors'=>false,'user'=> $user ,'token'=> $token],200);
+        return response(['user' => $user, 'token' => $token], 200);
     }
 
-    public function logout(Request $request){
-        auth()->user()->tokens()->delete();
-
-
-        return response(['errors'=>false]);
+    public function logout(Request $request)
+    {
+        return auth()->user()->tokens()->delete();
     }
 
+    public function register(RegisterRequest $request)
+    {
 
-    public function register(Request $request){
-        //驗證資料
-        $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'password' => ['required', 'string', new Password, 'confirmed'],
-        ]);
+        $validated = $request->validated();
 
-
-        //驗證失敗
-        if ($validator->fails()) {
-            return response(['errors'=>true,'data'=> $validator->errors()],200);
-        }
+        //密碼加密
+        $validated['password'] = Hash::make($validated['password']);
 
         //創建使用者
-        $user = User::create([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
-        ]);
-
+        $user = User::create($validated);
 
         //獲取token
         $token = $user->createToken('myapptoken')->plainTextToken;
 
-
-        return response(['errors'=>false,'user'=> $user , 'token'=> $token],201);
+        return response(['user' => $user, 'token' => $token], 201);
     }
-
-
 }

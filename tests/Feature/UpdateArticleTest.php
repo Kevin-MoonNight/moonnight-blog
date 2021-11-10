@@ -5,26 +5,29 @@ namespace Tests\Feature;
 use App\Models\Article;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class UpdateArticleTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_article_can_be_updated(){
-
+    public function test_article_can_be_updated()
+    {
         $user = User::factory()->create();
-        $article = Article::factory()->make();
+        Sanctum::actingAs($user);
 
-        Article::create($article);
+        $article = Article::factory(['user_id' => $user->getAttribute('id')])->create();
 
-        $article->title = '123';
-        $article->content = '123';
+        $this->post(route('articles.update', ['article' => $article->getAttribute('slug')]), [
+            'title' => 'test2',
+            'slug' => 'test',
+            'excerpt' => 'test',
+            'content' => 'test',
+            'state' => 1,
+        ])->assertOk();
 
-        $article->update();
-
-        $this->assertEquals($article->title, Article::first()->title);
-        $this->assertEquals($article->content, Article::first()->content);
+        $this->assertEquals('test2', $article->fresh()->getAttribute('title'));
+        $article->forceDelete();
     }
 }

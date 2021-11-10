@@ -1,7 +1,7 @@
 <template>
     <transition name="fade">
     <div v-show="isShow" class="bg-white rounded-md shadow-md">
-        <div class="h-auto w-full p-10 space-y-10">
+        <div class="p-10 space-y-10 w-full h-auto">
             <div class="flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
                     <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
@@ -11,20 +11,20 @@
             </div>
 
             <div class="min-h-screen">
-                <div class="text-5xl pb-10 break-words">{{article.title}}</div>
+                <div class="pb-10 text-5xl break-words">{{article.title}}</div>
                 <div v-html="article.content" class="text-2xl"></div>
             </div>
 
-            <div class="h-auto w-full flex flex-wrap gap-2">
+            <div class="flex flex-wrap gap-2 w-full h-auto">
                 <p v-for="tag in article.tags" :key="'ArticleTags ' + tag.name" @click="queryTag(tag.name)"
-                   class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-full text-sm cursor-pointer">
+                   class="px-3 py-1 text-sm bg-gray-200 rounded-full cursor-pointer hover:bg-gray-300">
 
                     {{ tag.name }}
                 </p>
             </div>
-            <div class="grid grid-cols-2 ">
+            <div class="grid grid-cols-2">
                 <p>{{article.views}} views</p>
-                <p @click="fallback" class="flex justify-end cursor-pointer hover:text-black text-gray-600">回文章列表</p>
+                <p @click="fallback" class="flex justify-end text-gray-600 cursor-pointer hover:text-black">回文章列表</p>
             </div>
         </div>
     </div>
@@ -41,7 +41,6 @@
             const article = ref({});
             const username = ref(null);
             const isShow = ref(false);
-            const errors = ref(false);
 
             const route = useRoute();
             const articleId = computed(() => route.params.id);
@@ -51,17 +50,12 @@
                     isShow.value = false;
                     await Promise.all([apiGetArticle(articleId.value)])
                         .then((results) => {
-                            errors.value = results[0].data.errors;
-
-                            //如果沒有該文章
-                            if(errors.value){
-                                fallback();
-                            }else{
-                                article.value = results[0].data;
-                                username.value = results[0].data.user.name
-                                isShow.value = true;
-                            }
-                        });
+                            article.value = results[0].data;
+                            username.value = results[0].data.author.name
+                            isShow.value = true;
+                        }).catch((error)=>{
+                            fallback();
+                        })
                 }
             };
             onBeforeMount(getArticle);

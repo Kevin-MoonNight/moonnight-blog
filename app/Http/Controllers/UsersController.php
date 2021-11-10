@@ -2,80 +2,71 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UpdatePasswordRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth:sanctum'])->except('store');
     }
 
-
-    public function index(){
-
-        $users = User::all();
-
-        return $users;
-    }
-
-
-    public function create(){
-
-
-    }
-
-
-    public function store(Request $request){
-        $content = $request->validate([
-            'name'=>'required',
-            'email'=>'required',
-            'password'=>'required'
-        ]);
-
-        $user = User::create($content);
-
-        return $user;
-    }
-
-
-    public function show($id){
-        $user = User::find($id);
-
-        if($user === null){
-            return "尋找不到使用者";
+    public function index()
+    {
+        if (Gate::denies('admin')) {
+            abort(403);
         }
 
-        return $user;
+        return User::all()->makeVisible(['id', 'username', 'email', 'is_admin']);
     }
 
+    public function store(CreateUserRequest $request)
+    {
+        $validated = $request->validated();
 
-    public function update(Request $request,$id){
-        $content = $request->validate([
-            'name'=>'required',
-            'email'=>'required',
-            'password'=>'required'
-        ]);
+        //密碼加密
+        $validated['password'] = Hash::make($validated['password']);
 
-        $user = User::find($id);
-
-        $user->update($content);
-
-        return $user;
+        return User::create($validated);
     }
 
+    public function show(User $user)
+    {
+        if (!Gate::any(['user', 'admin'], $user)) {
+            abort(403);
+        }
 
-    public function destory($id){
-
-        return User::destroy($id);
+        return $user->makeVisible(['id', 'username', 'email', 'is_admin']);
     }
 
+    public function update(UpdateUserRequest $request, User $user)
+    {
+        $validated = $request->validated();
 
-    public function search($name){
+        return $user->update($validated);
+    }
 
-        $users = User::where('name','like','%'.$name.'%')->get();
+    public function updatePassword(UpdatePasswordRequest $request, User $user)
+    {
+        $validated = $request->validated();
 
-        return $users;
+        //密碼加密
+        $validated['password'] = Hash::make($validated['password']);
+
+        return $user->update($validated);
+    }
+
+    public function destroy(User $user)
+    {
+        if (!Gate::any(['user', 'admin'], $user)) {
+            abort(403);
+        }
+
+        return $user->delete();
     }
 }

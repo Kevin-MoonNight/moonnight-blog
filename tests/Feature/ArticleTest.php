@@ -4,38 +4,68 @@ namespace Tests\Feature;
 
 use App\Models\Article;
 use App\Models\User;
-use http\Env\Response;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class ArticleTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_article_screen_can_be_rendered()
+    public function test_articles_can_be_get()
     {
-        $response = $this->get('/articles');
+        $article = Article::factory(['state' => 1])->create();
 
-        $response->assertStatus(200);
+        $response = $this->get(route('articles.index'))
+            ->assertOk();
+
+        $this->assertCount(1, $response->json('data'));
+
+        $article->forceDelete();
     }
 
-    public function test_show_article_screen_can_be_rendered()
+    public function test_popular_articles_can_be_get()
     {
-        $user = User::factory(1)->create();
-        $article = Article::factory(1)->create()->first();
+        $article = Article::factory(['state' => 1])->create();
 
+        $response = $this->get(route('articles.popular'))
+            ->assertOk();
 
-        $response = $this->get("/articles/{$article->id}");
+        $this->assertCount(1, $response->json());
 
-        $response->assertStatus(200);
+        $article->forceDelete();
     }
-//    public function test_create_article_screen_can_be_rendered()
-//    {
-//        $response = $this->get('/articles');
-//
-//        $response->assertStatus(200);
-//    }
 
+    public function test_draft_articles_can_be_get()
+    {
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
 
+        $article = Article::factory(['user_id' => $user->getAttribute('id'), 'state' => 0])->create();
+
+        $response = $this->get(route('articles.draft'))
+            ->assertOk();
+
+        $this->assertCount(1, $response->json('data'));
+
+        $article->forceDelete();
+    }
+
+    public function test_trashed_articles_can_be_get()
+    {
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+
+        $article = Article::factory(['user_id' => $user->getAttribute('id'), 'state' => 1])->create();
+
+        $article->delete();
+
+        $response = $this->get(route('articles.trashed'))
+            ->assertOk();
+
+        $this->assertCount(1, $response->json('data'));
+
+        $article->forceDelete();
+    }
 }
+

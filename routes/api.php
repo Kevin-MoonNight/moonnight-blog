@@ -1,33 +1,35 @@
 <?php
 
-use App\Http\Controllers\ArticlesAPIController;
-use App\Http\Controllers\MessagesAPIController;
+use App\Http\Controllers\ArticlesController;
+use App\Http\Controllers\MessagesController;
+use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\TagsController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
-use \App\Http\Controllers\AuthController;
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+use App\Http\Controllers\AuthController;
+
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum')->name('logout');
+Route::post('/register', [AuthController::class, 'register'])->name('register');
 
 
-Route::post('/login',[AuthController::class,'login']);
-Route::post('/logout',[AuthController::class,'logout'])->middleware('auth:sanctum');
-Route::post('/register',[AuthController::class,'register']);
-Route::post('/isAuth',[AuthController::class,'isAuth']);
+Route::get('/articles/popular', [ArticlesController::class, 'popular'])->name('articles.popular');
+Route::get('/articles/draft', [ArticlesController::class, 'draft'])->name('articles.draft');
+Route::get('/articles/trashed', [ArticlesController::class, 'trashed'])->name('articles.trashed');
+Route::get('/articles/restore/{trashed_article}', [ArticlesController::class, 'restore'])->name('articles.restore');
+Route::delete('/articles/deleteTrashed/{trashed_article}', [ArticlesController::class, 'deleteTrashed'])->name('articles.delete-trashed');
 
-Route::get('/articles/popular',[ArticlesAPIController::class,'popular']);
-Route::apiResource('/articles',ArticlesAPIController::class);
-Route::get('/articles/search/{text}',[ArticlesAPIController::class,'search']);
-Route::get('/articles/tag/{name}',[ArticlesAPIController::class,'searchTag']);
+//由於php的限制put/patch 不法使用form-data獲得資料 所以只能用post再傳送
+Route::post('/articles/{article:slug}', [ArticlesController::class, 'update'])->name('articles.update');
+Route::apiResource('/articles', ArticlesController::class)->except('update');
 
+//由於php的限制put/patch 不法使用form-data獲得資料 所以只能用post再傳送
+Route::post('/products/{product}', [ProductsController::class, 'update'])->name('products.update');
+Route::apiResource('/products', ProductsController::class)->except('update');
+Route::put('/user/{user}',[UsersController::class,'updatePassword'])->name('users.update-password');
 
-Route::apiResource('/messages',MessagesAPIController::class);
-
-Route::apiResource('/tags', TagsController::class);
+Route::apiResources([
+    'tags' => TagsController::class,
+    '/messages' => MessagesController::class,
+    'users' => UsersController::class
+]);

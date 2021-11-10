@@ -5,6 +5,8 @@ namespace Database\Factories;
 use App\Models\Article;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Str;
 
 class ArticleFactory extends Factory
 {
@@ -22,13 +24,20 @@ class ArticleFactory extends Factory
      */
     public function definition()
     {
+        $title = $this->faker->sentence;
+
+        $image = new UploadedFile(storage_path('app/test-files/thumbnail.jpg'), 'thumbnail.jpg', null, null, true);
+        $imagePath = "storage/" . $image->store('thumbnail');
+
         return [
-            'title'=> $this->faker->realText(10),
-            'content'=> $this->faker->realTextBetween(160,200),
-            'views'=> $this->faker->numberBetween(10,500),
-            'url'=> 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1352&q=80',
-            'state'=> 'published',
-            'user_id'=> User::first()->id
+            'title' => $this->faker->realText(10),
+            'slug' => Str::slug($title),
+            'excerpt' => $this->faker->sentence,
+            'content' => $this->faker->realTextBetween(160, 200),
+            'views' => $this->faker->numberBetween(100, 500),
+            'thumbnail' => $imagePath,
+            'state' => $this->faker->boolean,
+            'user_id' => User::factory()
         ];
     }
 }

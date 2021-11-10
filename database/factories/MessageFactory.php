@@ -24,7 +24,7 @@ class MessageFactory extends Factory
         return [
             'name'=>$this->faker->name,
             'email'=>$this->faker->email,
-            'remark'=>$this->faker->text,
+            'remark'=>$this->faker->sentence,
             'caseType'=>$this->faker->text
         ];
     }

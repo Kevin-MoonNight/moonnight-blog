@@ -6,7 +6,7 @@
                 <search-input />
             </div>
 
-            <p class="text-xl text-center" v-show="(articles.length === 0 || errors) && isShow">
+            <p class="text-xl text-center" v-show="(articles.length === 0) && isShow">
                 找不到文章!
             </p>
 
@@ -37,7 +37,7 @@
 
 <script>
     import {onBeforeMount, ref, computed, watch} from "vue";
-    import {apiArticles} from "../../api/article";
+    import {apiGetArticles} from "../../api/article";
     import {useRoute} from "vue-router";
     import ArticleCard from "../articles/ArticleCard";
     import Paginator from "../shared/Paginator";
@@ -55,50 +55,29 @@
         },
         setup(){
             const route = useRoute();
-            const apiUrl = computed(()=>{
-                let url ='';
-                if(route.query.tag != null) {
-                    url = '/articles/tag/' + route.query.tag;
-                }else if(route.query.search != null){
-                    url = '/articles/search/' + route.query.search;
-                }else{
-                    url = '/articles';
-                }
-
-                if(route.query.page != null){
-                    url += '?page=' + route.query.page;
-                }
-
-                return url;
-            })
-
             const articles = ref([]);
             const response = ref({});
-            const isShow = ref(false);
-            const errors = ref(false);
+            const isShow = ref(false);;
+            const params = computed(()=>route.query);
 
             const getArticles = async () => {
                 isShow.value = false;
-                await Promise.all([apiArticles(apiUrl.value)])
+                await Promise.all([apiGetArticles(params.value)])
                     .then((results) => {
-                        errors.value = results[0].data.errors;
-
-                        if(!errors.value){
-                            articles.value = results[0].data.data
-                        }
+                        articles.value = results[0].data.data
                         response.value = results[0].data;
                         isShow.value= true;
+                    }).catch((error)=>{
+
                     });
             }
             onBeforeMount(getArticles);
-            watch(apiUrl,getArticles);
+            watch(params,getArticles);
 
             return {
                 articles,
                 response,
-                isShow,
-                errors,
-                apiUrl
+                isShow
             }
         }
     }

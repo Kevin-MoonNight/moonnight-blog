@@ -3,7 +3,7 @@ import axios from "axios";
 const instance = axios.create({
     baseURL: '/api/',
     headers:{
-        contentType:'application/json'
+        'Content-Type':'application/json'
     }
 });
 
@@ -46,6 +46,7 @@ const errorHandle = (status,message) =>{
             tip(message);
             break;
         case 401:
+            //TODO 需要登出
             tip('登入過期，請重新登入')
             setTimeout(()=>{
                 toLogin();
@@ -64,12 +65,14 @@ const errorHandle = (status,message) =>{
 
 export default function(method,url,data = null){
     method = method.toLowerCase();
+    instance.defaults.headers.common["Content-Type"] = 'application/json';
 
     switch(method){
         case 'get':
             return instance.get(url,{params:data});
             break;
         case 'post':
+            instance.defaults.headers.common["Content-Type"] ='multipart/form-data';
             return instance.post(url,data);
             break;
         case 'put':
