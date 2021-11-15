@@ -1,6 +1,6 @@
 const mix = require('laravel-mix');
 
-mix.js('resources/js/app.js', 'public/js')
+mix.js('resources/js/app.js', 'public/js').sourceMaps()
     .options({
         processCssUrls: false
     })
@@ -10,6 +10,6 @@ mix.js('resources/js/app.js', 'public/js')
         require('tailwindcss'),
         require('autoprefixer'),
     ])
-    .copyDirectory('resources/images', 'public/images')
+    // .copyDirectory('resources/js/views/assets/images', 'public/images')
     .version()
     .disableNotifications();

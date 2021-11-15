@@ -1,8 +1,8 @@
-import { createApp } from 'vue';
-import { router } from './routes';
-import RootComponent from './components/app.vue';
-import { store } from './store/index';
-import { VueClipboard } from '@soerenmartius/vue3-clipboard'
+import {createApp} from 'vue';
+import {router} from './routes';
+import RootComponent from './views/app.vue';
+import {store} from './store/index';
+import {VueClipboard} from '@soerenmartius/vue3-clipboard'
 import CKEditor from '@ckeditor/ckeditor5-vue';
 
 

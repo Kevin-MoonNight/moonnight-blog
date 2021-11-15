@@ -1,28 +1,31 @@
+import {addToken, deleteToken} from "../../api/https";
 
 export default {
-    state () {
+    state() {
         return {
-            isAuth:false,
-            token:null,
-            user:null
+            isAuth: false,
+            token: null,
+            user: null
         }
     },
     mutations: {
-        login (state,data) {
+        login(state, data) {
             state.isAuth = true;
             state.token = data.token;
             state.user = data.user;
         },
-        logout (state) {
+        logout(state) {
             state.isAuth = false;
             state.token = null;
         }
     },
-    actions:{
-        login (context,data) {
-            context.commit('login',data);
+    actions: {
+        login(context, data) {
+            addToken(data.token)
+            context.commit('login', data);
         },
-        logout (context) {
+        logout(context) {
+            deleteToken()
             context.commit('logout');
         }
     }

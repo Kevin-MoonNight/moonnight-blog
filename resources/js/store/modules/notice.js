@@ -1,24 +1,24 @@
 export default {
-    state () {
+    state() {
         return {
-            notice:[],
+            notices: []
         }
     },
     mutations: {
-        addNotice (state,data) {
-            state.notice.push(data);
+        addNotice(state, data) {
+            state.notices.push(data);
         },
         removeNotice(state) {
-            state.notice.shift();
-      }
+            state.notices.shift();
+        }
     },
-    actions:{
-        addNotice (context,data) {
-            context.commit('addNotice',data);
+    actions: {
+        addNotice(context, data) {
+            context.commit('addNotice', data);
 
-            setTimeout(()=>{
+            setTimeout(() => {
                 context.commit('removeNotice');
-            }, 2000);
+            }, 3000);
         }
     }
 }

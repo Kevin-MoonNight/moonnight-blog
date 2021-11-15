@@ -2,8 +2,8 @@ import axios from "axios";
 
 const instance = axios.create({
     baseURL: '/api/',
-    headers:{
-        'Content-Type':'application/json'
+    headers: {
+        'Content-Type': 'application/json'
     }
 });
 
@@ -17,76 +17,75 @@ export const deleteToken = () => {
 
 instance.interceptors.request.use((config) => {
     return config;
-},(error) => {
+}, (error) => {
     return Promise.reject(error);
 })
 
-instance.interceptors.request.use((response) => {
-        return response;
-    },(error) => {
-        const {response} = error;
-        if(response){
-            errorHandle(response.status,response.data.error);
+instance.interceptors.response.use((response) => {
+    return response;
+}, (error) => {
+    const {response} = error;
+    if (response) {
+        errorHandle(response.status, response.data);
+        return Promise.reject(error);
+    } else {
+        if (!window.navigator.onLine) {
+            tip('網路出了點問題，請重新連接後刷新網頁');
+        } else {
             return Promise.reject(error);
-        }else{
-            if(!window.navigator.onLine){
-                tip('網路出了點問題，請重新連接後刷新網頁');
-            }else{
-                return Promise.reject(error);
-            }
         }
+    }
 })
 
 
-import {tip,toLogin ,to403Page} from "./utils";
+import {tip, toLogin} from "./utils";
 
-const errorHandle = (status,message) =>{
-    switch(status){
+const errorHandle = (status, message) => {
+    switch (status) {
         case 400:
-            tip(message);
+            Object.values(message).forEach((value) => {
+                value.forEach((error) => {
+                    tip(error);
+                })
+            })
             break;
         case 401:
-            //TODO 需要登出
             tip('登入過期，請重新登入')
-            setTimeout(()=>{
+
+            setTimeout(() => {
                 toLogin();
-            },1000)
+            }, 1000)
             break;
         case 403:
-            to403Page();
+            tip('用戶端並無訪問權限')
             break;
         case 404:
-            tip(message);
+            tip('伺服器找不到請求的資源');
             break;
         default:
-            console.log('resp沒有攔截到的錯誤:' + message);
+            tip('resp沒有攔截到的錯誤:');
+            console.log(message);
     }
 }
 
-export default function(method,url,data = null){
+export default function (method, url, data = null) {
     method = method.toLowerCase();
     instance.defaults.headers.common["Content-Type"] = 'application/json';
 
-    switch(method){
+    switch (method) {
         case 'get':
-            return instance.get(url,{params:data});
-            break;
+            return instance.get(url, {params: data});
         case 'post':
-            instance.defaults.headers.common["Content-Type"] ='multipart/form-data';
-            return instance.post(url,data);
-            break;
+            instance.defaults.headers.common["Content-Type"] = 'multipart/form-data';
+            return instance.post(url, data);
         case 'put':
-            return instance.put(url,data);
-            break;
+            return instance.put(url, data);
         case 'delete':
-            return instance.delete(url,{params:data});
-            break;
+            return instance.delete(url, {params: data});
         default:
             console.log('未知的method' + method);
             return false;
     }
 }
-
-
 
 

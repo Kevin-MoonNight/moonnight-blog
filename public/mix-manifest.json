@@ -1,9 +1,14 @@
 {
-    "/js/app.js": "/js/app.js?id=c49b9575ddd83db05812",
-    "/css/app.css": "/css/app.css?id=8a1daddf083c47d87c7f",
-    "/images/algorithm.jpg": "/images/algorithm.jpg?id=9fec02c84c7584c43094",
+    "/js/app.js": "/js/app.js?id=e238fe119e9e0b9dca24",
+    "/css/app.css": "/css/app.css?id=f7255a8f09b382593bfd",
+    "/images/about.svg": "/images/about.svg?id=878ff5005b7369dfab6d",
+    "/images/algorithm.svg": "/images/algorithm.svg?id=c34d4d3097ab8bedddb8",
     "/images/catIcon.ico": "/images/catIcon.ico?id=64d7836e72f161924b8e",
-    "/images/desktop.jpg": "/images/desktop.jpg?id=7108e352a64b9dad2089",
-    "/images/headshot.jpg": "/images/headshot.jpg?id=fa1ed0b881634ff4ddc9",
-    "/images/website.jpg": "/images/website.jpg?id=7b3391e8465d9a867bbd"
+    "/images/corporation.svg": "/images/corporation.svg?id=a0661b2cb40c0f28d37d",
+    "/images/cover.svg": "/images/cover.svg?id=488326d7f8eef8290b93",
+    "/images/desktop.svg": "/images/desktop.svg?id=1316a390cf1dd1b72723",
+    "/images/headshot.jpg": "/images/headshot.jpg?id=20f2af6c29b514b14735",
+    "/images/IndependentStudy.svg": "/images/IndependentStudy.svg?id=1c42c19ef044a9ead3a7",
+    "/images/thesis.svg": "/images/thesis.svg?id=c6b2afdcfbb6b34a97ac",
+    "/images/website.svg": "/images/website.svg?id=76c0522280058c8df271"
 }

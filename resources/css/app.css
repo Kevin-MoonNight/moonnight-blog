@@ -2,68 +2,70 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-@layer base{
+@layer base {
     @font-face {
         font-family: 'HunInn';
         src: url(https://cdn.jsdelivr.net/gh/marsnow/open-huninn-font@1.1/font/jf-openhuninn.eot); /* IE9 Compat Modes */
-        src: url(https://cdn.jsdelivr.net/gh/marsnow/open-huninn-font@1.1/font/jf-openhuninn.eot?#iefix) format("embedded-opentype"), /* IE6-IE8 */
-        url(https://cdn.jsdelivr.net/gh/marsnow/open-huninn-font@1.1/font/jf-openhuninn.woff) format("woff"), /* Modern Browsers */
-        url(https://cdn.jsdelivr.net/gh/marsnow/open-huninn-font@1.1/font/jf-openhuninn.ttf) format("truetype"), /* Safari, Android, iOS */
-        url(https://cdn.jsdelivr.net/gh/marsnow/open-huninn-font@1.1/font/jf-openhuninn.svg#SealmemoryHeader) format("svg"); /* Legacy iOS */
+        src: url(https://cdn.jsdelivr.net/gh/marsnow/open-huninn-font@1.1/font/jf-openhuninn.eot?#iefix) format("embedded-opentype"), /* IE6-IE8 */ url(https://cdn.jsdelivr.net/gh/marsnow/open-huninn-font@1.1/font/jf-openhuninn.woff) format("woff"), /* Modern Browsers */ url(https://cdn.jsdelivr.net/gh/marsnow/open-huninn-font@1.1/font/jf-openhuninn.ttf) format("truetype"), /* Safari, Android, iOS */ url(https://cdn.jsdelivr.net/gh/marsnow/open-huninn-font@1.1/font/jf-openhuninn.svg#SealmemoryHeader) format("svg"); /* Legacy iOS */
     }
 
-    body{
-        font-family: HunInn,sans-serif;
-        background-image: linear-gradient(120deg, #a6c0fe 0%, #f68084 100%);
+    body {
+        font-family: HunInn, sans-serif;
     }
 
-    section{
-        @apply flex justify-center items-center min-h-screen;
-    }
     .headroom {
         will-change: transform;
         transition: transform 200ms linear;
     }
+
     .headroom--pinned {
         transform: translateY(0%);
     }
+
     .headroom--unpinned {
         transform: translateY(-100%);
     }
+
     /* width */
     ::-webkit-scrollbar {
         width: 8px;
         height: 8px;
     }
+
     /* Track */
     ::-webkit-scrollbar-track {
         background: #1E293B;
     }
+
     ::-webkit-scrollbar-track:horizontal {
         background: #fff;
     }
+
     /* Handle */
     ::-webkit-scrollbar-thumb {
-        background:#D1D5DB;
-        border-radius: 10px;
-    }
-    ::-webkit-scrollbar-thumb:horizontal{
         background: #D1D5DB;
         border-radius: 10px;
     }
+
+    ::-webkit-scrollbar-thumb:horizontal {
+        background: #D1D5DB;
+        border-radius: 10px;
+    }
+
     /* Handle on hover */
     ::-webkit-scrollbar-thumb:hover {
         background: #6B7280;
     }
+
     ::-webkit-scrollbar-thumb:hover:horizontal {
         background: #6B7280;
     }
 
 }
 
-@layer components{
+@layer components {
     @responsive{
-        .input-style{
+        .input-style {
             @apply block px-3 py-2 mt-1 w-full bg-white rounded-md border-2 border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500;
         }
     }
@@ -103,7 +105,7 @@
 
 .slide-leave-active,
 .slide-enter-active {
-    transition:all 0.3s;
+    transition: all 0.3s;
 }
 
 .slide-enter-from,
