@@ -1,10 +1,10 @@
 <template>
     <main class="select-none bg-blueGray-200">
         <section class="py-10 bg-blueGray-800">
-            <div class="flex flex-wrap justify-center items-center md:min-h-screen">
+            <div class="flex items-stretch md:min-h-screen">
                 <div class="container px-4 mx-auto md:px-14">
-                    <div class="grid grid-cols-1 gap-10 w-full h-full lg:grid-cols-5">
-                        <div class="flex flex-wrap justify-center items-center w-full h-full lg:col-span-2">
+                    <div class="grid grid-cols-1 gap-10 place-items-center w-full h-full lg:grid-cols-5">
+                        <div class="lg:col-span-2">
                             <div class="text">
                                 <h1 class="text-5xl text-white">
                                     慕耐工作室
@@ -31,8 +31,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="hidden w-full h-full md:block lg:col-span-3">
-                            <img alt="封面" class="object-cover w-full h-full show"
+                        <div class="hidden w-full h-full md:block lg:col-span-3 show">
+                            <img alt="封面" class="object-contain w-full h-full"
                                  :src="cover">
                         </div>
                     </div>
@@ -40,11 +40,11 @@
             </div>
         </section>
 
-        <section id="about" class="py-10 bg-blueGray-200">
-            <div class="flex flex-wrap justify-center items-center h-screen">
+        <section id="about" class="py-20 bg-blueGray-200">
+            <div class="flex items-center md:min-h-screen">
                 <div class="container px-4 mx-auto md:px-14">
                     <div class="grid grid-cols-1 gap-10 w-full h-full lg:grid-cols-2">
-                        <div class="h-full text">
+                        <div class="text">
                             <h3 class="mb-2 text-3xl leading-normal">
                                 慕耐是由一群學生所組成的工作室
                             </h3>
@@ -53,8 +53,8 @@
                             </p>
                         </div>
 
-                        <div class="flex justify-center bottom">
-                            <div class="w-full h-full bg-white rounded-lg shadow-lg lg:w-full">
+                        <div class="bottom">
+                            <div class="w-full h-full bg-white rounded-lg shadow-lg">
                                 <img :src="about" alt="" class="w-full rounded-lg"/>
                             </div>
                         </div>
@@ -65,49 +65,45 @@
 
         <hr class="my-3 border-blueGray-300"/>
 
-        <section id="service" class="py-10 bg-blueGray-200">
-            <div class="flex flex-wrap justify-center items-center h-screen">
-                <div class="container px-4 mx-auto md:px-14">
-                    <div class="w-full h-full">
-                        <div class="mb-20 text-center sm:mx-10">
-                            <h3 class="text-3xl leading-normal text">
-                                我們所提供的服務
-                            </h3>
-                        </div>
+        <section id="service" class="py-20 bg-blueGray-200">
+            <div class="container px-4 mx-auto md:px-14">
+                <div class="w-full h-full">
+                    <div class="text-center text">
+                        <h3 class="text-3xl">
+                            我們所提供的服務
+                        </h3>
+                    </div>
 
-                        <div class="h-2/3">
-                            <carousel :items="services"/>
-                        </div>
+                    <div class="mt-20 h-2/3">
+                        <carousel :items="services"/>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="py-10 bg-blueGray-200">
-            <div class="flex flex-wrap justify-center items-center">
-                <div class="container px-4 mx-auto md:px-14">
-                    <div class="grid grid-cols-1 gap-10 w-full h-full lg:grid-cols-2">
-                        <div class="flex justify-center bottom">
-                            <div class="w-full h-full bg-white rounded-lg shadow-lg lg:w-full">
-                                <img :src="services.algorithm.img" :alt="services.algorithm.title"
-                                     class="w-full rounded-lg"/>
-                            </div>
+        <section class="py-20 bg-blueGray-200">
+            <div class="container px-4 mx-auto md:px-14">
+                <div class="grid grid-cols-1 gap-10 w-full h-full lg:grid-cols-2">
+                    <div class="bottom">
+                        <div class="w-full h-full bg-white rounded-lg shadow-lg">
+                            <img :src="services.algorithm.img" :alt="services.algorithm.title"
+                                 class="w-full rounded-lg"/>
                         </div>
+                    </div>
 
-                        <div class="h-full text">
-                            <h3 class="mb-2 text-3xl leading-normal">
-                                {{ services.algorithm.title }}、{{ services.thesis.title }}
-                                、 {{ services.IndependentStudy.title }}
-                            </h3>
-                            <ul class="list-unstyled">
-                                <li class="mt-4 text-lg font-light leading-relaxed text-blueGray-600">
-                                    1.把演算法邏輯製作流程圖，並且交由給業主核對才開始寫程式，減少開發中解決錯誤所額外花費的時間。
-                                </li>
-                                <li class="mt-4 text-lg font-light leading-relaxed text-blueGray-600">
-                                    2.並且使用TDD方式開發，減少開發中測試程式邏輯所花費的時間成本。
-                                </li>
-                            </ul>
-                        </div>
+                    <div class="text">
+                        <h3 class="mb-2 text-3xl leading-normal">
+                            {{ services.algorithm.title }}、{{ services.thesis.title }}
+                            、 {{ services.IndependentStudy.title }}
+                        </h3>
+                        <ol class="list-decimal">
+                            <li class="mt-4 text-lg font-light leading-relaxed text-blueGray-600">
+                                把演算法邏輯製作流程圖，並且交由給業主核對才開始寫程式，減少開發中解決錯誤所額外花費的時間。
+                            </li>
+                            <li class="mt-4 text-lg font-light leading-relaxed text-blueGray-600">
+                                並且使用TDD方式開發，減少開發中測試程式邏輯所花費的時間成本。
+                            </li>
+                        </ol>
                     </div>
                 </div>
             </div>
@@ -116,37 +112,35 @@
         <hr class="my-3 border-blueGray-300"/>
 
         <section class="py-20 bg-blueGray-200">
-            <div class="flex flex-wrap justify-center items-center">
-                <div class="container px-4 mx-auto md:px-14">
-                    <div class="grid grid-cols-1 gap-10 w-full h-full lg:grid-cols-2">
-                        <div class="h-full text">
-                            <h3 class="mb-2 text-3xl leading-normal">
-                                {{ services.corporation.title }}、{{ services.website.title }}
-                            </h3>
-                            <ul class="list-unstyled">
-                                <li class="mt-4 text-lg font-light leading-relaxed text-blueGray-600">
-                                    1.RWD響應式網站技術，讓您的網站不管在哪種裝置上面都能夠正常顯示畫面。
-                                </li>
-                                <li class="mt-4 text-lg font-light leading-relaxed text-blueGray-600">
-                                    2.內建SEO搜尋引擎優化，增加網站被用戶搜尋到的機率。
-                                </li>
-                                <li class="mt-4 text-lg font-light leading-relaxed text-blueGray-600">
-                                    3.客製化畫面設計，製作專屬於您的網站。
-                                </li>
-                                <li class="mt-4 text-lg font-light leading-relaxed text-blueGray-600">
-                                    4.後台管理系統，讓您可以自由的修改網頁內容。
-                                </li>
-                                <li class="mt-4 text-lg font-light leading-relaxed text-blueGray-600">
-                                    5.並且使用TDD方式開發，減少開發中測試程式邏輯所花費的時間成本。
-                                </li>
-                            </ul>
-                        </div>
+            <div class="container px-4 mx-auto md:px-14">
+                <div class="grid grid-cols-1 gap-10 w-full h-full lg:grid-cols-2">
+                    <div class="h-full text">
+                        <h3 class="mb-2 text-3xl leading-normal">
+                            {{ services.corporation.title }}、{{ services.website.title }}
+                        </h3>
+                        <ol class="list-decimal">
+                            <li class="mt-4 text-lg font-light leading-relaxed text-blueGray-600">
+                                RWD響應式網站技術，讓您的網站不管在哪種裝置上面都能夠正常顯示畫面。
+                            </li>
+                            <li class="mt-4 text-lg font-light leading-relaxed text-blueGray-600">
+                                內建SEO搜尋引擎優化，增加網站被用戶搜尋到的機率。
+                            </li>
+                            <li class="mt-4 text-lg font-light leading-relaxed text-blueGray-600">
+                                客製化畫面設計，製作專屬於您的網站。
+                            </li>
+                            <li class="mt-4 text-lg font-light leading-relaxed text-blueGray-600">
+                                後台管理系統，讓您可以自由的修改網頁內容。
+                            </li>
+                            <li class="mt-4 text-lg font-light leading-relaxed text-blueGray-600">
+                                並且使用TDD方式開發，減少開發中測試程式邏輯所花費的時間成本。
+                            </li>
+                        </ol>
+                    </div>
 
-                        <div class="flex justify-center bottom">
-                            <div class="w-full h-full bg-white rounded-lg shadow-lg lg:w-full">
-                                <img :src="services.corporation.img" :alt="services.corporation.title"
-                                     class="w-full rounded-lg"/>
-                            </div>
+                    <div class="bottom">
+                        <div class="w-full h-full bg-white rounded-lg shadow-lg">
+                            <img :src="services.corporation.img" :alt="services.corporation.title"
+                                 class="w-full rounded-lg"/>
                         </div>
                     </div>
                 </div>
@@ -154,34 +148,32 @@
         </section>
 
         <section id="contact" class="py-20 bg-blueGray-800">
-            <div class="flex flex-wrap justify-center items-center">
-                <div class="container px-4 mx-auto md:px-14">
-                    <div class="w-full h-full">
-                        <div class="mb-20 text-center text">
-                            <h2 class="text-4xl text-white">聯絡我們</h2>
-                            <p class="mt-4 mb-4 text-lg leading-relaxed text-blueGray-400">
-                                如果我們收到訊息會盡快向您回復!
-                            </p>
-                        </div>
-                        <div class="grid grid-cols-1 gap-5 lg:grid-cols-2">
-                            <contact-info class="info"></contact-info>
-                            <message-form class="messageForm"></message-form>
-                        </div>
+            <div class="container px-4 mx-auto md:px-14">
+                <div class="w-full h-full">
+                    <div class="mb-20 text-center text">
+                        <h2 class="text-4xl text-white">聯絡我們</h2>
+                        <p class="mt-4 text-lg leading-relaxed text-blueGray-400">
+                            如果我們收到訊息會盡快向您回復!
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-1 gap-5 place-items-stretch lg:grid-cols-2">
+                        <contact-info class="info"></contact-info>
+                        <message-form class="messageForm"></message-form>
                     </div>
                 </div>
             </div>
         </section>
-    </main>
 
+    </main>
 </template>
 
 <script>
 import {onMounted} from "vue";
-import Carousel from "./Carousel";
+import Carousel from "../components/Carousel";
 import About from "./About";
 import ScrollReveal from "scrollreveal";
 import MessageForm from "../components/MessageForm";
-import ContactInfo from "./ContactInfo";
+import ContactInfo from "../components/ContactInfo";
 
 export default {
     components: {

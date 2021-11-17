@@ -23,7 +23,7 @@ class Message extends Model
 
     public function scopeFilter($query, array $filter)
     {
-        $query->when(isset($filter['search']), function ($query, $search) {
+        $query->when($filter['search'] ?? false, function ($query, $search) {
             $query->where(function ($query) use ($search) {
                 $query->where('title', 'like', '%' . $search . '%')
                     ->orWhere('content', 'like', '%' . $search . '%');

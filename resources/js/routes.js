@@ -1,6 +1,6 @@
 import Home from './views/frontend/Home';
 import Articles from './views/frontend/Articles';
-import Article from './views/articles/Show';
+import Article from './views/frontend/Article';
 import Products from './views/frontend/Products';
 import Login from './views/auth/Login';
 import Register from './views/auth/Register';
@@ -14,6 +14,7 @@ import Frontend from "./views/layouts/Frontend";
 import {createRouter, createWebHistory} from 'vue-router';
 import {store} from './store/index';
 import {apiLogout} from "./api/auth";
+import ArticlesLayout from "./views/layouts/ArticlesLayout";
 
 const routes = [
     {
@@ -30,18 +31,27 @@ const routes = [
             },
             {
                 path: 'articles',
-                component: Articles,
-                name: 'articles',
-                query: {
-                    search: null,
-                    tag: null,
-                    page: null
-                }
-            },
-            {
-                path: 'articles/:id',
-                component: Article,
-                name: 'showArticle',
+                component: ArticlesLayout,
+                meta: {
+                    requiresAuth: false
+                },
+                children: [
+                    {
+                        path: '',
+                        component: Articles,
+                        name: 'articles',
+                        query: {
+                            search: null,
+                            tag: null,
+                            page: null
+                        }
+                    },
+                    {
+                        path: ':slug',
+                        component: Article,
+                        name: 'article',
+                    }
+                ]
             },
             {
                 path: 'products',

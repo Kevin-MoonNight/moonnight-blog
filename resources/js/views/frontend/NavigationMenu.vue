@@ -8,7 +8,7 @@
             <ul class="hidden md:flex md:items-center">
                 <li v-for="link in links">
                     <router-link v-if="link.isShow" :to="link.data">
-                        <p class="px-3 py-2 ml-3 text-center hover:text-indigo-500">
+                        <p class="px-3 py-2 ml-3 text-center text-blueGray-800 hover:text-indigo-500">
                             {{ link.title }}
                         </p>
                     </router-link>

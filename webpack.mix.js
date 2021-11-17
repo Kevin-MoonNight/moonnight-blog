@@ -10,6 +10,6 @@ mix.js('resources/js/app.js', 'public/js').sourceMaps()
         require('tailwindcss'),
         require('autoprefixer'),
     ])
-    // .copyDirectory('resources/js/views/assets/images', 'public/images')
+    .copyDirectory('resources/js/views/assets/images', 'public/images')
     .version()
     .disableNotifications();

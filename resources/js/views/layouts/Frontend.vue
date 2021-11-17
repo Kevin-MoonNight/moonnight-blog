@@ -6,7 +6,7 @@
 <script>
 
 import NavigationMenu from '../frontend/NavigationMenu';
-import FooterComponent from "../frontend/FooterComponent";
+import FooterComponent from "../components/FooterComponent";
 
 export default {
     components: {

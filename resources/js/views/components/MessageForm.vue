@@ -1,7 +1,7 @@
 <template>
-    <div class="flex relative flex-col mb-6 w-full min-w-0 break-words rounded-lg shadow-lg bg-blueGray-200">
+    <div class="w-full break-words rounded-lg shadow-lg bg-blueGray-200">
         <div class="flex-auto p-5 lg:p-10">
-            <div class="relative mb-3 w-full">
+            <div class="mb-3 w-full">
                 <label htmlFor="name" class="block mb-2 ml-1 font-bold text-left uppercase text-md text-blueGray-600">
                     全名
                 </label>
@@ -9,7 +9,7 @@
                        class="input-style"/>
             </div>
 
-            <div class="relative mb-3 w-full">
+            <div class="mb-3 w-full">
                 <label htmlFor="email" class="block mb-2 ml-1 font-bold text-left uppercase text-md text-blueGray-600">
                     電子信箱
                 </label>
@@ -17,7 +17,7 @@
                        autocomplete="email" class="input-style">
             </div>
 
-            <div class="relative mb-3 w-full">
+            <div class="mb-3 w-full">
                 <label htmlFor="remark" class="block mb-2 ml-1 font-bold text-left uppercase text-md text-blueGray-600">
                     訊息
                 </label>
@@ -25,7 +25,7 @@
                           rows="4" cols="80" class="input-style"/>
             </div>
 
-            <div class="relative mb-3 w-full">
+            <div class="mb-3 w-full">
                 <label htmlFor="caseType"
                        class="block mb-2 ml-1 font-bold text-left uppercase text-md text-blueGray-600">
                     訊息

@@ -1,61 +1,58 @@
 <template>
-    <div v-show="items.total > 0" class="flex justify-center items-center px-10 py-2">
-        <div class="grid grid-cols-3 w-full">
+    <div v-show="items.total > 0" class="px-10 py-2">
+        <div class="grid grid-cols-3 w-full h-full">
 
-            <p>{{items.from}} - {{items.to}} of {{items.total}}</p>
-
-            <div class="flex justify-between">
-
-                <button @click="prevPage" class="p-2 text-gray-400 bg-gray-200 rounded-full duration-200 transform hover:bg-indigo-600 hover:text-gray-900">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-                    </svg>
-                </button>
-
-                <button @click="nextPage" class="p-2 text-gray-400 bg-gray-200 rounded-full duration-200 transform hover:bg-indigo-600 hover:text-gray-900">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-                    </svg>
-                </button>
-
-            </div>
-
-            <p class="flex justify-end">
-                {{items.current_page}}
+            <p class="flex justify-start items-center">
+                {{ items.from }} - {{ items.to }} of {{ items.total }}
             </p>
 
+            <div class="flex justify-between">
+                <button @click="prevPage"
+                        class="px-4 py-1 text-gray-400 bg-gray-200 rounded-sm duration-200 transform hover:bg-indigo-600 hover:text-gray-900">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+
+                <button @click="nextPage"
+                        class="px-4 py-1 text-gray-400 bg-gray-200 rounded-sm duration-200 transform hover:bg-indigo-600 hover:text-gray-900">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <p class="flex justify-end items-center">
+                {{ items.current_page }}
+            </p>
         </div>
     </div>
 </template>
 
 <script>
-    import {toRefs} from "vue";
-    import {useRouter,useRoute} from "vue-router";
+import {toRefs} from "vue";
+import {useRouter, useRoute} from "vue-router";
 
-    export default {
-        props:['items'],
-        setup(props){
-            const {items} = toRefs(props)
-            const router = useRouter()
-            const route = useRoute();
+export default {
+    props: ['items'],
+    setup(props) {
+        const {items} = toRefs(props)
+        const router = useRouter()
+        const route = useRoute();
 
-            const prevPage = () => {
-                if(items.value.prev_page_url !== null){
-                    const page = items.value.current_page - 1;
-                    router.push({name:'articles',query:Object.assign({}, route.query, {page:page})});
-                }
-            }
-            const nextPage = () => {
-                if(items.value.next_page_url !== null){
-                    const page = items.value.current_page + 1;
-                    router.push({name:'articles',query:Object.assign({}, route.query, {page:page})});
-                }
-            }
-
-            return {
-                prevPage,
-                nextPage
+        const prevPage = () => {
+            if (items.value.prev_page_url !== null) {
+                const page = items.value.current_page - 1;
+                router.push({name: 'articles', query: Object.assign({}, route.query, {page: page})});
             }
         }
+        const nextPage = () => {
+            if (items.value.next_page_url !== null) {
+                const page = items.value.current_page + 1;
+                router.push({name: 'articles', query: Object.assign({}, route.query, {page: page})});
+            }
+        }
+
+        return {
+            prevPage,
+            nextPage
+        }
     }
+}
 </script>

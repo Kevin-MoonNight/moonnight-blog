@@ -1,38 +1,23 @@
 <template>
-    <div class="flex justify-center bg-blueGray-200">
-        <div class="px-5 py-10 w-full max-w-screen-xl h-auto min-h-screen lg:px-10">
+    <div class="flex flex-wrap content-between px-4 min-h-screen md:px-0" :class="!isShow ? 'h-screen' : ''">
+        <search-input/>
 
-            <div class="flex justify-center mb-10">
-                <search-input/>
-            </div>
+        <p v-show="(articles.length === 0) && isShow" class="mt-10 w-full text-xl text-center text-red-500">
+            找不到文章!
+        </p>
 
-            <p class="text-xl text-center" v-show="(articles.length === 0) && isShow">
-                找不到文章!
-            </p>
-
-            <div class="flex gap-5 w-full h-auto">
-                <div class="md:w-4/5">
-                    <transition name="fade">
-                        <div v-show="isShow" class="grid grid-cols-1 gap-10 lg:grid-cols-2">
-                            <article-card v-for="article in articles" :key="'Articles ' + article.id"
-                                          :article="article"/>
-                        </div>
-                    </transition>
-                </div>
-
-                <div class="hidden w-1/4 select-none md:block">
-                    <div class="sticky top-24 space-y-5 w-full h-auto">
-                        <popular-side-box/>
-                        <tags-side-box/>
-                    </div>
-                </div>
-            </div>
-
+        <div v-if="!isShow" class="flex flex-wrap place-content-center w-full h-full">
+            <loading-icon/>
         </div>
-    </div>
+        <transition name="fade">
+            <div v-if="isShow" class="mt-10 space-y-10 w-full h-auto">
+                <article-card v-for="article in articles" :key="article" :article="article"/>
+            </div>
+        </transition>
 
-    <div class="flex justify-center bg-white">
-        <paginator class="w-full max-w-screen-xl" :items="response"/>
+        <div class="mt-10 w-full h-auto bg-white rounded-sm">
+            <paginator :items="response"/>
+        </div>
     </div>
 </template>
 
@@ -43,16 +28,14 @@ import {useRoute} from "vue-router";
 import ArticleCard from "../articles/ArticleCard";
 import Paginator from "../components/Paginator";
 import SearchInput from "../components/SearchBox";
-import PopularSideBox from "../articles/PopularSideBox";
-import TagsSideBox from "../articles/TagsSideBox";
+import LoadingIcon from "../components/LoadingIcon";
 
 export default {
     components: {
+        LoadingIcon,
         ArticleCard,
         Paginator,
         SearchInput,
-        PopularSideBox,
-        TagsSideBox
     },
     setup() {
         const route = useRoute();
@@ -61,7 +44,6 @@ export default {
         const isShow = ref(false);
 
         const params = computed(() => route.query);
-
         const getArticles = async () => {
             isShow.value = false;
             await Promise.all([apiGetArticles(params.value)])
@@ -69,10 +51,9 @@ export default {
                     articles.value = results[0].data.data
                     response.value = results[0].data;
                     isShow.value = true;
-                }).catch((error) => {
-
                 });
         }
+
         onBeforeMount(getArticles);
         watch(params, getArticles);
 

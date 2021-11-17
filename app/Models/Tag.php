@@ -22,7 +22,7 @@ class Tag extends Model
 
     public function scopeFilter($query, array $filter)
     {
-        $query->when(isset($filter['search']), function ($query, $search) {
+        $query->when($filter['search'] ?? false, function ($query, $search) {
             $query->where('slug', 'like', '%' . $search . '%');
         });
     }

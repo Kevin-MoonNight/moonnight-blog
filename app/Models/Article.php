@@ -46,25 +46,25 @@ class Article extends Model
 
     public function scopeFilter($query, array $filters)
     {
-        $query->when(isset($filters['search']), function ($query, $search) {
+        $query->when($filters['search'] ?? false, function ($query, $search) {
             $query->where(function ($query) use ($search) {
                 $query->where('title', 'like', '%' . $search . '%')
                     ->orWhere('content', 'like', '%' . $search . '%');
             });
         });
 
-        $query->when(isset($filters['tag']), function ($query, $tag) {
+        $query->when($filters['tag'] ?? false, function ($query, $tag) {
             $query->whereRelation('tags', 'name', '=', $tag);
         });
 
-        $query->when(isset($filters['author']), function ($query, $author) {
+        $query->when($filters['author'] ?? false, function ($query, $author) {
             $query->whereRelation('author', 'name', '=', $author);
         });
     }
 
     public function scopePopular($query)
     {
-        return $query->orderBy('views','desc');
+        return $query->orderBy('views', 'desc');
     }
 
     public function getRouteKeyName()

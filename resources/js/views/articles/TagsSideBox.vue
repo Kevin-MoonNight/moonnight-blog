@@ -1,47 +1,46 @@
 <template>
-    <transition name="fade">
-        <side-box v-show="isShow" :name="'所有標籤'">
-            <p v-for="tag in tags" :key="'TagsSideBox ' + tag.id" @click="queryTag(tag.name)"
-               class="w-auto px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-full text-sm cursor-pointer">
-
-                {{ tag.name }}
-            </p>
-        </side-box>
-    </transition>
+    <side-box :name="'所有標籤'" :is-show="isShow">
+        <p v-for="tag in tags" :key="'TagsSideBox ' + tag.slug" @click="queryTag(tag.slug)"
+           class="px-4 py-1 w-auto text-sm rounded-sm cursor-pointer bg-blueGray-200 hover:text-indigo-500 hover:bg-blueGray-300">
+            {{ tag.name }}
+        </p>
+    </side-box>
 </template>
 <script>
-    import SideBox from "../components/SideBox";
-    import {apiGetTags} from "../../api/tag";
-    import {ref, onBeforeMount} from "vue";
-    import {useRouter} from "vue-router";
+import SideBox from "../components/SideBox";
+import {apiGetTags} from "../../api/tag";
+import {ref, onBeforeMount} from "vue";
+import {useRouter} from "vue-router";
+import LoadingIcon from "../components/LoadingIcon";
 
-    export default {
-        components:{
-            SideBox,
-        },
-        setup(){
-            const tags = ref([]);
-            const isShow = ref(false);
-            onBeforeMount(async () => {
-                isShow.value = false;
-                await Promise.all([apiGetTags()])
-                    .then((results) => {
-                        tags.value = results[0].data;
-                        isShow.value = true;
-                    });
-            })
+export default {
+    components: {
+        LoadingIcon,
+        SideBox,
+    },
+    setup() {
+        const tags = ref([]);
+        const isShow = ref(false);
+        onBeforeMount(async () => {
+            isShow.value = false;
+            await Promise.all([apiGetTags()])
+                .then((results) => {
+                    tags.value = results[0].data;
+                    isShow.value = true;
+                });
+        })
 
-            const router = useRouter();
-            //搜尋擁有該標籤的文章
-            const queryTag = (tag) => {
-                router.push({name:'articles',query:{tag:tag}})
-            }
+        const router = useRouter();
+        //搜尋擁有該標籤的文章
+        const queryTag = (slug) => {
+            router.push({name: 'articles', query: {tag: slug}})
+        }
 
-            return {
-                tags,
-                isShow,
-                queryTag
-            }
+        return {
+            tags,
+            isShow,
+            queryTag
         }
     }
+}
 </script>

@@ -21,10 +21,11 @@
     <link href="https://cdn.iconmonstr.com/1.3.0/css/iconmonstr-iconic-font.min.css"
           rel="stylesheet">
     <script src="https://kit.fontawesome.com/240a2f8f32.js" crossorigin="anonymous"></script>
+    <base href="{{ env('APP_URL','http://localhost:8000/') }}" target="_self">
 </head>
 <body class="">
-    <div id="app">
-    </div>
+<div id="app">
+</div>
 </body>
 </html>
 
