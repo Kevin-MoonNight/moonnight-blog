@@ -46,6 +46,7 @@
         "spinkit": "^2.0.1",
         "swiper": "^7.2.0",
         "vanilla-tilt": "^1.7.2",
+        "vue-meta": "^3.0.0-alpha.9",
         "vuex": "^4.0.2",
         "vuex-persistedstate": "^4.1.0"
     }

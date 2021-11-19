@@ -188,15 +188,15 @@ export default {
             about: "../../../images/about.svg",
             services: {
                 algorithm: {
-                    title: "演算法程式開發",
+                    title: "演算法程式設計",
                     img: "../../../images/algorithm.svg"
                 },
                 IndependentStudy: {
-                    title: "專題程式開發",
+                    title: "專題程式設計",
                     img: "../../../images/IndependentStudy.svg"
                 },
                 thesis: {
-                    title: "論文程式開發",
+                    title: "論文程式設計",
                     img: "../../../images/thesis.svg"
                 },
                 website: {
@@ -204,7 +204,7 @@ export default {
                     img: "../../../images/website.svg"
                 },
                 desktop: {
-                    title: "桌面軟體開發",
+                    title: "桌面軟體設計",
                     img: "../../../images/desktop.svg"
                 },
                 corporation: {

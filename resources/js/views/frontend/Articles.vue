@@ -15,8 +15,8 @@
             </div>
         </transition>
 
-        <div class="mt-10 w-full h-auto bg-white rounded-sm">
-            <paginator :items="response"/>
+        <div v-if="isShow" class="mt-10 w-full h-auto bg-white rounded-sm">
+            <paginator :items="response" :url="'articles'"/>
         </div>
     </div>
 </template>
@@ -36,6 +36,11 @@ export default {
         ArticleCard,
         Paginator,
         SearchInput,
+    },
+    metaInfo() {
+        return {
+            title: '文章'
+        }
     },
     setup() {
         const route = useRoute();

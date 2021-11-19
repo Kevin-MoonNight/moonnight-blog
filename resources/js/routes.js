@@ -15,6 +15,7 @@ import {createRouter, createWebHistory} from 'vue-router';
 import {store} from './store/index';
 import {apiLogout} from "./api/auth";
 import ArticlesLayout from "./views/layouts/ArticlesLayout";
+import {toLogin} from "./api/utils";
 
 const routes = [
     {
@@ -127,7 +128,11 @@ const scrollBehavior = function (to, from, savedPosition) {
         };
         window.scrollTo(options);
     } else {
-        return savedPosition;
+        const options = {
+            top: 0
+            // behavior: 'smooth'
+        };
+        window.scrollTo(options);
     }
 }
 

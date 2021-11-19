@@ -52,11 +52,12 @@
     </div>
 </template>
 <script>
-import {computed, onBeforeMount, ref, watch} from "vue";
+import {computed, onBeforeMount, onMounted, ref, watch} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {apiGetArticle} from "../../api/article";
 import moment from "moment";
 import LoadingIcon from "../components/LoadingIcon";
+import {useMeta} from 'vue-meta'
 
 export default {
     components: {LoadingIcon},
@@ -76,14 +77,26 @@ export default {
                         article.value = results[0].data;
                         author.value = results[0].data.author;
                         isShow.value = true;
+
                     }).catch(() => {
                         fallback();
                     })
             }
         };
 
-        onBeforeMount(getArticle);
+        const computedMeta = computed(() => ({
+            title: `${article.value.title}`,
+            description: {
+                content: `${article.value.excerpt}`
+            }
+        }))
+        const {meta} = useMeta(computedMeta);
+
+        onBeforeMount(async () => {
+            await getArticle();
+        });
         watch(slug, getArticle);
+
 
         const router = useRouter();
         //返回文章列表

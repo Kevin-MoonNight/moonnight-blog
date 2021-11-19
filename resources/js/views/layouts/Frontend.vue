@@ -1,7 +1,7 @@
 <template>
-    <navigation-menu />
+    <navigation-menu/>
     <router-view></router-view>
-    <footerComponent />
+    <footerComponent/>
 </template>
 <script>
 
