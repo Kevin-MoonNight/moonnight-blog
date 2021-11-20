@@ -1,5 +1,5 @@
 <template>
-    <footer class="select-none pt-8 pb-4 bg-blueGray-800">
+    <footer class="pt-8 pb-4 select-none bg-blueGray-800">
         <div class="container px-4 mx-auto">
             <div class="flex flex-wrap text-center lg:text-left">
                 <div class="px-4 w-full lg:w-6/12">
@@ -42,7 +42,7 @@
                 </div>
                 <div class="px-4 w-full lg:w-6/12">
                     <div class="flex flex-wrap mb-6 items-top">
-                        <address class="px-4 ml-auto w-full lg:w-4/12">
+                        <address class="px-4 ml-auto w-full not-italic lg:w-4/12">
                             <span class="block mb-2 font-bold uppercase text-blueGray-300 text-md">聯絡資訊</span>
                             <ul class="list-unstyled">
                                 <li id="email" v-clipboard:copy="email" v-clipboard:success="onCopy" :title="email">

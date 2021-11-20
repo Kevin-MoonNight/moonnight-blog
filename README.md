@@ -18,6 +18,7 @@
 - <a href="https://ckeditor.com/docs/ckeditor5/latest/index.html">ckeditor/ckeditor5-build-decoupled-document</a> 文字編輯器 
 - <a href="https://popper.js.org/">popper.js</a> 提示方框
 - <a href="https://tobiasahlin.com/spinkit/">SpinKit</a> 載入特效
+- <a href="https://github.com/nuxt/vue-meta">vue-meta</a> 動態更改meta
 
 ## 後端使用到的套件
 - <a href="https://github.com/Intervention/image">intervention/image</a> 調整圖片大小
