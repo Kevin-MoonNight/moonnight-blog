@@ -13,7 +13,7 @@
                 <label htmlFor="email" class="block mb-2 ml-1 font-bold text-left uppercase text-md text-blueGray-600">
                     電子信箱
                 </label>
-                <input v-model="message.email" type="text" name="email" id="email" placeholder="電子信箱"
+                <input v-model="message.email" type="email" name="email" id="email" placeholder="電子信箱"
                        autocomplete="email" class="input-style">
             </div>
 

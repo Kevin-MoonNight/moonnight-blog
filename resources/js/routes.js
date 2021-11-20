@@ -13,9 +13,9 @@ import Backend from "./views/layouts/Backend";
 import Frontend from "./views/layouts/Frontend";
 import {createRouter, createWebHistory} from 'vue-router';
 import {store} from './store/index';
-import {apiLogout} from "./api/auth";
 import ArticlesLayout from "./views/layouts/ArticlesLayout";
-import {toLogin} from "./api/utils";
+import {logout} from "./api/utils";
+import {addToken} from "./api/https";
 
 const routes = [
     {
@@ -59,6 +59,16 @@ const routes = [
                 component: Products,
                 name: 'products'
             },
+            {
+                path: '/login',
+                component: Login,
+                name: 'login'
+            },
+            {
+                path: '/register',
+                component: Register,
+                name: 'register',
+            },
         ]
     },
     {
@@ -96,29 +106,14 @@ const routes = [
         ]
     },
     {
-        path: '/login',
-        component: Login,
-        name: 'login'
-    },
-    {
         path: '/logout',
         name: 'logout',
-        beforeEnter: [logout]
-    },
-    {
-        path: '/register',
-        component: Register,
-        name: 'register'
+        beforeEnter: [logout],
+        meta: {
+            requiresAuth: true
+        }
     },
 ]
-
-async function logout() {
-    await Promise.all([apiLogout()])
-        .then((results) => {
-            store.dispatch('logout');
-            router.push({name: 'home'});
-        });
-}
 
 const scrollBehavior = function (to, from, savedPosition) {
     if (to.hash) {
@@ -130,7 +125,6 @@ const scrollBehavior = function (to, from, savedPosition) {
     } else {
         const options = {
             top: 0
-            // behavior: 'smooth'
         };
         window.scrollTo(options);
     }
@@ -144,6 +138,12 @@ export const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     const isAuthenticated = store.state.auth.isAuth;
+
+    //防止網頁重整axios的token不見
+    if (isAuthenticated) {
+        addToken(store.state.auth.token);
+    }
+
     if (!isAuthenticated && to.meta.requiresAuth) next('Login')
     else next();
 })

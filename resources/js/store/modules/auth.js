@@ -21,12 +21,12 @@ export default {
     },
     actions: {
         login(context, data) {
-            addToken(data.token)
             context.commit('login', data);
+            addToken(data.token);
         },
         logout(context) {
-            deleteToken()
             context.commit('logout');
+            deleteToken();
         }
     }
 }
