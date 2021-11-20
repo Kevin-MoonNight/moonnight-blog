@@ -42,7 +42,7 @@
                 </div>
                 <div class="px-4 w-full lg:w-6/12">
                     <div class="flex flex-wrap mb-6 items-top">
-                        <div class="px-4 ml-auto w-full lg:w-4/12">
+                        <address class="px-4 ml-auto w-full lg:w-4/12">
                             <span class="block mb-2 font-bold uppercase text-blueGray-300 text-md">聯絡資訊</span>
                             <ul class="list-unstyled">
                                 <li id="email" v-clipboard:copy="email" v-clipboard:success="onCopy" :title="email">
@@ -61,7 +61,7 @@
                                     </p>
                                 </li>
                             </ul>
-                        </div>
+                        </address>
 
                         <div class="px-4 ml-auto w-full lg:w-4/12">
                             <span class="block mb-2 font-bold uppercase text-blueGray-300 text-md">所有連結</span>

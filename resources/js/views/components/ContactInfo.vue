@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="grid grid-cols-1 gap-5 group md:grid-cols-3">
+        <address class="grid grid-cols-1 gap-5 group md:grid-cols-3">
             <div :title="email"
                  v-clipboard:copy="email" v-clipboard:success="onCopy"
                  class="px-4 w-full text-center cursor-pointer">
@@ -38,7 +38,7 @@
                     {{ address }}
                 </p>
             </div>
-        </div>
+        </address>
 
         <div id="map" class="w-full h-96"></div>
     </div>

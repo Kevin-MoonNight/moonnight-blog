@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen bg-white shadow-md md:rounded-md" :class="!isShow ? 'h-screen' : ''">
+    <article class="min-h-screen bg-white shadow-md md:rounded-md" :class="!isShow ? 'h-screen' : ''">
         <div v-if="!isShow" class="flex flex-wrap place-content-center w-full h-full">
             <loading-icon/>
         </div>
@@ -13,22 +13,22 @@
                 </div>
 
                 <div class="mt-5">
-                    <div class="mb-5 text-4xl">
+                    <h1 class="mb-5 text-4xl">
                         {{ article.title }}
-                    </div>
+                    </h1>
 
                     <div class="mb-5 h-60">
                         <img class="object-none object-center w-full h-full" alt="圖片無法載入..."
                              v-bind:src="article.thumbnail">
                     </div>
 
-                    <div class="mb-5 text-xl text-blueGray-500">
+                    <h2 class="mb-5 text-xl text-blueGray-500">
                         {{ article.excerpt }}
-                    </div>
+                    </h2>
 
                     <hr class="my-4 border-blueGray-300"/>
 
-                    <div v-html="article.content" class="text-2xl"></div>
+                    <h3 v-html="article.content" class="text-2xl"></h3>
                 </div>
 
                 <div class="flex flex-wrap gap-2 mt-20 w-full h-auto">
@@ -49,10 +49,10 @@
                 </div>
             </div>
         </transition>
-    </div>
+    </article>
 </template>
 <script>
-import {computed, onBeforeMount, onMounted, ref, watch} from "vue";
+import {computed, onBeforeMount, ref, watch} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {apiGetArticle} from "../../api/article";
 import moment from "moment";

@@ -1,5 +1,5 @@
 <template>
-    <div @click="toArticle(article.slug)"
+    <div @click="toArticle(article.slug)" :title="article.title"
          class="block w-full h-60 bg-white rounded-md shadow-md cursor-pointer group hover:shadow-lg">
         <div class="grid grid-cols-3 w-full">
             <div class="col-span-2 p-4 h-60">
@@ -7,12 +7,12 @@
                     <p class="">
                         {{ article.author.name + '．' + date(article.created_at) }}
                     </p>
-                    <p class="mt-3 text-2xl font-bold">
+                    <h1 class="mt-3 text-2xl font-bold">
                         {{ article.title }}
-                    </p>
-                    <p class="my-3 text-gray-600">
+                    </h1>
+                    <h2 class="my-3 text-gray-600">
                         {{ article.excerpt }}
-                    </p>
+                    </h2>
                 </div>
 
                 <div class="flex overflow-x-auto items-end h-1/5">
@@ -24,7 +24,8 @@
             </div>
 
             <div class="object-cover col-span-1 h-60 bg-white rounded-r-md">
-                <img class="object-none object-center w-full h-full rounded-r-md" alt="圖片無法載入..." v-bind:src="article.thumbnail">
+                <img class="object-none object-center w-full h-full rounded-r-md" alt="圖片無法載入..."
+                     v-bind:src="article.thumbnail">
             </div>
         </div>
     </div>
