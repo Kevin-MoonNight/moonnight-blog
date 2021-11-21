@@ -17,11 +17,13 @@
 </template>
 
 <script>
-import {onBeforeMount, ref} from "vue";
+import {onBeforeMount, ref, toRefs} from "vue";
 import {useRoute, useRouter} from "vue-router";
 
 export default {
-    setup() {
+    props: ['link'],
+    setup(props) {
+        const {link} = toRefs(props);
         const text = ref('');
         const router = useRouter();
         const route = useRoute();
@@ -43,7 +45,7 @@ export default {
                     Object.assign(query.value, {tag: route.query.tag})
                 }
 
-                router.push({name: 'articles', query: query.value});
+                router.push({name: link.value, query: query.value});
             }
         }
 

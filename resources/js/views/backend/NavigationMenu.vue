@@ -19,7 +19,7 @@
 
     <transition name="fade">
         <div v-if="isOpen" class="flex fixed z-50 w-full h-full xl:hidden">
-            <nav class="overflow-y-auto py-8 w-2/4 h-full md:w-1/4 text-blueGray-200 bg-blueGray-800">
+            <nav class="overflow-y-auto py-8 w-3/4 h-full md:w-1/4 text-blueGray-200 bg-blueGray-800">
 
                 <div class="px-6 py-4 w-full text-indigo-500">
                     <p class="text-2xl">MoonNight</p>
@@ -35,7 +35,7 @@
 
             </nav>
 
-            <div class="w-2/4 h-full bg-opacity-30 md:w-3/4 bg-blueGray-700" @click="isOpen = false"></div>
+            <div class="w-1/4 h-full bg-opacity-30 md:w-3/4 bg-blueGray-700" @click="isOpen = false"></div>
         </div>
     </transition>
 </template>
@@ -68,7 +68,7 @@ export default {
                         {
                             name: '所有文章',
                             link: {
-                                name: 'articlesManager'
+                                name: 'managesArticle'
                             },
                             icon:
                                 `<i class="fas fa-list"></i>`,
@@ -77,7 +77,7 @@ export default {
                         {
                             name: '新增文章',
                             link: {
-                                name: 'articlesCreate'
+                                name: 'createArticle'
                             },
                             icon:
                                 `<i class="fas fa-plus"></i>`,

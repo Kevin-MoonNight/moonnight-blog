@@ -74,7 +74,7 @@ class ArticlesController extends Controller
         if (Gate::any(['admin', 'article'], $article)) {
             return $article->delete();
         } else {
-            abort(404);
+            abort(403);
         }
     }
 
@@ -106,7 +106,7 @@ class ArticlesController extends Controller
         if (Gate::any(['admin', 'article'], $article)) {
             return Article::onlyTrashed()->findOrFail($article->id)->restore();
         } else {
-            abort(404);
+            abort(403);
         }
     }
 
@@ -115,7 +115,7 @@ class ArticlesController extends Controller
         if (Gate::any(['admin', 'article'], $article)) {
             return Article::onlyTrashed()->findOrFail($article->id)->forceDelete();
         } else {
-            abort(404);
+            abort(403);
         }
     }
 

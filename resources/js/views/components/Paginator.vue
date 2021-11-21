@@ -30,22 +30,22 @@ import {toRefs} from "vue";
 import {useRouter, useRoute} from "vue-router";
 
 export default {
-    props: ['items', 'url'],
+    props: ['items', 'link'],
     setup(props) {
-        const {items, url} = toRefs(props);
+        const {items, link} = toRefs(props);
         const router = useRouter();
         const route = useRoute();
 
         const prevPage = () => {
             if (items.value.prev_page_url !== null) {
                 const page = items.value.current_page - 1;
-                router.push({name: url.value, query: Object.assign({}, route.query, {page: page})});
+                router.push({name: link.value, query: Object.assign({}, route.query, {page: page})});
             }
         }
         const nextPage = () => {
             if (items.value.next_page_url !== null) {
                 const page = items.value.current_page + 1;
-                router.push({name: url.value, query: Object.assign({}, route.query, {page: page})});
+                router.push({name: link.value, query: Object.assign({}, route.query, {page: page})});
             }
         }
 

@@ -1,56 +1,63 @@
 <template>
-    <div class="w-full h-auto pb-10">
-        <div class="w-full h-auto bg-white rounded-md">
-            <div class="overflow-x-auto">
-                <article-list v-bind:is-show="isShow" v-bind:articles="articles" v-bind:refresh-articles="getArticles"></article-list>
+    <search-box :link="'managesArticle'"/>
+
+    <div class="mt-10 bg-white rounded-sm shadow-md">
+        <div class="overflow-x-auto w-full h-full min-h-screen" :class="!isShow ? 'h-screen' : ''">
+            <div v-if="!isShow" class="flex flex-wrap place-content-center w-full h-full">
+                <loading-icon/>
             </div>
-            <paginator class="py-4" v-bind:items="response" v-bind:update-url="updateUrl" />
+
+            <article-list :articles="articles" :refresh-articles="getArticles" :is-show="isShow"/>
+            <p v-show="articles.length === 0" class="mt-10 w-full text-xl text-center text-red-500">找不到文章!</p>
         </div>
+    </div>
+    <div v-if="isShow" class="mt-10 w-full h-auto bg-white rounded-sm">
+        <paginator :items="response" :url="'managesArticle'"/>
     </div>
 </template>
 
 <script>
-    import ArticleList from './ArticleList';
-    import paginator from "../components/Paginator";
-    import {ref, watchEffect} from "vue";
-    import {apiArticles} from "../../api/article";
+import ArticleList from '../articles/ArticleList';
+import paginator from "../components/Paginator";
+import {computed, onBeforeMount, ref, watch} from "vue";
+import {apiGetArticles} from "../../api/article";
+import SearchBox from "../components/SearchBox";
+import LoadingIcon from "../components/LoadingIcon";
+import {useRoute} from "vue-router";
 
-    export default {
-        components: {
-            paginator,
-            ArticleList
-        },
-        setup(){
-            const articles = ref([]);
-            const response = ref({});
-            const isShow = ref(false);
+export default {
+    components: {
+        LoadingIcon,
+        SearchBox,
+        paginator,
+        ArticleList
+    },
+    setup() {
+        const route = useRoute();
+        const articles = ref([]);
+        const response = ref({});
+        const isShow = ref(false);
 
-            const url = ref('/articles');
-            function updateUrl(newUrl){
-                if(newUrl !== null && newUrl !== url.value){
-                    url.value = newUrl;
-                }
-            };
+        const params = computed(() => route.query);
+        const getArticles = async () => {
+            isShow.value = false;
+            await Promise.all([apiGetArticles(params.value)])
+                .then((results) => {
+                    articles.value = results[0].data.data
+                    response.value = results[0].data;
+                    isShow.value = true;
+                });
+        }
 
-            const getArticles = async () =>{
-                isShow.value = false;
-                await Promise.all([apiArticles(url.value)])
-                    .then((results) => {
-                        articles.value = results[0].data.data
-                        response.value = results[0].data;
-                        isShow.value=true;
-                    });
-            };
+        onBeforeMount(getArticles);
+        watch(params, getArticles);
 
-            watchEffect(getArticles);
-
-            return {
-                articles,
-                response,
-                isShow,
-                updateUrl,
-                getArticles
-            }
+        return {
+            articles,
+            response,
+            isShow,
+            getArticles
         }
     }
+}
 </script>

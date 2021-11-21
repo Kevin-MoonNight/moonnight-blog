@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-wrap content-between px-4 min-h-screen md:px-0" :class="!isShow ? 'h-screen' : ''">
-        <search-input/>
+        <search-box :link="'articles'"/>
 
         <p v-show="(articles.length === 0) && isShow" class="mt-10 w-full text-xl text-center text-red-500">
             找不到文章!
@@ -16,7 +16,7 @@
         </transition>
 
         <div v-if="isShow" class="mt-10 w-full h-auto bg-white rounded-sm">
-            <paginator :items="response" :url="'articles'"/>
+            <paginator :items="response" :link="'articles'"/>
         </div>
     </div>
 </template>
@@ -27,7 +27,7 @@ import {apiGetArticles} from "../../api/article";
 import {useRoute} from "vue-router";
 import ArticleCard from "../articles/ArticleCard";
 import Paginator from "../components/Paginator";
-import SearchInput from "../components/SearchBox";
+import SearchBox from "../components/SearchBox";
 import LoadingIcon from "../components/LoadingIcon";
 
 export default {
@@ -35,7 +35,7 @@ export default {
         LoadingIcon,
         ArticleCard,
         Paginator,
-        SearchInput,
+        SearchBox,
     },
     metaInfo() {
         return {
