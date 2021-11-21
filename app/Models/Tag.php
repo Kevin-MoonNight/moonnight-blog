@@ -10,12 +10,12 @@ class Tag extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id',
         'name',
         'slug'
     ];
 
     protected $hidden = [
-        'id',
         'created_at',
         'updated_at'
     ];
@@ -23,7 +23,11 @@ class Tag extends Model
     public function scopeFilter($query, array $filter)
     {
         $query->when($filter['search'] ?? false, function ($query, $search) {
-            $query->where('slug', 'like', '%' . $search . '%');
+            $query->where(function ($query) use ($search) {
+                $query->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('slug', 'like', '%' . $search . '%');
+            });
+
         });
     }
 

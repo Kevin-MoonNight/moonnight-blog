@@ -1,146 +1,151 @@
 <template>
     <transition name="fade">
-        <div v-show="isShow" class="w-full h-auto pb-10">
-            <div class="w-full h-auto bg-white rounded-md">
-                <div class="p-5 space-y-5 mb-10">
-                    <div class ="">
-                        <label for="title" class="block text-lg text-gray-700">標題</label>
-                        <input v-model="article.title" id="title" type="text" name="title" placeholder ="標題" class="input-style">
-
-                        <p v-for="error in errors.title"
-                           class="text-red-600 mt-2 text-sm"
-                        >{{error}}</p>
-                    </div>
-
-                    <div class ="">
-                        <label for="thumbnail" class="block text-lg text-gray-700">縮圖</label>
-                        <input type="file" @change="previewFiles($event)" id="thumbnail" name="thumbnail" placeholder ="縮圖">
-
-                        <p v-for="error in errors.thumbnail"
-                           class="text-red-600 mt-2 text-sm"
-                        >{{error}}</p>
-                    </div>
-
-                    <div class ="">
-                        <label class="block text-lg text-gray-700">內容</label>
-                        <ckeditor :editor="editor" v-model="article.content" @ready="onReady"></ckeditor>
-
-                        <p v-for="error in errors.content"
-                           class="text-red-600 mt-2 text-sm"
-                        >{{error}}</p>
-                    </div>
-
-                    <div class="">
-                        <label for="tags" class="block text-lg text-gray-700">標籤</label>
-                        <select v-model="article.tags" id="tags" size="10" multiple class="w-1/5 input-style">
-                            <option v-for="tag in tagList" :value="tag.id">{{tag.name}}</option>
-                        </select>
-                    </div>
-
+        <div v-show="isShow" class="w-full h-auto bg-white rounded-sm shadow-md">
+            <div class="p-5">
+                <div class="w-full">
+                    <label htmlFor="title"
+                           class="block mb-2 ml-1 font-bold text-left uppercase text-md text-blueGray-600">
+                        標題
+                    </label>
+                    <input v-model="article.title" id="title" type="text" name="title" placeholder="標題"
+                           class="input-style">
+                </div>
+                <div class="mt-4 w-full">
+                    <label htmlFor="slug"
+                           class="block mb-2 ml-1 font-bold text-left uppercase text-md text-blueGray-600">
+                        slug
+                    </label>
+                    <input v-model="article.slug" id="slug" type="text" name="title" placeholder="slug"
+                           class="input-style">
+                </div>
+                <div class="mt-4 w-full">
+                    <label htmlFor="thumbnail"
+                           class="block mb-2 ml-1 font-bold text-left uppercase text-md text-blueGray-600">
+                        縮圖
+                    </label>
+                    <input type="file" @change="previewFiles($event)" id="thumbnail" name="thumbnail"
+                           placeholder="縮圖">
                 </div>
 
-                <div class="flex justify-between items-end p-5">
-                    <select v-model="article.state" class="p-3 rounded-md border-2 hover:border-black" name="state">
+                <div class="mt-4 w-full">
+                    <label htmlFor="excerpt"
+                           class="block mb-2 ml-1 font-bold text-left uppercase text-md text-blueGray-600">
+                        摘要
+                    </label>
+                    <input v-model="article.excerpt" id="excerpt" type="text" name="title" placeholder="摘要"
+                           class="input-style">
+                </div>
+
+                <div class="mt-4 w-full">
+                    <label class="block mb-2 ml-1 font-bold text-left uppercase text-md text-blueGray-600">內容</label>
+                    <ckeditor :editor="editor" v-model="article.content" @ready="onReady"></ckeditor>
+                </div>
+
+                <div class="mt-4 w-full">
+                    <label htmlFor="tags"
+                           class="block mb-2 ml-1 font-bold text-left uppercase text-md text-blueGray-600">
+                        標籤
+                    </label>
+                    <select v-model="article.tags" id="tags" size="10" multiple class="input-style">
+                        <option v-for="tag in tags" :value="tag.id">{{ tag.name }}</option>
+                    </select>
+                </div>
+
+                <div class="flex justify-between mt-4 w-full">
+                    <select v-model="article.state"
+                            class="px-6 py-3 mr-1 mb-1 font-medium text-left text-white uppercase rounded shadow transition-all duration-150 ease-linear outline-none text-md bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none"
+                            name="state">
                         <option value="1">發布</option>
                         <option value="0">草稿</option>
                     </select>
 
-
-                    <p v-for="error in errors.state"
-                       class="text-red-600 mt-2 text-sm"
-                    >{{error}}</p>
-
-                    <button @click="addArticle" class="rounded-md p-3 bg-blue-500 text-white hover:bg-blue-600">新增文章</button>
+                    <button @click="addArticle"
+                            class="px-6 py-3 mr-1 mb-1 font-medium text-left text-white uppercase rounded shadow transition-all duration-150 ease-linear outline-none text-md bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none">
+                        新增文章
+                    </button>
                 </div>
-
             </div>
-
         </div>
     </transition>
 </template>
 
 <script>
-    import {onBeforeMount, ref} from "vue";
-    import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
-    import {useRouter} from "vue-router";
-    import {apiCreateArticle} from "../../api/article";
-    import {apiGetTags} from "../../api/tag";
-    import {useStore} from "vuex";
+import {onBeforeMount, ref} from "vue";
+import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
+import {useRouter} from "vue-router";
+import {apiCreateArticle} from "../../api/article";
+import {apiGetTags} from "../../api/tag";
+import {useStore} from "vuex";
 
-    export default {
-        data() {
-            return {
-                editor: DecoupledEditor,
-            };
-        },
-        setup(){
-            const tagList = ref([]);
-            const isShow = ref(false);
-            const getData = async ()=>{
-                await Promise.all([apiGetTags()])
-                    .then((results) => {
-                        tagList.value = results[0].data;
-                        isShow.value = true;
-                    });
+export default {
+    data() {
+        return {
+            editor: DecoupledEditor,
+        };
+    },
+    setup() {
+        const tags = ref([]);
+        const isShow = ref(false);
+        const getData = async () => {
+            await Promise.all([apiGetTags()])
+                .then((results) => {
+                    tags.value = results[0].data;
+                    isShow.value = true;
+                });
+        }
+
+        onBeforeMount(getData);
+        let data = new FormData();
+        const article = ref({
+            title: 'test1',
+            slug: 'test1',
+            excerpt: 'test article',
+            content: 'test test test test',
+            thumbnail: null,
+            tags: [],
+            state: 0
+        });
+
+        const router = useRouter();
+        const store = useStore();
+        const addArticle = async () => {
+            //todo 改善data.append 用foreach實現
+            data.append('title', article.value.title);
+            data.append('slug', article.value.slug);
+            data.append('excerpt', article.value.excerpt);
+            data.append('content', article.value.content);
+            for (let i = 0; i < article.value.tags.length; i++) {
+                data.append('tags[]', article.value.tags[i]);
             }
 
-            onBeforeMount(getData);
-            let data = new FormData();
-            const article = ref({
-                title:'test1',
-                content:'test',
-                thumbnail:null,
-                tags:[],
-                state:0
-            });
+            data.append('state', article.value.state);
+            await Promise.all([apiCreateArticle(data)])
+                .then((response) => {
+                    store.dispatch('addNotice', {message: '文章新增成功!', color: true});
+                    router.push({name: 'managesArticle'});
+                });
+        };
 
-            const errors = ref({
-                title:[],
-                content:[],
-                thumbnail:[],
-                state:[],
-            });
-            const router = useRouter();
-            const store = useStore();
-            const addArticle = async () => {
-                data.append('title',article.value.title);
-                data.append('content',article.value.content);
+        function previewFiles(event) {
+            data.append('thumbnail', event.target.files[0]);
+        }
 
-                for (let i = 0; i < article.value.tags.length; i++) {
-                    data.append('tags[]', article.value.tags[i]);
-                }
+        function onReady(editor) {
+            // Insert the toolbar before the editable area.
+            editor.ui.getEditableElement().parentElement.insertBefore(
+                editor.ui.view.toolbar.element,
+                editor.ui.getEditableElement()
+            );
+        }
 
-                data.append('state', article.value.state);
-                await Promise.all([apiCreateArticle(data)])
-                    .then((response) => {
-                        console.log(response);
-                        store.dispatch('addNotice',{name:'提醒',message:'文章新增成功!'});
-                        router.push({name:'articlesManager'});
-                    }).catch((errors)=>{
-                        console.log(errors.response.data);
-                    });
-            };
-            function previewFiles(event) {
-                data.append('thumbnail', event.target.files[0]);
-            }
-
-            function onReady(editor)  {
-                // Insert the toolbar before the editable area.
-                editor.ui.getEditableElement().parentElement.insertBefore(
-                    editor.ui.view.toolbar.element,
-                    editor.ui.getEditableElement()
-                );
-            }
-
-            return {
-                article,
-                addArticle,
-                tagList,
-                onReady,
-                isShow,
-                errors,
-                previewFiles
-            }
+        return {
+            article,
+            addArticle,
+            tags,
+            onReady,
+            isShow,
+            previewFiles
         }
     }
+}
 </script>

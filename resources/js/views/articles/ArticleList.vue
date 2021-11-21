@@ -63,7 +63,7 @@ export default {
         const router = useRouter();
 
         function editArticle(slug) {
-            router.push({name: 'editArticle', params: {slug: slug}});
+            router.push({name: 'articleEdit', params: {slug: slug}});
         }
 
         const store = useStore();

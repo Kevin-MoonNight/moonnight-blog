@@ -33,7 +33,7 @@
 
                 <div class="flex flex-wrap gap-2 mt-20 w-full h-auto">
                     <p v-for="tag in article.tags" :key="'ArticleTags ' + tag.name" @click="queryTag(tag.name)"
-                       class="px-3 py-1 text-sm bg-gray-200 rounded-full cursor-pointer hover:bg-gray-300">
+                       class="px-3 py-1 text-sm rounded-sm cursor-pointer bg-blueGray-200 hover:bg-blueGray-300">
                         {{ tag.name }}
                     </p>
                 </div>

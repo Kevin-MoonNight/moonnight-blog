@@ -15,10 +15,10 @@
                     </h2>
                 </div>
 
-                <div class="flex overflow-x-auto items-end h-1/5">
+                <div class="flex overflow-auto flex-wrap items-end space-y-4 h-1/5">
                     <span v-for="tag in article.tags"
-                          class="px-4 py-1 mr-5 w-auto text-sm bg-gray-200 rounded-sm cursor-pointer hover:text-indigo-500 hover:bg-gray-300">
-                        {{ tag }}
+                          class="px-4 py-1 mr-5 text-sm rounded-sm cursor-pointer bg-blueGray-200 hover:text-indigo-500 hover:bg-blueGray-300">
+                        {{ tag.name }}
                     </span>
                 </div>
             </div>

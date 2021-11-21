@@ -1,5 +1,5 @@
 <template>
-    <search-box :link="'managesArticle'"/>
+    <search-box :link="'articlesManages'"/>
 
     <div class="mt-10 bg-white rounded-sm shadow-md">
         <div class="overflow-x-auto w-full h-full min-h-screen" :class="!isShow ? 'h-screen' : ''">
@@ -7,12 +7,14 @@
                 <loading-icon/>
             </div>
 
-            <article-list :articles="articles" :refresh-articles="getArticles" :is-show="isShow"/>
-            <p v-show="articles.length === 0" class="mt-10 w-full text-xl text-center text-red-500">找不到文章!</p>
+            <article-list v-if="isShow" :articles="articles" :refresh-articles="getArticles" :is-show="isShow"/>
+            <p v-if="isShow" v-show="articles.length === 0" class="mt-10 w-full text-xl text-center text-red-500">
+                找不到文章!
+            </p>
         </div>
     </div>
     <div v-if="isShow" class="mt-10 w-full h-auto bg-white rounded-sm">
-        <paginator :items="response" :url="'managesArticle'"/>
+        <paginator :items="response" :url="'articlesManages'"/>
     </div>
 </template>
 

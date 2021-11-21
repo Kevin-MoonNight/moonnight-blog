@@ -31,7 +31,7 @@ class StoreArticleRequest extends FormRequest
         return [
             'title' => ['required', 'max:255'],
             'content' => ['required'],
-            'slug' => [Rule::unique('articles', 'slug')],
+            'slug' => [Rule::unique('articles', 'slug'),'required'],
             'excerpt' => ['required'],
             'thumbnail' => ['required', 'image'],
             'state' => ['required'],

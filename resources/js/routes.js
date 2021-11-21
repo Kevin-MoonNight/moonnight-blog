@@ -86,7 +86,7 @@ const routes = [
             {
                 path: 'articles',
                 component: ArticlesManager,
-                name: 'managesArticle',
+                name: 'articlesManages',
                 query: {
                     search: null,
                     tag: null,
@@ -96,17 +96,17 @@ const routes = [
             {
                 path: 'articles/create',
                 component: ArticlesCreate,
-                name: 'createArticle',
+                name: 'articleCreate',
             },
             {
                 path: 'articles/:slug/edit',
                 component: ArticlesEdit,
-                name: 'editArticle',
+                name: 'articleEdit',
             },
             {
                 path: 'messages',
                 component: Messages,
-                name: 'messagesManager',
+                name: 'messagesManages',
             },
         ]
     },
