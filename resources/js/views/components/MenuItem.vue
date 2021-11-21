@@ -1,62 +1,63 @@
 <template>
-    <div class="w-full">
-        <div v-if="childItems.length > 0">
+    <div class="px-6 w-full">
+        <div v-if="childItems !== null">
+            <div @click="isOpen = !isOpen"
+                 class="flex justify-between items-center w-full h-16 duration-200 transform cursor-pointer hover:pl-1 hover:text-indigo-500">
 
-            <div @click="isOpen = !isOpen" class="flex justify-between items-center transform duration-200 h-16 w-full px-6 hover:pl-7 hover:text-purple-500 cursor-pointer">
-                <div class="flex items-center space-x-3">
+                <div class="flex items-center">
                     <div v-html="icon"/>
-                    <p>{{name}}</p>
+                    <p class="ml-3">{{ name }}</p>
                 </div>
-
                 <div v-if="isOpen">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                    </svg>
+                    <i class="fas fa-chevron-down"></i>
                 </div>
                 <div v-else>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                    </svg>
+                    <i class="fas fa-chevron-right"></i>
                 </div>
             </div>
-            <transition name="list">
-                <div v-show="isOpen" class="pl-5">
-                    <menu-item v-if="childItems.length > 0" v-for="child in childItems"
-                               v-bind:name="child.name"
-                               v-bind:icon="child.icon"
-                               v-bind:link="child.link"
-                               v-bind:child="child.child"
-                    />
-                </div>
-            </transition>
         </div>
-        <div v-else class="flex justify-between items-center transform duration-200 h-16 w-full px-6 hover:pl-7 hover:text-purple-500">
-            <router-link :to="link" class="flex items-center space-x-3">
+        <div v-else @click="closeNav"
+             class="flex justify-between items-center w-full h-16 duration-200 transform hover:pl-1 hover:text-indigo-500">
+            <router-link :to="link" class="flex items-center">
                 <div v-html="icon"/>
-                <p>{{name}}</p>
+                <p class="ml-3">{{ name }}</p>
             </router-link>
         </div>
+
+        <transition name="list">
+            <div v-show="isOpen" class="pl-3">
+                <menu-item v-for="child in childItems"
+                           :name="child.name"
+                           :icon="child.icon"
+                           :link="child.link"
+                           :childItems="child.childItems"
+                           :close-nav="closeNav"
+                />
+            </div>
+        </transition>
     </div>
 </template>
 
 <script>
-    export default {
-        name: `menu-item`,
-        props:{
-            name: String,
-            link: {
-                name:String
-            },
-            icon: null,
-            childItems: {
-                type: Array,
-                default: []
-            }
-        },
-        data (){
-            return {
-                isOpen:false
-            }
+import {toRefs} from "vue";
+
+export default {
+    props: ['name', 'link', 'icon', 'childItems', 'closeNav'],
+    data() {
+        return {
+            isOpen: false
+        }
+    },
+    setup(props) {
+        const {name, link, icon, childItems, closeNav} = toRefs(props);
+
+        return {
+            name,
+            link,
+            icon,
+            childItems,
+            closeNav
         }
     }
+}
 </script>

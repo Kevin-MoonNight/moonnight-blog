@@ -1,144 +1,144 @@
 <template>
-    <nav class="min-h-full w-64 py-8 bg-blueGray-800 text-gray-200">
+    <div class="hidden z-50 w-1/5 h-full select-none xl:block">
+        <nav class="overflow-y-auto py-8 w-full h-full text-blueGray-200 bg-blueGray-800">
 
-        <div class="flex justify-between w-full px-6 py-4 text-indigo-400">
-            <p class="text-2xl">MoonNight</p>
+            <div class="px-6 py-4 w-full text-indigo-500">
+                <p class="text-2xl">MoonNight</p>
+            </div>
 
-            <button v-if="openNav" @click="closeNav">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
+            <menu-item v-for="item in items"
+                       :name="item.name"
+                       :icon="item.icon"
+                       :link="item.link"
+                       :childItems="item.childItems"
+                       :close-nav="closeNav"
+            />
+
+        </nav>
+    </div>
+
+    <transition name="fade">
+        <div v-if="isOpen" class="flex fixed z-50 w-full h-full xl:hidden">
+            <nav class="overflow-y-auto py-8 w-2/4 h-full md:w-1/4 text-blueGray-200 bg-blueGray-800">
+
+                <div class="px-6 py-4 w-full text-indigo-500">
+                    <p class="text-2xl">MoonNight</p>
+                </div>
+
+                <menu-item v-for="item in items"
+                           :name="item.name"
+                           :icon="item.icon"
+                           :link="item.link"
+                           :childItems="item.childItems"
+                           :close-nav="closeNav"
+                />
+
+            </nav>
+
+            <div class="w-2/4 h-full bg-opacity-30 md:w-3/4 bg-blueGray-700" @click="isOpen = false"></div>
         </div>
-
-        <menu-item v-for="item in items"
-                   v-bind:name="item.name"
-                   v-bind:icon="item.icon"
-                   v-bind:link="item.link"
-                   v-bind:childItems="item.childItems"
-        />
-
-    </nav>
+    </transition>
 </template>
 
 <script>
-    import MenuItem from '../components/MenuItem';
+import MenuItem from '../components/MenuItem';
 
-    export default {
-        props:['openNav','closeNav'],
-        components: {
-            MenuItem
-        },
-        data() {
-            return {
-                items: [
-                    {
-                        name: '儀錶板',
-                        link: {
-                            name: 'dashboard'
-                        },
-                        icon:
-                            `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                            </svg>`,
-                        childItems: []
+export default {
+    components: {
+        MenuItem
+    },
+    props: ['isOpen', 'closeNav'],
+    data() {
+        return {
+            items: [
+                {
+                    name: '儀錶板',
+                    link: {
+                        name: 'dashboard'
                     },
-                    {
-                        name: '文章管理',
-                        icon:
-                            `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-                            </svg>`,
-                        childItems: [
-                            {
-                                name:'所有文章',
-                                link: {
-                                    name:'articlesManager'
-                                },
-                                icon:
-                                    `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-                                    </svg>`,
-                                childItems:[]
+                    icon:
+                        `<i class="fas fa-home"></i>`,
+                    childItems: null
+                },
+                {
+                    name: '文章管理',
+                    icon:
+                        `<i class="far fa-newspaper"></i>`,
+                    childItems: [
+                        {
+                            name: '所有文章',
+                            link: {
+                                name: 'articlesManager'
                             },
-                            {
-                                name:'新增文章',
-                                link: {
-                                    name:'articlesCreate'
-                                },
-                                icon:
-                                    `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-                                    </svg>`,
-                                childItems:[]
-                            }
-                        ]
-                    },
-                    {
-                        name: '訊息管理',
-                        icon:
-                            `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                            </svg>`,
-                        childItems: [
-                            {
-                                name: '所有訊息',
-                                link: {
-                                    name: 'messagesManager'
-                                },
-                                icon:
-                                    `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                                    </svg>`,
-                                childItems: []
-                            }
-                        ]
-                    },
-                    {
-                        name: '會員管理',
-                        icon:
-                            `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                            </svg>`,
-                        childItems: [
-                            {
-                                name: '所有會員',
-                                link: {
-                                    name: 'dashboard'
-                                },
-                                icon:
-                                    `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                    </svg>`,
-                                childItems: []
+                            icon:
+                                `<i class="fas fa-list"></i>`,
+                            childItems: null
+                        },
+                        {
+                            name: '新增文章',
+                            link: {
+                                name: 'articlesCreate'
                             },
-                        ]
-                    },
-                    {
-                        name: '設定',
-                        link: {
-                            name: 'dashboard'
+                            icon:
+                                `<i class="fas fa-plus"></i>`,
+                            childItems: null
+                        }
+                    ]
+                },
+                {
+                    name: '訊息管理',
+                    icon:
+                        `<i class="far fa-comment-dots"></i>`,
+                    childItems: [
+                        {
+                            name: '所有訊息',
+                            link: {
+                                name: 'messagesManager'
+                            },
+                            icon:
+                                `<i class="fas fa-list"></i>`,
+                            childItems: null
+                        }
+                    ]
+                },
+                {
+                    name: '會員管理',
+                    icon:
+                        `<i class="fas fa-users"></i>`,
+                    childItems: [
+                        {
+                            name: '所有會員',
+                            link: {
+                                name: 'dashboard'
+                            },
+                            icon:
+                                `<i class="fas fa-list"></i>`,
+                            childItems: null
                         },
-                        icon:
-                            ` <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                            </svg>`,
-                        childItems: []
+                    ]
+                },
+                {
+                    name: '個人設定',
+                    link: {
+                        name: 'dashboard'
                     },
-                    {
-                        name: '返回首頁',
-                        link: {
-                            name: 'home'
-                        },
-                        icon:
-                            ` <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    icon:
+                        ` <i class="far fa-user"></i>`,
+                    childItems: null
+                },
+                {
+                    name: '返回首頁',
+                    link: {
+                        name: 'home'
+                    },
+                    icon:
+                        ` <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
                             </svg>`,
-                        childItems: []
-                    },
-                ]
-            }
+                    childItems: null
+                },
+            ]
         }
     }
+}
 </script>
