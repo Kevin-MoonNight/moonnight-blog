@@ -28,7 +28,7 @@
             <div class="mb-3 w-full">
                 <label htmlFor="caseType"
                        class="block mb-2 ml-1 font-bold text-left uppercase text-md text-blueGray-600">
-                    訊息
+                    委託類型
                 </label>
                 <select v-model="message.caseType" id="caseType" name="caseType" class="input-style">
                     <option disabled value="">請選擇委託類型</option>

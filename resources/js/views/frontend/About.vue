@@ -3,7 +3,7 @@
         class="grid grid-cols-1 gap-5 p-5 h-auto bg-white bg-opacity-80 rounded-md shadow-xl lg:grid-cols-3 md:w-2/3 lg:p-10">
         <div class="col-span-1">
             <div class="flex flex-col justify-center items-center">
-                <img src="../assets/images/headshot.jpg"
+                <img src=""
                      class="object-cover w-40 h-40 rounded-full">
                 <div class="px-5 mt-10 space-x-3 w-full">
                     <a :href="githubLink"><i class="im im-github"/></a>

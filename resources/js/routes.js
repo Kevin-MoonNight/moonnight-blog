@@ -1,14 +1,15 @@
 import Home from './views/frontend/Home';
 import Articles from './views/frontend/Articles';
-import Article from './views/frontend/Article';
+import Article from './views/articles/ArticlesShow';
 import Products from './views/frontend/Products';
 import Login from './views/auth/Login';
 import Register from './views/auth/Register';
 import Dashboard from './views/backend/Dashboard';
-import ArticlesManager from './views/backend/Articles';
-import ArticlesEdit from './views/articles/Edit';
-import ArticlesCreate from './views/articles/Create';
-import Messages from './views/backend/Messages';
+import ArticlesManage from './views/backend/Articles';
+import ArticlesEdit from './views/articles/ArticlesEdit';
+import ArticlesCreate from './views/articles/ArticlesCreate';
+import MessagesManage from './views/backend/Messages';
+import MessagesEdit from "./views/messages/MessagesEdit";
 import Backend from "./views/layouts/Backend";
 import Frontend from "./views/layouts/Frontend";
 import {createRouter, createWebHistory} from 'vue-router';
@@ -85,8 +86,8 @@ const routes = [
             },
             {
                 path: 'articles',
-                component: ArticlesManager,
-                name: 'articlesManages',
+                component: ArticlesManage,
+                name: 'articlesManage',
                 query: {
                     search: null,
                     tag: null,
@@ -96,17 +97,22 @@ const routes = [
             {
                 path: 'articles/create',
                 component: ArticlesCreate,
-                name: 'articleCreate',
+                name: 'articlesCreate',
             },
             {
                 path: 'articles/:slug/edit',
                 component: ArticlesEdit,
-                name: 'articleEdit',
+                name: 'articlesEdit',
             },
             {
                 path: 'messages',
-                component: Messages,
-                name: 'messagesManages',
+                component: MessagesManage,
+                name: 'messagesManage',
+            },
+            {
+                path: 'messages/:id/edit',
+                component: MessagesEdit,
+                name: 'messagesEdit',
             },
         ]
     },

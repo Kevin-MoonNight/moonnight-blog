@@ -7,6 +7,7 @@ export const tip = (message) => {
 }
 
 export const toLogin = () => {
+    store.dispatch('logout');
     router.replace({name: 'login'})
 }
 

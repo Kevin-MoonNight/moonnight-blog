@@ -45,17 +45,17 @@
                 <div class="container px-4 mx-auto md:px-14">
                     <div class="grid grid-cols-1 gap-10 w-full h-full lg:grid-cols-2">
                         <div class="text">
-                            <h3 class="mb-2 text-3xl leading-normal">
+                            <h3 class="mb-2 text-3xl font-medium leading-normal">
                                 慕耐是由一群學生所組成的工作室
                             </h3>
-                            <p class="mt-4 text-lg font-light leading-relaxed text-blueGray-600">
+                            <p class="mt-4 text-lg font-medium leading-relaxed text-blueGray-600">
                                 我們是一群熱愛程式的學生，擁有強大的物件導向、資料結構、演算法、作業系統和資料庫基礎，並且利用課餘閒暇時間接案，在堅實的基礎上替您打造所需的程式。
                             </p>
                         </div>
 
                         <div class="bottom">
                             <div class="w-full h-full bg-white rounded-lg shadow-lg">
-                                <img :src="about" alt="" class="w-full rounded-lg"/>
+                                <img :src="about" alt="" class="w-full h-auto rounded-lg"/>
                             </div>
                         </div>
                     </div>
@@ -69,7 +69,7 @@
             <div class="container px-4 mx-auto md:px-14">
                 <div class="w-full h-full">
                     <div class="text-center text">
-                        <h3 class="text-3xl">
+                        <h3 class="text-3xl font-medium leading-normal">
                             我們所提供的服務
                         </h3>
                     </div>
@@ -87,20 +87,20 @@
                     <div class="bottom">
                         <div class="w-full h-full bg-white rounded-lg shadow-lg">
                             <img :src="services.algorithm.img" :alt="services.algorithm.title"
-                                 class="w-full rounded-lg"/>
+                                 class="w-full h-auto rounded-lg"/>
                         </div>
                     </div>
 
                     <div class="text">
-                        <h3 class="mb-2 text-3xl leading-normal">
+                        <h3 class="mb-2 text-3xl font-medium leading-normal">
                             {{ services.algorithm.title }}、{{ services.thesis.title }}
                             、 {{ services.IndependentStudy.title }}
                         </h3>
-                        <ol class="list-decimal">
-                            <li class="mt-4 text-lg font-light leading-relaxed text-blueGray-600">
+                        <ol class="list-decimal list-inside">
+                            <li class="mt-4 text-lg font-medium leading-relaxed text-blueGray-600">
                                 把演算法邏輯製作流程圖，並且交由給業主核對才開始寫程式，減少開發中解決錯誤所額外花費的時間。
                             </li>
-                            <li class="mt-4 text-lg font-light leading-relaxed text-blueGray-600">
+                            <li class="mt-4 text-lg font-medium leading-relaxed text-blueGray-600">
                                 並且使用TDD方式開發，減少開發中測試程式邏輯所花費的時間成本。
                             </li>
                         </ol>
@@ -115,23 +115,23 @@
             <div class="container px-4 mx-auto md:px-14">
                 <div class="grid grid-cols-1 gap-10 w-full h-full lg:grid-cols-2">
                     <div class="h-full text">
-                        <h3 class="mb-2 text-3xl leading-normal">
+                        <h3 class="mb-2 text-3xl font-medium leading-normal">
                             {{ services.corporation.title }}、{{ services.website.title }}
                         </h3>
-                        <ol class="list-decimal">
-                            <li class="mt-4 text-lg font-light leading-relaxed text-blueGray-600">
+                        <ol class="list-decimal list-inside">
+                            <li class="mt-4 text-lg font-medium leading-relaxed text-blueGray-600">
                                 RWD響應式網站技術，讓您的網站不管在哪種裝置上面都能夠正常顯示畫面。
                             </li>
-                            <li class="mt-4 text-lg font-light leading-relaxed text-blueGray-600">
+                            <li class="mt-4 text-lg font-medium leading-relaxed text-blueGray-600">
                                 內建SEO搜尋引擎優化，增加網站被用戶搜尋到的機率。
                             </li>
-                            <li class="mt-4 text-lg font-light leading-relaxed text-blueGray-600">
+                            <li class="mt-4 text-lg font-medium leading-relaxed text-blueGray-600">
                                 客製化畫面設計，製作專屬於您的網站。
                             </li>
-                            <li class="mt-4 text-lg font-light leading-relaxed text-blueGray-600">
+                            <li class="mt-4 text-lg font-medium leading-relaxed text-blueGray-600">
                                 後台管理系統，讓您可以自由的修改網頁內容。
                             </li>
-                            <li class="mt-4 text-lg font-light leading-relaxed text-blueGray-600">
+                            <li class="mt-4 text-lg font-medium leading-relaxed text-blueGray-600">
                                 並且使用TDD方式開發，減少開發中測試程式邏輯所花費的時間成本。
                             </li>
                         </ol>
@@ -140,7 +140,7 @@
                     <div class="bottom">
                         <div class="w-full h-full bg-white rounded-lg shadow-lg">
                             <img :src="services.corporation.img" :alt="services.corporation.title"
-                                 class="w-full rounded-lg"/>
+                                 class="w-full h-auto rounded-lg"/>
                         </div>
                     </div>
                 </div>
@@ -151,7 +151,7 @@
             <div class="container px-4 mx-auto md:px-14">
                 <div class="w-full h-full">
                     <div class="mb-20 text-center text">
-                        <h2 class="text-4xl text-white">聯絡我們</h2>
+                        <h2 class="text-4xl font-medium leading-normal text-white">聯絡我們</h2>
                         <p class="mt-4 text-lg leading-relaxed text-blueGray-400">
                             如果我們收到訊息會盡快向您回復!
                         </p>
@@ -184,32 +184,32 @@ export default {
     },
     data() {
         return {
-            cover: "../../../images/cover.svg",
-            about: "../../../images/about.svg",
+            cover: "../../../images/cover.png",
+            about: "../../../images/about.jpg",
             services: {
                 algorithm: {
                     title: "演算法程式設計",
-                    img: "../../../images/algorithm.svg"
+                    img: "../../../images/algorithm.jpg"
                 },
                 IndependentStudy: {
                     title: "專題程式設計",
-                    img: "../../../images/IndependentStudy.svg"
+                    img: "../../../images/IndependentStudy.jpg"
                 },
                 thesis: {
                     title: "論文程式設計",
-                    img: "../../../images/thesis.svg"
+                    img: "../../../images/thesis.jpg"
                 },
                 website: {
                     title: "客製化網站服務",
-                    img: "../../../images/website.svg"
+                    img: "../../../images/website.jpg"
                 },
                 desktop: {
                     title: "桌面軟體設計",
-                    img: "../../../images/desktop.svg"
+                    img: "../../../images/desktop.jpg"
                 },
                 corporation: {
                     title: "品牌形象網站設計",
-                    img: "../../../images/corporation.svg"
+                    img: "../../../images/corporation.jpg"
                 }
             },
         }

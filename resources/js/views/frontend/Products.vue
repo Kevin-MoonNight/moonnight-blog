@@ -24,7 +24,7 @@
 import {onBeforeMount, ref, computed, watch} from "vue";
 import {useRoute} from "vue-router";
 import Paginator from "../components/Paginator";
-import ProductCard from "../products/ProductCard";
+import ProductCard from "../products/ProductsCard";
 import {apiGetProducts} from "../../api/product";
 import LoadingIcon from "../components/LoadingIcon";
 

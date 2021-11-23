@@ -13,10 +13,10 @@
     <meta name="copyright" content="鄭政文">
 
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-    <link rel="shortcut icon" href="{{mix('/images/catIcon.ico')}}">
+    <link rel="shortcut icon" href="{{mix('/images/blogIcon.ico')}}">
     <script src="{{ mix('/js/app.js') }}" defer></script>
     <script src="https://kit.fontawesome.com/240a2f8f32.js" crossorigin="anonymous"></script>
-    <base href="{{ env('APP_URL','http://localhost:8000/') }}" target="_self">
+    <base href="{{ env('APP_URL','http://127.0.0.1:8000/') }}" target="_self">
 </head>
 <body class="">
 <div id="app">

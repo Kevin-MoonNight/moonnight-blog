@@ -25,7 +25,7 @@
 import {onBeforeMount, ref, computed, watch} from "vue";
 import {apiGetArticles} from "../../api/article";
 import {useRoute} from "vue-router";
-import ArticleCard from "../articles/ArticleCard";
+import ArticleCard from "../articles/ArticlesCard";
 import Paginator from "../components/Paginator";
 import SearchBox from "../components/SearchBox";
 import LoadingIcon from "../components/LoadingIcon";

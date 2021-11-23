@@ -1,15 +1,14 @@
 {
-    "/js/app.js": "/js/app.js?id=f7be2df4d961b0bf5222",
-    "/css/app.css": "/css/app.css?id=ede5f93ec1923421f503",
-    "/images/about.svg": "/images/about.svg?id=878ff5005b7369dfab6d",
-    "/images/algorithm.svg": "/images/algorithm.svg?id=c34d4d3097ab8bedddb8",
-    "/images/catIcon.ico": "/images/catIcon.ico?id=64d7836e72f161924b8e",
-    "/images/corporation.svg": "/images/corporation.svg?id=a0661b2cb40c0f28d37d",
-    "/images/cover.svg": "/images/cover.svg?id=488326d7f8eef8290b93",
-    "/images/desktop.svg": "/images/desktop.svg?id=1316a390cf1dd1b72723",
+    "/js/app.js": "/js/app.js?id=3d32a24e06d4a34c8541",
+    "/css/app.css": "/css/app.css?id=526ae7df5c7de90a2eb5",
+    "/images/about.jpg": "/images/about.jpg?id=cc5a9fe9a111f0c212b2",
+    "/images/algorithm.jpg": "/images/algorithm.jpg?id=42a0d14546c4a4f638c9",
+    "/images/blogIcon.ico": "/images/blogIcon.ico?id=f0981df07baed2ccda8b",
+    "/images/corporation.jpg": "/images/corporation.jpg?id=b5ab9a8f016ebd176929",
+    "/images/cover.png": "/images/cover.png?id=9e4a4daf316083083d8e",
+    "/images/desktop.jpg": "/images/desktop.jpg?id=5854ec73d651d9ca1d15",
     "/images/google.svg": "/images/google.svg?id=87be59a1f7061fc60218",
-    "/images/headshot.jpg": "/images/headshot.jpg?id=20f2af6c29b514b14735",
-    "/images/IndependentStudy.svg": "/images/IndependentStudy.svg?id=1c42c19ef044a9ead3a7",
-    "/images/thesis.svg": "/images/thesis.svg?id=c6b2afdcfbb6b34a97ac",
-    "/images/website.svg": "/images/website.svg?id=76c0522280058c8df271"
+    "/images/IndependentStudy.jpg": "/images/IndependentStudy.jpg?id=feacca7d7bce080dcbc5",
+    "/images/thesis.jpg": "/images/thesis.jpg?id=14277cb12acf49db2f72",
+    "/images/website.jpg": "/images/website.jpg?id=ece712075934ce300082"
 }

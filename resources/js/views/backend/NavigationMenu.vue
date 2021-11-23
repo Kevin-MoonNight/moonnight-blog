@@ -68,7 +68,7 @@ export default {
                         {
                             name: '所有文章',
                             link: {
-                                name: 'articlesManages'
+                                name: 'articlesManage'
                             },
                             icon:
                                 `<i class="fas fa-list"></i>`,
@@ -77,7 +77,7 @@ export default {
                         {
                             name: '新增文章',
                             link: {
-                                name: 'articleCreate'
+                                name: 'articlesCreate'
                             },
                             icon:
                                 `<i class="fas fa-plus"></i>`,
@@ -93,7 +93,7 @@ export default {
                         {
                             name: '所有訊息',
                             link: {
-                                name: 'messagesManages'
+                                name: 'messagesManage'
                             },
                             icon:
                                 `<i class="fas fa-list"></i>`,

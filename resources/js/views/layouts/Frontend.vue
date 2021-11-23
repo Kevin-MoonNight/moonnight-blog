@@ -5,8 +5,8 @@
 </template>
 <script>
 
-import NavigationMenu from '../frontend/NavigationMenu';
-import FooterComponent from "../components/FooterComponent";
+import NavigationMenu from '../frontend/TheNavigation';
+import FooterComponent from "../components/TheFooter";
 
 export default {
     components: {

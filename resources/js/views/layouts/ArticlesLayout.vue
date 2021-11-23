@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import PopularSideBox from "../articles/PopularSideBox";
-import TagsSideBox from "../articles/TagsSideBox";
+import PopularSideBox from "../articles/ArticlesSideBoxPopular";
+import TagsSideBox from "../articles/ArticlesTagsSideBox";
 
 export default {
     components: {

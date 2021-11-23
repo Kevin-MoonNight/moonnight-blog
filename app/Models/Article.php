@@ -54,7 +54,7 @@ class Article extends Model
         });
 
         $query->when($filters['tag'] ?? false, function ($query, $tag) {
-            $query->whereRelation('tags', 'name', '=', $tag);
+            $query->whereRelation('tags', 'slug', '=', $tag);
         });
 
         $query->when($filters['author'] ?? false, function ($query, $author) {
