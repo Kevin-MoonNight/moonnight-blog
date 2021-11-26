@@ -17,8 +17,9 @@ Route::get('/articles/popular', [ArticlesController::class, 'popular'])->name('a
 Route::get('/articles/draft', [ArticlesController::class, 'draft'])->name('articles.draft');
 Route::get('/articles/trashed', [ArticlesController::class, 'trashed'])->name('articles.trashed');
 Route::get('/articles/restore/{trashed_article}', [ArticlesController::class, 'restore'])->name('articles.restore');
-Route::delete('/articles/deleteTrashed/{trashed_article}', [ArticlesController::class, 'deleteTrashed'])->name('articles.delete-trashed');
+Route::delete('/articles/trashed/{trashed_article}', [ArticlesController::class, 'deleteTrashed'])->name('articles.delete-trashed');
 
+Route::get('/articles/getArticle/{article:slug}', [ArticlesController::class, 'getArticle'])->name('articles.get-article');
 //由於php的限制put/patch 不法使用form-data獲得資料 所以只能用post再傳送
 Route::post('/articles/{article:slug}', [ArticlesController::class, 'update'])->name('articles.update');
 Route::apiResource('/articles', ArticlesController::class)->except('update');

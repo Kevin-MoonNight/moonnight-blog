@@ -66,7 +66,7 @@ export default {
                         `<i class="far fa-newspaper"></i>`,
                     childItems: [
                         {
-                            name: '所有文章',
+                            name: '文章列表',
                             link: {
                                 name: 'articlesManage'
                             },
@@ -81,6 +81,24 @@ export default {
                             },
                             icon:
                                 `<i class="fas fa-plus"></i>`,
+                            childItems: null
+                        },
+                        {
+                            name: '草稿',
+                            link: {
+                                name: 'articlesDraft'
+                            },
+                            icon:
+                                `<i class="fas fa-newspaper"></i>`,
+                            childItems: null
+                        },
+                        {
+                            name: '垃圾桶',
+                            link: {
+                                name: 'articlesTrashed'
+                            },
+                            icon:
+                                `<i class="fas fa-trash"></i>`,
                             childItems: null
                         }
                     ]

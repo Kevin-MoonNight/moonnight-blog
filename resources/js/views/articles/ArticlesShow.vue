@@ -54,7 +54,7 @@
 <script>
 import {computed, onBeforeMount, ref, watch} from "vue";
 import {useRoute, useRouter} from "vue-router";
-import {apiGetArticle} from "../../api/article";
+import {apiShowArticle} from "../../api/article";
 import moment from "moment";
 import LoadingIcon from "../components/LoadingIcon";
 import {useMeta} from 'vue-meta'
@@ -72,7 +72,7 @@ export default {
             //防止離開頁面執行
             if (slug.value != null) {
                 isShow.value = false;
-                await Promise.all([apiGetArticle(slug.value)])
+                await Promise.all([apiShowArticle(slug.value)])
                     .then((results) => {
                         article.value = results[0].data;
                         author.value = results[0].data.author;

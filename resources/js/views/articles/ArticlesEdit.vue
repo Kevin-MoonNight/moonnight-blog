@@ -111,6 +111,7 @@ export default {
                     article.value = results[0].data;
                     thumbnailSrc.value = article.value.thumbnail;
                     article.value.thumbnail = null;
+                    article.value.author = null;
                     article.value.tags = article.value.tags.map(tag => tag.id);
                     tags.value = results[1].data;
                     isShow.value = true;
@@ -133,7 +134,7 @@ export default {
             const data = new FormData();
 
             Object.keys(article.value).forEach((key) => {
-                if (key !== 'tags') {
+                if (key !== 'tags' && article.value[key] !== null) {
                     data.append(key, article.value[key])
                 }
             });

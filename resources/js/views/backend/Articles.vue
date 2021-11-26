@@ -7,12 +7,12 @@
                 <loading-icon></loading-icon>
             </div>
 
-            <article-list
+            <articles-list
                 v-if="isShow"
                 :articles="articles"
                 :refresh-articles="getArticles"
                 :is-show="isShow">
-            </article-list>
+            </articles-list>
             <p v-if="articles.length === 0 && isShow" class="mt-10 w-full text-xl text-center text-red-500">
                 找不到文章!
             </p>
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import ArticleList from '../articles/ArticlesList';
+import ArticlesList from '../articles/ArticlesList';
 import paginator from "../components/Paginator";
 import SearchBox from "../components/SearchBox";
 import LoadingIcon from "../components/LoadingIcon";
@@ -38,7 +38,7 @@ export default {
         LoadingIcon,
         SearchBox,
         paginator,
-        ArticleList
+        ArticlesList
     },
     setup() {
         const route = useRoute();

@@ -6,6 +6,7 @@ use App\Http\Requests\UpdateArticleRequest;
 use App\Http\Requests\StoreArticleRequest;
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class ArticlesController extends Controller
@@ -35,6 +36,15 @@ class ArticlesController extends Controller
         }
 
         return $article;
+    }
+
+    public function getArticle(Article $article)
+    {
+        if (Gate::any(['admin', 'article'], $article)) {
+            return $article->makeVisible('state');
+        } else {
+            abort(404);
+        }
     }
 
     public function show(Article $article)

@@ -12,11 +12,13 @@ import MessagesManage from './views/backend/Messages';
 import MessagesEdit from "./views/messages/MessagesEdit";
 import Backend from "./views/layouts/Backend";
 import Frontend from "./views/layouts/Frontend";
-import {createRouter, createWebHistory} from 'vue-router';
-import {store} from './store/index';
 import ArticlesLayout from "./views/layouts/ArticlesLayout";
+import ArticlesTrashed from "./views/articles/ArticlesTrashed";
+import {store} from './store/index';
 import {logout} from "./api/utils";
 import {addToken} from "./api/https";
+import {createRouter, createWebHistory} from 'vue-router';
+import ArticlesDraft from "./views/articles/ArticlesDraft";
 
 const routes = [
     {
@@ -88,6 +90,26 @@ const routes = [
                 path: 'articles',
                 component: ArticlesManage,
                 name: 'articlesManage',
+                query: {
+                    search: null,
+                    tag: null,
+                    page: null
+                }
+            },
+            {
+                path: 'articles/draft',
+                component: ArticlesDraft,
+                name: 'articlesDraft',
+                query: {
+                    search: null,
+                    tag: null,
+                    page: null
+                }
+            },
+            {
+                path: 'articles/trashed',
+                component: ArticlesTrashed,
+                name: 'articlesTrashed',
                 query: {
                     search: null,
                     tag: null,
