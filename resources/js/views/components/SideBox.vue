@@ -11,7 +11,6 @@
                 <slot/>
             </div>
         </transition>
-        
     </div>
 </template>
 <script>

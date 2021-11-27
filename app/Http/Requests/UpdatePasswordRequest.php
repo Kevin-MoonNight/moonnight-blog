@@ -36,7 +36,7 @@ class UpdatePasswordRequest extends FormRequest
         return [
             "password.required" => '密碼為必填資料',
             "password.string" => '密碼必須為字串',
-            "password.confirmed" => '密碼不一樣',
+            "password.confirmed" => '密碼必須一致',
         ];
     }
 

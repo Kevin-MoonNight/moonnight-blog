@@ -7,16 +7,16 @@
         <div class="relative h-full">
             <div class="flex items-center h-full">
                 <p class="">
-                    {{ userName }}
+                    {{ user.name }}
                 </p>
                 <button @click="profileDropdown = !profileDropdown" class="ml-3 h-full">
-                    <img v-bind:src="photoUrl" alt="無法載入圖片..." class="h-full rounded-full">
+                    <img :src="user.profile_photo_url" alt="無法載入圖片" class="h-full rounded-full">
                 </button>
             </div>
 
             <transition name="list">
                 <div v-show="profileDropdown"
-                     class="absolute py-2 mt-16 min-w-32 h-auto text-gray-900 bg-white rounded-md">
+                     class="absolute py-2 mt-16 h-auto text-gray-900 bg-white rounded-md min-w-32">
                     <button @click="logout" class="px-5 py-3 w-full hover:bg-gray-200">Logout</button>
                 </div>
             </transition>
@@ -35,19 +35,15 @@ export default {
     setup(props) {
         const store = useStore();
         const {changeOpen} = toRefs(props);
-        const photoUrl = computed(() => {
-            return store.state.auth.user.profile_photo_url;
-        });
 
-        const userName = computed(() => {
-            return store.state.auth.user.name;
+        const user = computed(() => {
+            return store.state.auth.user;
         });
 
         const profileDropdown = ref(false);
 
         return {
-            userName,
-            photoUrl,
+            user,
             profileDropdown,
             changeOpen,
             logout: logout

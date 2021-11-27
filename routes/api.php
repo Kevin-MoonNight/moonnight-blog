@@ -27,7 +27,7 @@ Route::apiResource('/articles', ArticlesController::class)->except('update');
 //由於php的限制put/patch 不法使用form-data獲得資料 所以只能用post再傳送
 Route::post('/products/{product}', [ProductsController::class, 'update'])->name('products.update');
 Route::apiResource('/products', ProductsController::class)->except('update');
-Route::put('/user/{user}',[UsersController::class,'updatePassword'])->name('users.update-password');
+Route::put('/users/password/{user}',[UsersController::class,'updatePassword'])->name('users.update-password');
 
 Route::apiResources([
     'tags' => TagsController::class,

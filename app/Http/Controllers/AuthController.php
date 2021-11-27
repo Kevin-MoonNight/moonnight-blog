@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ class AuthController extends Controller
         //獲取token
         $token = $user->createToken('myapptoken')->plainTextToken;
 
-        return response(['user' => $user, 'token' => $token], 200);
+        return response(['user' => $user->makeVisible(['id']), 'token' => $token], 200);
     }
 
     public function logout(Request $request)
@@ -33,7 +34,7 @@ class AuthController extends Controller
         return auth()->user()->tokens()->delete();
     }
 
-    public function register(RegisterRequest $request)
+    public function register(StoreUserRequest $request)
     {
 
         $validated = $request->validated();

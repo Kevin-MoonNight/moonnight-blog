@@ -19,6 +19,10 @@ import {logout} from "./api/utils";
 import {addToken} from "./api/https";
 import {createRouter, createWebHistory} from 'vue-router';
 import ArticlesDraft from "./views/articles/ArticlesDraft";
+import UsersManage from "./views/backend/Users";
+import UsersEdit from "./views/users/UsersEdit";
+import UsersEditPassword from "./views/users/UsersEditPassword";
+import Setting from "./views/backend/Setting";
 
 const routes = [
     {
@@ -135,6 +139,26 @@ const routes = [
                 path: 'messages/:id/edit',
                 component: MessagesEdit,
                 name: 'messagesEdit',
+            },
+            {
+                path: 'users',
+                component: UsersManage,
+                name: 'usersManage',
+            },
+            {
+                path: 'users/:id/edit',
+                component: UsersEdit,
+                name: 'usersEdit',
+            },
+            {
+                path: 'users/:id/password/edit',
+                component: UsersEditPassword,
+                name: 'usersEditPassword',
+            },
+            {
+                path: 'setting',
+                component: Setting,
+                name: 'setting',
             },
         ]
     },

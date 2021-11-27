@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,16 +17,19 @@ class UsersController extends Controller
         $this->middleware(['auth:sanctum'])->except('store');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         if (Gate::denies('admin')) {
             abort(403);
         }
 
-        return User::all()->makeVisible(['id', 'username', 'email', 'is_admin']);
+        $users = User::filter($request->all())->paginate(10)->withQueryString();
+        $users->makeVisible(['id', 'username', 'email', 'is_admin']);
+
+        return $users;
     }
 
-    public function store(CreateUserRequest $request)
+    public function store(StoreUserRequest $request)
     {
         $validated = $request->validated();
 
