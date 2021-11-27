@@ -24,8 +24,8 @@
             </div>
 
             <div class="object-cover col-span-1 h-60 bg-white rounded-r-md">
-                <img class="object-none object-center w-full h-full rounded-r-md" alt="圖片無法載入..."
-                     v-bind:src="article.thumbnail">
+                <img class="object-none object-center w-full h-full rounded-r-md"
+                     v-lazy="{src: article.thumbnail}" alt="圖片無法載入...">
             </div>
         </div>
     </div>

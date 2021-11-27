@@ -8,8 +8,8 @@
                     </p>
                 </div>
             </div>
-            <img class="object-none object-center w-full h-full rounded-t-md" alt="圖片無法載入..."
-                 v-bind:src="product.thumbnail">
+            <img class="object-none object-center w-full h-full rounded-t-md"
+                 v-lazy="{src: product.thumbnail}" :alt="product.name">
         </div>
         <div class="p-4">
             <p class="text-blueGray-200">

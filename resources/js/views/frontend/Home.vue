@@ -32,8 +32,8 @@
                             </div>
                         </div>
                         <div class="hidden w-full h-full md:block lg:col-span-3 show">
-                            <img alt="封面" class="object-contain w-full h-full"
-                                 :src="cover">
+                            <img class="object-contain w-full h-full"
+                                 v-lazy="{src: cover}" alt="封面">
                         </div>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
 
                         <div class="bottom">
                             <div class="w-full h-full bg-white rounded-lg shadow-lg">
-                                <img :src="about" alt="" class="w-full h-auto rounded-lg"/>
+                                <img v-lazy="{src: about}" alt="關於我們" class="w-full h-auto rounded-lg"/>
                             </div>
                         </div>
                     </div>
@@ -86,7 +86,7 @@
                 <div class="grid grid-cols-1 gap-10 w-full h-full lg:grid-cols-2">
                     <div class="bottom">
                         <div class="w-full h-full bg-white rounded-lg shadow-lg">
-                            <img :src="services.algorithm.img" :alt="services.algorithm.title"
+                            <img v-lazy="{src: services.algorithm.img}" :alt="services.algorithm.title"
                                  class="w-full h-auto rounded-lg"/>
                         </div>
                     </div>
@@ -139,7 +139,7 @@
 
                     <div class="bottom">
                         <div class="w-full h-full bg-white rounded-lg shadow-lg">
-                            <img :src="services.corporation.img" :alt="services.corporation.title"
+                            <img v-lazy="{src: services.corporation.img}" :alt="services.corporation.title"
                                  class="w-full h-auto rounded-lg"/>
                         </div>
                     </div>

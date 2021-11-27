@@ -19,6 +19,7 @@
 - <a href="https://popper.js.org/">popper.js</a> 提示方框
 - <a href="https://tobiasahlin.com/spinkit/">SpinKit</a> 載入特效
 - <a href="https://github.com/nuxt/vue-meta">vue-meta</a> 動態更改meta
+- <a href="https://github.com/murongg/vue3-lazyload">vue3-lazyload</a> 圖片懶載入
 
 ## 後端使用到的套件
 - <a href="https://github.com/Intervention/image">intervention/image</a> 調整圖片大小
