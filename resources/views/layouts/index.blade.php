@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta http-equiv="Content-Language" content="zh-TW">
-{{--    <meta name="csrf-token" content="{{ csrf_token() }}">--}}
+
     <title>慕耐程式工作室 | MoonNight</title>
     <meta name="keywords" content="演算法,專題,論文,網頁設計,軟體設計,外包,程式,慕耐工作室">
     <meta name="description" content="MoonNight 慕耐工作室，題供演算法程式設計、專題程式設計、論文程式設計、桌面軟體設計、客製化網站服務、品牌形象網站設計等服務">

@@ -4,7 +4,7 @@
             <div class="flex items-stretch md:min-h-screen">
                 <div class="container px-4 mx-auto md:px-14">
                     <div class="grid grid-cols-1 gap-10 place-items-center w-full h-full lg:grid-cols-5">
-                        <div class="lg:col-span-2">
+                        <div class="col-span-1 lg:col-span-2">
                             <div class="text">
                                 <h1 class="text-5xl text-white">
                                     慕耐工作室
@@ -31,8 +31,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="hidden w-full h-full md:block lg:col-span-3 show">
-                            <img class="object-contain w-full h-full"
+                        <div
+                            class="hidden md:w-full md:h-full md:flex md:show md:px-16 md:items-center md:justify-center md:col-span-1 lg:col-span-3">
+                            <img class="object-contain w-auto h-auto rounded-md shadow-2xl"
                                  v-lazy="{src: cover}" alt="封面">
                         </div>
                     </div>
@@ -184,32 +185,32 @@ export default {
     },
     data() {
         return {
-            cover: "../../../images/cover.png",
-            about: "../../../images/about.jpg",
+            cover: "../../../images/cover.avif",
+            about: "../../../images/about.avif",
             services: {
                 algorithm: {
                     title: "演算法程式設計",
-                    img: "../../../images/algorithm.jpg"
+                    img: "../../../images/algorithm.avif"
                 },
                 IndependentStudy: {
                     title: "專題程式設計",
-                    img: "../../../images/IndependentStudy.jpg"
+                    img: "../../../images/IndependentStudy.avif"
                 },
                 thesis: {
                     title: "論文程式設計",
-                    img: "../../../images/thesis.jpg"
+                    img: "../../../images/thesis.avif"
                 },
                 website: {
                     title: "客製化網站服務",
-                    img: "../../../images/website.jpg"
+                    img: "../../../images/website.avif"
                 },
                 desktop: {
                     title: "桌面軟體設計",
-                    img: "../../../images/desktop.jpg"
+                    img: "../../../images/desktop.avif"
                 },
                 corporation: {
                     title: "品牌形象網站設計",
-                    img: "../../../images/corporation.jpg"
+                    img: "../../../images/corporation.avif"
                 }
             },
         }
