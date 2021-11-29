@@ -5,7 +5,7 @@
                 <div class="px-4 w-full lg:w-6/12">
                     <h4 class="text-3xl text-white">慕耐工作室</h4>
                     <h5 class="mt-4 mb-2 text-lg text-blueGray-400">
-                        歡迎到來我們的社群軟體看看，裡面也有很多的酷東西!
+                        歡迎到來我們其他社群軟體看看，裡面也有很多酷東西!
                     </h5>
                     <div class="mt-6 mb-6 lg:mb-0">
                         <a :href="twitter">
@@ -102,9 +102,9 @@ export default {
             twitter: '',
             line: '',
             youtube: '',
-            email: '123456@example.com',
-            phone: '0912345678',
-            location: '新北市',
+            email: '暫不提供',
+            phone: '暫不提供',
+            location: '暫不提供',
             links: [
                 {
                     title: '關於我們',
@@ -132,11 +132,7 @@ export default {
                         hash: '#contact'
                     }
                 }
-            ]
-        }
-    },
-    setup() {
-        return {
+            ],
             onCopy: onCopy
         }
     }

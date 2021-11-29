@@ -32,9 +32,9 @@
                             </div>
                         </div>
                         <div
-                            class="hidden md:w-full md:h-full md:flex md:show md:px-16 md:items-center md:justify-center md:col-span-1 lg:col-span-3">
+                            class="hidden show md:w-full md:h-full md:flex md:show md:px-16 md:items-center md:justify-center md:col-span-1 lg:col-span-3">
                             <img class="object-contain w-auto h-auto rounded-md shadow-2xl"
-                                 v-lazy="{src: cover}" alt="封面">
+                                 v-lazy="cover" alt="封面">
                         </div>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
 
                         <div class="bottom">
                             <div class="w-full h-full bg-white rounded-lg shadow-lg">
-                                <img v-lazy="{src: about}" alt="關於我們" class="w-full h-auto rounded-lg"/>
+                                <img v-lazy="about" alt="關於我們" class="w-full h-auto rounded-lg"/>
                             </div>
                         </div>
                     </div>
@@ -87,7 +87,7 @@
                 <div class="grid grid-cols-1 gap-10 w-full h-full lg:grid-cols-2">
                     <div class="bottom">
                         <div class="w-full h-full bg-white rounded-lg shadow-lg">
-                            <img v-lazy="{src: services.algorithm.img}" :alt="services.algorithm.title"
+                            <img v-lazy="services.algorithm.img" :alt="services.algorithm.title"
                                  class="w-full h-auto rounded-lg"/>
                         </div>
                     </div>
@@ -140,7 +140,7 @@
 
                     <div class="bottom">
                         <div class="w-full h-full bg-white rounded-lg shadow-lg">
-                            <img v-lazy="{src: services.corporation.img}" :alt="services.corporation.title"
+                            <img v-lazy="services.corporation.img" :alt="services.corporation.title"
                                  class="w-full h-auto rounded-lg"/>
                         </div>
                     </div>
