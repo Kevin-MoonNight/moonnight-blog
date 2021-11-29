@@ -39,6 +39,7 @@ instance.interceptors.response.use((response) => {
 
 
 import {tip, toLogin} from "./utils";
+import {store} from "../store";
 
 const errorHandle = (status, message) => {
     switch (status) {
@@ -71,6 +72,12 @@ const errorHandle = (status, message) => {
 export default function (method, url, data = null) {
     method = method.toLowerCase();
     instance.defaults.headers.common["Content-Type"] = 'application/json';
+    const isAuthenticated = store.state.auth.isAuth;
+
+    //防止網頁重整axios的token不見
+    if (isAuthenticated) {
+        addToken(store.state.auth.token);
+    }
 
     switch (method) {
         case 'get':

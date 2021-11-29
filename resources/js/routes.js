@@ -21,7 +21,6 @@ const UsersEditPassword = () => import( "./views/users/UsersEditPassword");
 const Setting = () => import( "./views/backend/Setting");
 import {store} from './store/index';
 import {logout} from "./api/utils";
-import {addToken} from "./api/https";
 import {createRouter, createWebHistory} from 'vue-router';
 
 const routes = [
@@ -195,11 +194,6 @@ export const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     const isAuthenticated = store.state.auth.isAuth;
-
-    //防止網頁重整axios的token不見
-    if (isAuthenticated) {
-        addToken(store.state.auth.token);
-    }
 
     if (!isAuthenticated && to.meta.requiresAuth) next('Login')
     else next();
