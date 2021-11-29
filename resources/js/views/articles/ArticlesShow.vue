@@ -77,7 +77,6 @@ export default {
                         article.value = results[0].data;
                         author.value = results[0].data.author;
                         isShow.value = true;
-
                     }).catch(() => {
                         fallback();
                     })
@@ -85,12 +84,10 @@ export default {
         };
 
         const computedMeta = computed(() => ({
-            title: `${article.value.title}`,
-            description: {
-                content: `${article.value.excerpt}`
-            }
+            title: article.value.title ? article.value.title : '',
+            description: article.value.excerpt ? article.value.excerpt : ''
         }))
-        const {meta} = useMeta(computedMeta);
+        useMeta(computedMeta);
 
         onBeforeMount(async () => {
             await getArticle();
