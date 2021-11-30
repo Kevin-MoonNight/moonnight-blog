@@ -17,6 +17,15 @@
     <script src="{{ mix('/js/app.js') }}" defer></script>
     <script src="https://kit.fontawesome.com/240a2f8f32.js" crossorigin="anonymous" defer></script>
     <base href="{{ env('APP_URL','https://moonnight.me/') }}" target="_self">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CNT3YFPJWD"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-CNT3YFPJWD');
+    </script>
 </head>
 <body class="">
 <div id="app">
