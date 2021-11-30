@@ -15,7 +15,7 @@
                            class="block mb-2 ml-1 font-bold text-left uppercase text-md text-blueGray-600">
                         slug
                     </label>
-                    <input v-model="article.slug" id="slug" type="text" name="title" placeholder="slug"
+                    <input v-model="article.slug" id="slug" type="text" name="slug" placeholder="slug"
                            class="input-style">
                 </div>
                 <div class="mt-4 w-full">

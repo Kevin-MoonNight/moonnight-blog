@@ -70,13 +70,13 @@
             <div class="container px-4 mx-auto md:px-14">
                 <div class="w-full h-full">
                     <div class="text-center text">
-                        <h3 class="text-3xl font-medium leading-normal">
+                        <h2 class="text-3xl font-medium leading-normal">
                             我們所提供的服務
-                        </h3>
+                        </h2>
                     </div>
 
                     <div class="mt-20 h-2/3">
-                        <carousel :items="services"/>
+                        <carousel :items="services"></carousel>
                     </div>
                 </div>
             </div>

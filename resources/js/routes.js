@@ -19,6 +19,10 @@ const UsersManage = () => import( "./views/backend/Users");
 const UsersEdit = () => import( "./views/users/UsersEdit");
 const UsersEditPassword = () => import( "./views/users/UsersEditPassword");
 const Setting = () => import( "./views/backend/Setting");
+const TagsManage = () => import('./views/backend/Tags');
+const TagsCreate = () => import('./views/tags/TagsCreate')
+const TagsEdit = () => import('./views/tags/TagsEdit')
+
 import {store} from './store/index';
 import {logout} from "./api/utils";
 import {createRouter, createWebHistory} from 'vue-router';
@@ -130,9 +134,32 @@ const routes = [
                 name: 'articlesEdit',
             },
             {
+                path: 'tags',
+                component: TagsManage,
+                name: 'tagsManage',
+                query: {
+                    search: null,
+                    page: null
+                }
+            },
+            {
+                path: 'tags/create',
+                component: TagsCreate,
+                name: 'tagsCreate',
+            },
+            {
+                path: 'tags/:slug/edit',
+                component: TagsEdit,
+                name: 'tagsEdit',
+            },
+            {
                 path: 'messages',
                 component: MessagesManage,
                 name: 'messagesManage',
+                query: {
+                    search: null,
+                    page: null
+                }
             },
             {
                 path: 'messages/:id/edit',
@@ -143,6 +170,10 @@ const routes = [
                 path: 'users',
                 component: UsersManage,
                 name: 'usersManage',
+                query: {
+                    search: null,
+                    page: null
+                }
             },
             {
                 path: 'users/:id/edit',

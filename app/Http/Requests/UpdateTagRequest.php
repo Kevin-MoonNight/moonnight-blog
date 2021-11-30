@@ -30,14 +30,13 @@ class UpdateTagRequest extends FormRequest
     {
         return [
             'name' => ['required'],
-            'slug' => [Rule::unique('articles', 'slug')->ignore($this->route('tag'))]
+            'slug' => ['required', Rule::unique('articles', 'slug')->ignore($this->route('tag'))]
         ];
     }
 
     protected function prepareForValidation()
     {
         $this->merge([
-
             'slug' => Str::slug($this->slug ?: $this->name)
         ]);
     }
@@ -46,6 +45,7 @@ class UpdateTagRequest extends FormRequest
     {
         return [
             "name.required" => "名稱為必填資料",
+            "slug.required" => "slug為必填資料",
             "slug.unique" => "slug重複"
         ];
     }

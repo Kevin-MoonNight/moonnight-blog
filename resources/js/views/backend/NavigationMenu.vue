@@ -104,6 +104,31 @@ export default {
                     ]
                 },
                 {
+                    name: '標籤管理',
+                    icon:
+                        `<i class="fas fa-tags"></i>`,
+                    childItems: [
+                        {
+                            name: '標籤列表',
+                            link: {
+                                name: 'tagsManage'
+                            },
+                            icon:
+                                `<i class="fas fa-list"></i>`,
+                            childItems: null
+                        },
+                        {
+                            name: '新增標籤',
+                            link: {
+                                name: 'tagsCreate'
+                            },
+                            icon:
+                                `<i class="fas fa-tag"></i>`,
+                            childItems: null
+                        }
+                    ]
+                },
+                {
                     name: '訊息管理',
                     icon:
                         `<i class="far fa-comment-dots"></i>`,

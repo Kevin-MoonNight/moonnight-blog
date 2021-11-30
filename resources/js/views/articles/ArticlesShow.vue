@@ -28,7 +28,7 @@
 
                     <hr class="my-4 border-blueGray-300"/>
 
-                    <h3 v-html="article.content" class="text-2xl"></h3>
+                    <h3 v-html="article.content" class="text-lg"></h3>
                 </div>
 
                 <div class="flex flex-wrap gap-2 mt-20 w-full h-auto">

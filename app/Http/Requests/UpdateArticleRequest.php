@@ -32,7 +32,7 @@ class UpdateArticleRequest extends FormRequest
         return [
             'title' => ['required', 'max:255'],
             'content' => ['required'],
-            'slug' => [Rule::unique('articles', 'slug')->ignore($this->route('article'))],
+            'slug' => ['required', Rule::unique('articles', 'slug')->ignore($this->route('article'))],
             'excerpt' => ['required'],
             'thumbnail' => ['image'],
             'state' => ['required'],

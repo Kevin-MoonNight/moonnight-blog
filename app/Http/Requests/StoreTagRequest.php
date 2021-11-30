@@ -30,7 +30,7 @@ class StoreTagRequest extends FormRequest
     {
         return [
             'name' => ['required'],
-            'slug' => [Rule::unique('articles', 'slug')]
+            'slug' => ['required', Rule::unique('articles', 'slug')]
         ];
     }
 
@@ -45,6 +45,7 @@ class StoreTagRequest extends FormRequest
     {
         return [
             "name.required" => "名稱為必填資料",
+            "slug.required" => "slug為必填資料",
             "slug.unique" => "slug重複"
         ];
     }
