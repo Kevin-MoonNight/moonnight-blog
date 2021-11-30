@@ -14,7 +14,7 @@
                 :is-show="isShow">
             </tags-list>
             <p v-if="tags.length === 0 && isShow" class="mt-10 w-full text-xl text-center text-red-500">
-                找不到文章!
+                找不到標籤!
             </p>
         </div>
     </div>

@@ -29,8 +29,8 @@ class StoreTagRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required'],
-            'slug' => ['required', Rule::unique('articles', 'slug')]
+            'name' => ['required', Rule::unique('tags', 'name')],
+            'slug' => ['required', Rule::unique('tags', 'slug')]
         ];
     }
 
@@ -45,6 +45,7 @@ class StoreTagRequest extends FormRequest
     {
         return [
             "name.required" => "名稱為必填資料",
+            "name.unique" => "名稱重複",
             "slug.required" => "slug為必填資料",
             "slug.unique" => "slug重複"
         ];
