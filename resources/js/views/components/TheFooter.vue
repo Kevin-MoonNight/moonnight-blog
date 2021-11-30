@@ -45,7 +45,7 @@
                         <address class="px-4 ml-auto w-full not-italic lg:w-4/12">
                             <span class="block mb-2 font-bold uppercase text-blueGray-300 text-md">聯絡資訊</span>
                             <ul class="list-unstyled">
-                                <li id="email" v-clipboard:copy="email" v-clipboard:success="onCopy" :title="email">
+                                <li v-clipboard:copy="email" v-clipboard:success="onCopy" :title="email">
                                     <p class="block pb-2 text-sm font-semibold cursor-pointer text-blueGray-400 hover:text-indigo-500">
                                         電子信箱：{{ email }}
                                     </p>
