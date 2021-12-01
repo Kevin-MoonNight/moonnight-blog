@@ -1,49 +1,33 @@
 <template>
-    <search-box :link="'articlesDraft'"></search-box>
+    <manage-layout :data="response" :link="link" :is-show="isShow" :search="true" :paginate="true">
+        <articles-draft-table
+            v-if="isShow"
+            :articles="articles"
+            :refresh-articles="getArticles"
+        >
+        </articles-draft-table>
 
-    <div class="mt-10 bg-white rounded-sm shadow-md">
-        <div class="overflow-x-auto w-full h-full min-h-screen" :class="!isShow ? 'h-screen' : ''">
-            <div v-if="!isShow" class="flex flex-wrap place-content-center w-full h-full">
-                <loading-icon></loading-icon>
-            </div>
-
-            <articles-draft-list
-                v-if="isShow"
-                :articles="articles"
-                :refresh-articles="getArticles"
-                :is-show="isShow">
-            </articles-draft-list>
-            <p v-if="articles.length === 0 && isShow" class="mt-10 w-full text-xl text-center text-red-500">
-                找不到文章!
-            </p>
-        </div>
-    </div>
-
-    <div v-if="isShow" class="mt-10 w-full h-auto bg-white rounded-sm">
-        <paginator :items="response" :url="'articlesDraft'"></paginator>
-    </div>
+        <p v-if="articles.length === 0" class="mt-10 w-full text-xl text-center text-red-500">
+            找不到文章!
+        </p>
+    </manage-layout>
 </template>
 
 <script>
-import ArticlesTrashedList from "./ArticlesTrashedList";
-import paginator from "../components/Paginator";
-import SearchBox from "../components/SearchBox";
-import LoadingIcon from "../components/LoadingIcon";
 import {useRoute} from "vue-router";
-import {computed, onBeforeMount, ref, watch} from "vue";
+import {computed, ref, watch, onBeforeMount} from "vue";
 import {apiGetDraftArticles} from "../../api/article";
-import ArticlesDraftList from "./ArticlesDraftList";
+import ArticlesDraftTable from "./ArticlesDraftTable";
+import ManageLayout from "../layouts/ManageLayout";
 
 export default {
     components: {
-        ArticlesDraftList,
-        LoadingIcon,
-        SearchBox,
-        paginator,
-        ArticlesTrashedList
+        ArticlesDraftTable,
+        ManageLayout
     },
     setup() {
         const route = useRoute();
+        const link = ref('articlesDraft');
         const articles = ref([]);
         const response = ref({});
         const isShow = ref(false);
@@ -63,6 +47,7 @@ export default {
         watch(params, getArticles);
 
         return {
+            link,
             articles,
             response,
             isShow,

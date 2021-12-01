@@ -1,7 +1,6 @@
 <template>
-    <div v-show="items.total > 0" class="px-10 py-2">
+    <div class="px-10 py-2">
         <div class="grid grid-cols-3 w-full h-full">
-
             <p class="flex justify-start items-center">
                 {{ items.from }} - {{ items.to }} of {{ items.total }}
             </p>
@@ -19,37 +18,52 @@
             </div>
 
             <p class="flex justify-end items-center">
-                {{ items.current_page }}
+                {{ currentPage }}
             </p>
         </div>
     </div>
 </template>
 
 <script>
-import {toRefs} from "vue";
+import {computed, toRefs} from "vue";
 import {useRouter, useRoute} from "vue-router";
 
 export default {
-    props: ['items', 'link'],
+    props: {
+        items: {
+            type: Object,
+            required: true
+        },
+        link: {
+            type: String,
+            required: true
+        }
+    },
     setup(props) {
         const {items, link} = toRefs(props);
+        const currentPage = computed(() => items.value.current_page);
         const router = useRouter();
         const route = useRoute();
 
         const prevPage = () => {
-            if (items.value.prev_page_url !== null) {
-                const page = items.value.current_page - 1;
-                router.push({name: link.value, query: Object.assign({}, route.query, {page: page})});
+            if (items.value.prev_page_url) {
+                const page = currentPage.value - 1;
+                const query = Object.assign({}, route.query, {page: page});
+
+                router.push({name: link.value, query: query});
             }
         }
         const nextPage = () => {
-            if (items.value.next_page_url !== null) {
-                const page = items.value.current_page + 1;
-                router.push({name: link.value, query: Object.assign({}, route.query, {page: page})});
+            if (items.value.next_page_url) {
+                const page = currentPage.value + 1;
+                const query = Object.assign({}, route.query, {page: page});
+
+                router.push({name: link.value, query: query});
             }
         }
 
         return {
+            currentPage,
             prevPage,
             nextPage
         }
