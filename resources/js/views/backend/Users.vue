@@ -20,7 +20,7 @@
     </div>
 
     <div v-if="isShow" class="mt-10 w-full h-auto bg-white rounded-sm">
-        <paginator :items="response" :url="'usersManage'"></paginator>
+        <paginator :items="response" :link="'usersManage'"></paginator>
     </div>
 </template>
 

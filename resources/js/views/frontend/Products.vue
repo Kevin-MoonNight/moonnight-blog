@@ -13,7 +13,7 @@
                 </transition>
 
                 <div v-if="isShow" class="mt-10 w-full h-auto bg-white rounded-sm">
-                    <paginator class="w-full" :items="response" :url="'products'"/>
+                    <paginator class="w-full" :items="response" :link="'products'"/>
                 </div>
             </div>
         </div>

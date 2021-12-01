@@ -30,19 +30,61 @@ export default {
                     childItems: [
                         {
                             name: '文章列表',
-                            link: 'articlesManage',
+                            link: {
+                                name: 'articlesManage'
+                            }
                         },
                         {
                             name: '新增文章',
-                            link: 'articlesCreate',
+                            link: {
+                                name: 'articlesCreate'
+                            }
                         },
                         {
                             name: '草稿',
-                            link: 'articlesDraft',
+                            link: {
+                                name: 'articlesDraft'
+                            }
                         },
                         {
                             name: '垃圾桶',
-                            link: 'articlesTrashed',
+                            link: {
+                                name: 'articlesTrashed'
+                            }
+                        }
+                    ]
+                },
+                {
+                    name: '標籤管理',
+                    childItems: [
+                        {
+                            name: '標籤列表',
+                            link: {
+                                name: 'tagsManage'
+                            }
+                        },
+                        {
+                            name: '新增標籤',
+                            link: {
+                                name: 'tagsCreate'
+                            }
+                        }
+                    ]
+                },
+                {
+                    name: '作品管理',
+                    childItems: [
+                        {
+                            name: '作品列表',
+                            link: {
+                                name: 'productsManage'
+                            }
+                        },
+                        {
+                            name: '新增作品',
+                            link: {
+                                name: 'productsCreate'
+                            }
                         }
                     ]
                 },
@@ -51,7 +93,9 @@ export default {
                     childItems: [
                         {
                             name: '所有訊息',
-                            link: 'messagesManage',
+                            link: {
+                                name: 'messagesManage'
+                            }
                         }
                     ]
                 },
@@ -60,7 +104,9 @@ export default {
                     childItems: [
                         {
                             name: '所有會員',
-                            link: 'usersManage',
+                            link: {
+                                name: 'usersManage'
+                            }
                         }
                     ]
                 },
@@ -69,7 +115,9 @@ export default {
                     childItems: [
                         {
                             name: '個人設定',
-                            link: 'setting',
+                            link: {
+                                name: 'setting'
+                            }
                         }
                     ]
                 }
@@ -79,7 +127,7 @@ export default {
     setup() {
         const router = useRouter();
         const redirect = (link) => {
-            router.push({name: link});
+            router.push(link);
         }
 
         return {

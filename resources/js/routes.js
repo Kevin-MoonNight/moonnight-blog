@@ -23,6 +23,9 @@ const TagsManage = () => import('./views/backend/Tags');
 const TagsCreate = () => import('./views/tags/TagsCreate')
 const TagsEdit = () => import('./views/tags/TagsEdit')
 const PathNotFound = () => import('./views/components/PathNotFound');
+const ProductsManage = () => import('./views/backend/Products');
+const ProductsCreate = () => import('./views/products/ProductsCreate');
+const ProductsEdit = () => import('./views/products/ProductsEdit');
 
 import {store} from './store/index';
 import {logout} from "./api/utils";
@@ -143,8 +146,7 @@ const routes = [
                 component: TagsManage,
                 name: 'tagsManage',
                 query: {
-                    search: null,
-                    page: null
+                    search: null
                 }
             },
             {
@@ -156,6 +158,24 @@ const routes = [
                 path: 'tags/:slug/edit',
                 component: TagsEdit,
                 name: 'tagsEdit',
+            },
+            {
+                path: 'products',
+                component: ProductsManage,
+                name: 'productsManage',
+                query: {
+                    page: null
+                }
+            },
+            {
+                path: 'products/create',
+                component: ProductsCreate,
+                name: 'productsCreate',
+            },
+            {
+                path: 'products/:id/edit',
+                component: ProductsEdit,
+                name: 'productsEdit',
             },
             {
                 path: 'messages',

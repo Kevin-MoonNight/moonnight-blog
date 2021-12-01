@@ -39,7 +39,6 @@ export default {
     setup() {
         const route = useRoute();
         const tags = ref([]);
-        const response = ref({});
         const isShow = ref(false);
 
         const params = computed(() => route.query);
@@ -48,7 +47,6 @@ export default {
             await Promise.all([apiGetTags(params.value)])
                 .then((results) => {
                     tags.value = results[0].data;
-                    response.value = results[0].data;
                     isShow.value = true;
                 });
         }
@@ -58,7 +56,6 @@ export default {
 
         return {
             tags,
-            response,
             isShow,
             getTags
         }

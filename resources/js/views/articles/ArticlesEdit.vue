@@ -26,7 +26,7 @@
                     <div class="flex">
                         <input type="file" @change="getThumbnail($event)" id="thumbnail" name="thumbnail"
                                placeholder="縮圖">
-                        <img v-if="thumbnailSrc !== null" v-bind:src="thumbnailSrc" alt=""
+                        <img v-if="thumbnailSrc !== null" v-bind:src="thumbnailSrc" alt="縮圖"
                              class="w-auto h-24">
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                            class="block mb-2 ml-1 font-bold text-left uppercase text-md text-blueGray-600">
                         摘要
                     </label>
-                    <input v-model="article.excerpt" id="excerpt" type="text" name="title" placeholder="摘要"
+                    <input v-model="article.excerpt" id="excerpt" type="text" name="excerpt" placeholder="摘要"
                            class="input-style">
                 </div>
 

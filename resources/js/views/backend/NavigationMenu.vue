@@ -129,6 +129,31 @@ export default {
                     ]
                 },
                 {
+                    name: '作品管理',
+                    icon:
+                        `<i class="fas fa-code"></i>`,
+                    childItems: [
+                        {
+                            name: '作品列表',
+                            link: {
+                                name: 'productsManage'
+                            },
+                            icon:
+                                `<i class="fas fa-list"></i>`,
+                            childItems: null
+                        },
+                        {
+                            name: '新增作品',
+                            link: {
+                                name: 'productsCreate'
+                            },
+                            icon:
+                                `<i class="fas fa-file-code"></i>`,
+                            childItems: null
+                        }
+                    ]
+                },
+                {
                     name: '訊息管理',
                     icon:
                         `<i class="far fa-comment-dots"></i>`,
