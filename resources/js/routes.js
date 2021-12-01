@@ -22,6 +22,7 @@ const Setting = () => import( "./views/backend/Setting");
 const TagsManage = () => import('./views/backend/Tags');
 const TagsCreate = () => import('./views/tags/TagsCreate')
 const TagsEdit = () => import('./views/tags/TagsEdit')
+const PathNotFound = () => import('./views/components/PathNotFound');
 
 import {store} from './store/index';
 import {logout} from "./api/utils";
@@ -78,6 +79,10 @@ const routes = [
                 path: '/register',
                 component: Register,
                 name: 'register',
+            },
+            {
+                path: '/:pathMatch(.*)*',
+                component: PathNotFound
             },
         ]
     },
