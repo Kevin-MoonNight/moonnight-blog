@@ -87,7 +87,9 @@ export default {
             const data = new FormData();
 
             Object.keys(product.value).forEach((key) => {
-                data.append(key, product.value[key])
+                if(product.value[key] !== null){
+                    data.append(key, product.value[key])
+                }
             });
 
             return data;

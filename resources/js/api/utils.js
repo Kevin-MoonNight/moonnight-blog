@@ -33,3 +33,21 @@ export const logout = async () => {
 export const onCopy = () => {
     store.dispatch('addNotice', {message: '複製成功!', color: true});
 }
+
+export const transformToFormData = (data) => {
+    const result = new FormData();
+
+    Object.keys(data).forEach((key) => {
+        if (data[key] !== null) {
+            if (Array.isArray(data[key])) {
+                data[key].forEach((item) => {
+                    result.append(`${key}[]`, item);
+                });
+            } else {
+                result.append(key, data[key])
+            }
+        }
+    });
+
+    return result;
+}

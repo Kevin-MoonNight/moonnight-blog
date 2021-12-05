@@ -78,13 +78,18 @@
 
 <script>
 import {ref} from "vue";
-import google from "../assets/images/google.svg";
 import {login} from "../../api/utils";
+import google from "../assets/images/google.svg";
 
 export default {
     data() {
         return {
             google
+        }
+    },
+    metaInfo() {
+        return {
+            title: '登入'
         }
     },
     setup() {

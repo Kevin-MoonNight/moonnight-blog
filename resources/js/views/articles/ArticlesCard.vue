@@ -1,5 +1,5 @@
 <template>
-    <div @click="toArticle(article.slug)" :title="article.title"
+    <div @click="redirectToArticle(article.slug)" :title="article.title"
          class="block w-full h-60 bg-white rounded-md shadow-md cursor-pointer group hover:shadow-lg">
         <div class="grid grid-cols-3 w-full">
             <div class="col-span-2 p-4 h-60">
@@ -32,27 +32,25 @@
 </template>
 
 <script>
-import moment from "moment";
 import {useRouter} from "vue-router";
+import {fromNow} from "../../api/time";
 
 export default {
-    props: ['article'],
+    props: {
+        article: {
+            type: Object,
+            required: true
+        }
+    },
     setup() {
         const router = useRouter();
-
-        //導航到文章
-        function toArticle(slug) {
+        const redirectToArticle = (slug) => {
             router.push({name: 'article', params: {slug: slug}});
         }
 
-        //格式化日期
-        const date = (created_at) => {
-            return moment(created_at).fromNow();
-        };
-
         return {
-            date,
-            toArticle
+            date: fromNow,
+            redirectToArticle
         }
     }
 }

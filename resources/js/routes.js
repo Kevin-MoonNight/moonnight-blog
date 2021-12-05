@@ -84,8 +84,13 @@ const routes = [
                 name: 'register',
             },
             {
-                path: '/:pathMatch(.*)*',
+                path: '/404',
+                name: '404',
                 component: PathNotFound
+            },
+            {
+                path: '/:pathMatch(.*)*',
+                redirect: '/404'
             },
         ]
     },

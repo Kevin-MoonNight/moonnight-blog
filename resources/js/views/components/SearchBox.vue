@@ -1,6 +1,6 @@
 <template>
     <form class="flex justify-center w-full h-12 bg-white rounded-lg border-2 hover:border-gray-800">
-        <input v-model="text" type="search" name="text" id="text" placeholder="搜尋文章" title="搜尋文章"
+        <input v-model.trim="text" type="search" name="text" id="text" placeholder="搜尋文章" title="搜尋文章"
                class="px-5 w-full h-full rounded-lg outline-none">
 
         <button @click.prevent="search" class="flex justify-center items-center w-12 text-gray-500 hover:text-black">
@@ -27,7 +27,7 @@ export default {
 
         const text = ref('');
         const query = reactive({
-            search: computed(() => text.value.trim()),
+            search: computed(() => text.value),
             tag: computed(() => route.query.tag)
         });
 

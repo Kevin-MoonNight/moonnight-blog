@@ -1,94 +1,111 @@
 <template>
-    <transition name="fade">
-        <div v-show="isShow" class="w-full h-auto bg-white rounded-sm shadow-md">
-            <div class="p-5">
-                <div class="w-full">
-                    <label htmlFor="title"
-                           class="block mb-2 ml-1 font-bold text-left uppercase text-md text-blueGray-600">
-                        標題
-                    </label>
-                    <input v-model="article.title" id="title" type="text" name="title" placeholder="標題"
-                           class="input-style">
-                </div>
-                <div class="mt-4 w-full">
-                    <label htmlFor="slug"
-                           class="block mb-2 ml-1 font-bold text-left uppercase text-md text-blueGray-600">
-                        slug
-                    </label>
-                    <input v-model="article.slug" id="slug" type="text" name="slug" placeholder="slug"
-                           class="input-style">
-                </div>
-                <div class="mt-4 w-full">
-                    <label htmlFor="thumbnail"
-                           class="block mb-2 ml-1 font-bold text-left uppercase text-md text-blueGray-600">
-                        縮圖
-                    </label>
-                    <div class="flex">
-                        <input type="file" @change="getThumbnail($event)" id="thumbnail" name="thumbnail"
-                               placeholder="縮圖">
-                        <img v-if="thumbnailSrc !== null" v-bind:src="thumbnailSrc" alt="縮圖"
-                             class="w-auto h-24">
-                    </div>
-                </div>
+    <div class="w-full h-auto bg-white rounded-sm shadow-md">
+        <div class="p-5">
+            <div class="w-full">
+                <base-label htmlFor="title">標題</base-label>
 
-                <div class="mt-4 w-full">
-                    <label htmlFor="excerpt"
-                           class="block mb-2 ml-1 font-bold text-left uppercase text-md text-blueGray-600">
-                        摘要
-                    </label>
-                    <input v-model="article.excerpt" id="excerpt" type="text" name="excerpt" placeholder="摘要"
-                           class="input-style">
-                </div>
+                <base-input-text
+                    v-model:value="article.title"
+                    name="title"
+                    placeholder="標題"
+                ></base-input-text>
+            </div>
 
-                <div class="mt-4 w-full">
-                    <label class="block mb-2 ml-1 font-bold text-left uppercase text-md text-blueGray-600">內容</label>
-                    <editor v-model="article.content"></editor>
-                </div>
+            <div class="mt-4 w-full">
+                <base-label htmlFor="slug">slug</base-label>
 
-                <div class="mt-4 w-full">
-                    <label htmlFor="tags"
-                           class="block mb-2 ml-1 font-bold text-left uppercase text-md text-blueGray-600">
-                        標籤
-                    </label>
-                    <select v-model="article.tags" id="tags" multiple class="input-style">
-                        <option v-for="tag in tags" :value="tag.id" :key="tag.slug">
-                            {{ tag.name }}
-                        </option>
-                    </select>
-                </div>
+                <base-input-text
+                    v-model:value="article.slug"
+                    name="slug"
+                    placeholder="slug"
+                ></base-input-text>
+            </div>
 
-                <div class="flex justify-between mt-4 w-full">
-                    <select v-model="article.state"
-                            class="px-6 py-3 mr-1 mb-1 font-medium text-left text-white uppercase rounded shadow transition-all duration-150 ease-linear outline-none text-md bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none"
-                            name="state">
-                        <option value="1">發布</option>
-                        <option value="0">草稿</option>
-                    </select>
+            <div class="mt-4 w-full">
+                <base-label htmlFor="thumbnail">縮圖</base-label>
 
-                    <button @click="createArticle"
-                            class="px-6 py-3 mr-1 mb-1 font-medium text-left text-white uppercase rounded shadow transition-all duration-150 ease-linear outline-none text-md bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none">
-                        新增文章
-                    </button>
+                <div class="flex">
+                    <input type="file" @change="getThumbnail($event)"
+                           id="thumbnail"
+                           name="thumbnail"
+                           placeholder="縮圖">
+
+                    <img v-if="thumbnailSrc !== null"
+                         v-bind:src="thumbnailSrc"
+                         alt="縮圖"
+                         class="w-auto h-24"
+                    >
                 </div>
             </div>
+
+            <div class="mt-4 w-full">
+                <base-label htmlFor="slug">摘要</base-label>
+
+                <base-input-text
+                    v-model:value="article.excerpt"
+                    name="excerpt"
+                    placeholder="摘要"
+                ></base-input-text>
+            </div>
+
+            <div class="mt-4 w-full">
+                <base-label htmlFor="content">內容</base-label>
+
+                <editor v-model="article.content"></editor>
+            </div>
+
+            <div class="mt-4 w-full">
+                <base-label htmlFor="tags">標籤</base-label>
+
+                <base-select
+                    v-model:value="article.tags"
+                    name="tags"
+                    :multiple="true"
+                >
+                    <option v-for="tag in tags" :value="tag.id" :key="tag.slug">
+                        {{ tag.name }}
+                    </option>
+                </base-select>
+            </div>
+
+            <div class="flex justify-between mt-4 w-full">
+                <base-select
+                    v-model:value="article.state"
+                    name="state"
+                >
+                    <option value="1">發布</option>
+                    <option value="0">草稿</option>
+                </base-select>
+
+                <base-button @click="createArticle">新增文章</base-button>
+            </div>
         </div>
-    </transition>
+    </div>
 </template>
 
 <script>
-import {onBeforeMount, ref} from "vue";
+import {onBeforeMount, reactive, ref} from "vue";
+import {useStore} from "vuex";
 import {useRouter} from "vue-router";
 import {apiCreateArticle} from "../../api/article";
 import {apiGetTags} from "../../api/tag";
-import {useStore} from "vuex";
+import {transformToFormData} from "../../api/utils";
 import Editor from "../components/Editor";
+import BaseLabel from "../components/BaseLabel";
+import BaseInputText from "../components/BaseInputText";
+import BaseButton from "../components/BaseButton";
+import BaseSelect from "../components/BaseSelect";
 
 export default {
     components: {
+        BaseSelect,
+        BaseButton,
+        BaseInputText,
+        BaseLabel,
         Editor
     },
     setup() {
-        const article = ref({
+        const article = reactive({
             title: '',
             slug: '',
             excerpt: '',
@@ -97,19 +114,16 @@ export default {
             tags: [],
             state: 0
         });
-        const thumbnailSrc = ref(null);
         const tags = ref([]);
-        const isShow = ref(false);
 
-        const getTags = async () => {
-            await Promise.all([apiGetTags()])
-                .then((results) => {
-                    tags.value = results[0].data;
-                    isShow.value = true;
+        onBeforeMount(async () => {
+            await apiGetTags()
+                .then((res) => {
+                    tags.value = res.data;
                 });
-        }
-        onBeforeMount(getTags);
+        });
 
+        const thumbnailSrc = ref(null);
         const getThumbnail = (event) => {
             const reader = new FileReader();
 
@@ -119,28 +133,13 @@ export default {
 
             reader.readAsDataURL(event.target.files[0]);
 
-            article.value.thumbnail = event.target.files[0]
-        }
-        const inputData = () => {
-            const data = new FormData();
-
-            Object.keys(article.value).forEach((key) => {
-                if (key !== 'tags') {
-                    data.append(key, article.value[key])
-                }
-            });
-
-            for (let i = 0; i < article.value.tags.length; i++) {
-                data.append('tags[]', article.value.tags[i]);
-            }
-
-            return data;
+            article.thumbnail = event.target.files[0]
         }
 
         const router = useRouter();
         const store = useStore();
         const createArticle = async () => {
-            await Promise.all([apiCreateArticle(inputData())])
+            await apiCreateArticle(transformToFormData(article))
                 .then(() => {
                     store.dispatch('addNotice', {message: '文章新增成功!', color: true});
                     router.push({name: 'articlesManage'});
@@ -148,10 +147,9 @@ export default {
         };
 
         return {
+            tags,
             article,
             thumbnailSrc,
-            tags,
-            isShow,
             createArticle,
             getThumbnail
         }

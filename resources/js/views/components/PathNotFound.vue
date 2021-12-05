@@ -25,6 +25,11 @@
 import {useRouter} from "vue-router";
 
 export default {
+    metaInfo() {
+        return {
+            title: '尋找不到頁面'
+        }
+    },
     setup() {
         const router = useRouter();
         const redirectToHome = () => {

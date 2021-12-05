@@ -1,7 +1,6 @@
 <template>
     <manage-layout :data="response" :link="link" :is-show="isShow" :search="true" :paginate="true">
         <articles-table
-            v-if="isShow"
             :articles="articles"
             :refresh-articles="getArticles"
         >
@@ -35,10 +34,10 @@ export default {
         const params = computed(() => route.query);
         const getArticles = async () => {
             isShow.value = false;
-            await Promise.all([apiGetArticles(params.value)])
+            await apiGetArticles(params.value)
                 .then((results) => {
-                    articles.value = results[0].data.data
-                    response.value = results[0].data;
+                    articles.value = results.data.data
+                    response.value = results.data;
                     isShow.value = true;
                 });
         }

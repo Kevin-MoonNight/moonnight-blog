@@ -7,7 +7,9 @@
                 <loading-icon></loading-icon>
             </div>
 
-            <slot></slot>
+            <div v-else>
+                <slot></slot>
+            </div>
         </div>
     </div>
 
@@ -37,7 +39,8 @@ export default {
             default: null
         },
         isShow: {
-            type: Boolean
+            type: Boolean,
+            default: true
         },
         search: {
             type: Boolean,

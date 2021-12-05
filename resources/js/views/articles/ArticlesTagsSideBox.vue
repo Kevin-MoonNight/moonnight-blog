@@ -22,10 +22,9 @@ export default {
         const tags = ref([]);
         const isShow = ref(false);
         onBeforeMount(async () => {
-            isShow.value = false;
-            await Promise.all([apiGetTags()])
-                .then((results) => {
-                    tags.value = results[0].data;
+            await apiGetTags()
+                .then((res) => {
+                    tags.value = res.data;
                     isShow.value = true;
                 });
         })

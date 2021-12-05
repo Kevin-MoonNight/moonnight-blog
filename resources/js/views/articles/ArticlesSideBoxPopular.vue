@@ -7,11 +7,11 @@
     </side-box>
 </template>
 <script>
-import SideBox from "../components/SideBox";
 import {apiPopularArticles} from "../../api/article";
 import {ref, onBeforeMount} from "vue";
 import {useRouter} from 'vue-router';
 import LoadingIcon from "../components/LoadingIcon";
+import SideBox from "../components/SideBox";
 
 export default {
     components: {
@@ -22,10 +22,9 @@ export default {
         const articles = ref([]);
         const isShow = ref(false);
         onBeforeMount(async () => {
-            isShow.value = false;
-            await Promise.all([apiPopularArticles()])
-                .then((results) => {
-                    articles.value = results[0].data;
+            await apiPopularArticles()
+                .then((res) => {
+                    articles.value = res.data;
                     isShow.value = true;
                 });
         })
