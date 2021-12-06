@@ -10,14 +10,32 @@ class Tag extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name'
+        'id',
+        'name',
+        'slug'
     ];
 
-    /**
-     * Get all of the articles for the Tag
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
+
+    public function scopeFilter($query, array $filter)
+    {
+        $query->when($filter['search'] ?? false, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('slug', 'like', '%' . $search . '%');
+            });
+
+        });
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     public function articles()
     {
         return $this->belongsToMany(Article::class);

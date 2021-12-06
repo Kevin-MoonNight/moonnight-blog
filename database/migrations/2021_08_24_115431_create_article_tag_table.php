@@ -15,8 +15,8 @@ class CreateArticleTagTable extends Migration
     {
         Schema::create('article_tag', function (Blueprint $table) {
             $table->id();
-            $table->integer('article_id')->unsigned()->nullable();
-            $table->integer('tag_id')->unsigned()->nullable();
+            $table->foreignId('article_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('tag_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

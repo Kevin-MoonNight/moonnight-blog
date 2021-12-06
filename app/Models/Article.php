@@ -11,26 +11,72 @@ class Article extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable=[
+    protected $fillable = [
         'title',
+        'slug',
+        'excerpt',
         'content',
         'views',
-        'url',
+        'thumbnail',
         'state',
         'user_id'
     ];
 
-    //model關聯性 屬於某一個User
-    public function user(){
-        return $this->belongsTo(User::class);
+    protected $hidden = [
+        'id',
+        'state',
+        'user_id',
+        'updated_at',
+        'deleted_at'
+    ];
+
+    protected $with = [
+        'tags', 'author'
+    ];
+
+    public function scopePublished($query)
+    {
+        $query->where('state', true);
     }
 
-    //屬於很多tag
-    /**
-     * The tags that belong to the Post
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
+    public function scopeDraft($query)
+    {
+        $query->where('state', false);
+    }
+
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['search'] ?? false, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query->where('title', 'like', '%' . $search . '%')
+                    ->orWhere('content', 'like', '%' . $search . '%');
+            });
+        });
+
+        $query->when($filters['tag'] ?? false, function ($query, $tag) {
+            $query->whereRelation('tags', 'slug', '=', $tag);
+        });
+
+        $query->when($filters['author'] ?? false, function ($query, $author) {
+            $query->whereRelation('author', 'name', '=', $author);
+        });
+    }
+
+    public function scopePopular($query)
+    {
+        return $query->orderBy('views', 'desc');
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
     public function tags()
     {
         return $this->belongsToMany(Tag::class);

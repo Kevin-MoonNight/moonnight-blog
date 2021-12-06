@@ -1,10 +1,16 @@
 {
-    "name": "laravel/laravel",
+    "name": "moonnight/blog",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "My blog",
+    "authors": [
+        {
+            "name": "Moon Night",
+            "email": "k0937477331@gmail.com"
+        }
+    ],
     "keywords": [
-        "framework",
-        "laravel"
+        "moonnight",
+        "blog"
     ],
     "license": "MIT",
     "require": {
@@ -12,15 +18,13 @@
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "intervention/image": "^2.7",
         "laravel/framework": "^8.12",
-        "laravel/jetstream": "^2.2",
         "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.5",
-        "laravel/ui": "^3.3",
-        "livewire/livewire": "^2.0"
+        "laravel/ui": "^3.3"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.6",
         "barryvdh/laravel-ide-helper": "^2.10",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
@@ -67,5 +71,4 @@
             "@php artisan key:generate --ansi"
         ]
     }
-
 }

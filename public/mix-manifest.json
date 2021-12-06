@@ -1,4 +1,14 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/js/app.js": "/js/app.js?id=62e2d7f52ed95be266e4",
+    "/css/app.css": "/css/app.css?id=921b38b710e55b3a8cab",
+    "/images/about.avif": "/images/about.avif?id=fc821ad637b5f8fd8072",
+    "/images/algorithm.avif": "/images/algorithm.avif?id=3d3a68a0218c9fa4e331",
+    "/images/blogIcon.ico": "/images/blogIcon.ico?id=f0981df07baed2ccda8b",
+    "/images/corporation.avif": "/images/corporation.avif?id=d625d0acce515e005c7f",
+    "/images/cover.avif": "/images/cover.avif?id=ac240dc53cc0f3f09c42",
+    "/images/desktop.avif": "/images/desktop.avif?id=c8e5cc1e94e1510c227b",
+    "/images/google.svg": "/images/google.svg?id=87be59a1f7061fc60218",
+    "/images/IndependentStudy.avif": "/images/IndependentStudy.avif?id=8563cb57fb7cd6a0e8d8",
+    "/images/thesis.avif": "/images/thesis.avif?id=78c387d504ab01912a1e",
+    "/images/website.avif": "/images/website.avif?id=fa76ccd20095a049c14f"
 }

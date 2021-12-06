@@ -2,65 +2,44 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreTagRequest;
+use App\Http\Requests\UpdateTagRequest;
 use App\Models\Tag;
+use Illuminate\Http\Request;
 
 class TagsController extends Controller
 {
-    public function __construct(){
-        $this->middleware('auth')->except('index','show');
+    public function __construct()
+    {
+        $this->middleware(['auth:sanctum', 'can:admin'])->except('index', 'show');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return Tag::all();
+        return Tag::filter($request->all())->get();
     }
 
-    public function store(Request $request)
+    public function store(StoreTagRequest $request)
     {
-        $ok=true;
-        $msg = '標籤新增成功!';
-        $error='';
-        try{
-            //驗證內容
-            $content = $request->validate([
-                'name'=>'required'
-            ]);
+        $validated = $request->validated();
 
-            Tag::create($content);
-        }catch (Exception $e){
-            $ok = false;
-            $msg = '標籤新增失敗!';
-            $error = $e;
-        }
-
-        return response()->json(['ok' => $ok, 'msg' => $msg,'error'=>$error], 200);;
+        return Tag::create($validated);
     }
 
-    public function show($id)
+    public function show(Tag $tag)
     {
-        return Tag::all()->find($id);
-    }
-
-    public function update(Request $request, $id)
-    {
-        $content = $request->validate([
-            'name'=>'required'
-        ]);
-
-        $tag = Tag::all()->find($id);
-        $tag->update($content);
-
         return $tag;
     }
 
-    public function destroy($id)
+    public function update(UpdateTagRequest $request, Tag $tag)
     {
-        return Tag::destroy($id);
+        $validated = $request->validated();
+
+        return $tag->update($validated);
     }
 
-    public function search($name)
+    public function destroy(Tag $tag)
     {
-        return Tag::where('name','like', '%'.$name.'%')->get();
+        return $tag->delete();
     }
 }

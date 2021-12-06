@@ -2,70 +2,44 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreMessageRequest;
+use App\Http\Requests\UpdateMessageRequest;
 use App\Models\Message;
 use Illuminate\Http\Request;
 
 class MessagesController extends Controller
 {
-    public function __construct(){
-        $this->middleware('auth')->except('create','store');
+    public function __construct()
+    {
+        $this->middleware(['auth:sanctum', 'can:admin'])->except('store');
     }
 
-
-    public function index()
+    public function index(Request $request)
     {
-        $messages = Message::orderBy('id','desc')->paginate(10);
-
-        return view('backend.messages')->with(['messages'=>$messages]);
+        return Message::filter($request->all())->latest()->paginate(10)->withQueryString();
     }
 
-
-    public function create()
+    public function store(StoreMessageRequest $request)
     {
-        return view('frontend.contact');
+        $validated = $request->validated();
+
+        return Message::Create($validated);
     }
 
-
-    public function store(Request $request)
+    public function show(Message $message)
     {
-        //驗證內容
-        $request->validate([
-            'name' =>'required',
-            'email'=>'required',
-            'caseType'=>'required'
-        ]);
-
-        //新增訊息
-        Message::Create($request->all());
-
-        return redirect()->route('contact.create')->with(['notice'=>'訊息發送成功，請留意信箱!']);
+        return $message;
     }
 
-
-    public function show($id)
+    public function update(UpdateMessageRequest $request, Message $message)
     {
-        //
+        $validated = $request->validated();
+
+        return  $message->update($validated);
     }
 
-
-    public function edit($id)
+    public function destroy(Message $message)
     {
-        //
-    }
-
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-
-    public function destroy($id)
-    {
-        $message = Message::all()->find($id);
-
-        $message->delete();
-
-        return redirect()->route('contact.index')->with(['notice'=>'訊息刪除成功!']);
+        return $message->delete();
     }
 }
