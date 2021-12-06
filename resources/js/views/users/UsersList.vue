@@ -1,16 +1,13 @@
 <template>
-    <table class="w-full h-full bg-white rounded-md table-auto min-w-lg">
-        <thead>
-        <tr class="font-light rounded-t-md border-b text-blueGray-800">
+    <table-layout>
+        <template v-slot:header>
             <th class="py-2 border-r">名稱</th>
             <th class="py-2 border-r">帳號</th>
             <th class="py-2 border-r">電子信箱</th>
             <th class="py-2 border-r">權限</th>
             <th class="py-2">動作</th>
-        </tr>
-        </thead>
-        <transition name="fade">
-            <tbody v-show="isShow">
+        </template>
+        <template v-slot:body>
             <tr v-for="user in users" class="h-14 border-b group hover:bg-blueGray-200">
                 <td class="px-2 h-14 text-center min-w-32 group-hover:text-indigo-500">
                     {{ user.name }}
@@ -38,28 +35,28 @@
                     </button>
                 </td>
             </tr>
-            </tbody>
-        </transition>
-    </table>
+        </template>
+    </table-layout>
 </template>
 
 <script>
-import moment from "moment";
 import {useRouter} from "vue-router";
 import {toRefs} from "vue";
 import {useStore} from "vuex";
 import {apiDeleteUser} from "../../api/users";
+import {date} from "../../api/time";
+import TableLayout from "../layouts/TableLayout";
 
 export default {
+    components: {TableLayout},
     props: {
         users: {
-            type: Object
+            type: Object,
+            required: true
         },
         refreshUsers: {
-            type: Function
-        },
-        isShow: {
-            type: Boolean
+            type: Function,
+            required: true
         }
     },
     setup(props) {
@@ -71,21 +68,17 @@ export default {
             router.push({name: 'usersEdit', params: {id: id}});
         }
         const deleteUser = async (id) => {
-            await Promise.all([apiDeleteUser(id)])
+            await apiDeleteUser(id)
                 .then(() => {
                     store.dispatch('addNotice', {message: '使用者刪除成功!', color: true});
                     refreshArticles.value();
                 });
         }
 
-        function date(create_at) {
-            return moment(create_at).format('YYYY-MM-DD');
-        }
-
         return {
             editUser,
             deleteUser,
-            date,
+            date: date
         }
     }
 }

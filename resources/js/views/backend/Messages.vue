@@ -1,47 +1,38 @@
 <template>
-    <search-box :link="'messagesManage'"></search-box>
+    <manage-layout
+        :data="response"
+        :link="link"
+        :is-show="isShow"
+        :search="true"
+        :paginate="true"
+    >
+        <message-list
+            :messages="messages"
+            :refresh-messages="getMessages"
+        >
+        </message-list>
 
-    <div class="mt-10 bg-white rounded-sm shadow-md">
-        <div class="overflow-x-auto w-full h-full min-h-screen" :class="!isShow ? 'h-screen' : ''">
-            <div v-if="!isShow" class="flex flex-wrap place-content-center w-full h-full">
-                <loading-icon></loading-icon>
-            </div>
-
-            <message-list
-                v-if="isShow"
-                :messages="messages"
-                :refresh-messages="getMessages"
-                :is-show="isShow">
-            </message-list>
-            <p v-if="messages.length === 0 && isShow" class="mt-10 w-full text-xl text-center text-red-500">
-                找不到訊息!
-            </p>
-        </div>
-    </div>
-
-    <div v-if="isShow" class="mt-10 w-full h-auto bg-white rounded-sm">
-        <paginator :items="response" :link="'messagesManage'"></paginator>
-    </div>
+        <p v-if="messages.length === 0" class="mt-10 w-full text-xl text-center text-red-500">
+            找不到訊息!
+        </p>
+    </manage-layout>
 </template>
 
 <script>
-import paginator from "../components/Paginator";
-import MessageList from "../messages/MessagesList";
-import LoadingIcon from "../components/LoadingIcon";
-import SearchBox from "../components/SearchBox";
 import {computed, onBeforeMount, ref, watch} from "vue";
 import {apiGetMessages} from "../../api/message";
 import {useRoute} from "vue-router";
+import MessageList from "../messages/MessagesList";
+import ManageLayout from "../layouts/ManageLayout";
 
 export default {
     components: {
-        SearchBox,
-        LoadingIcon,
-        paginator,
+        ManageLayout,
         MessageList
     },
     setup() {
         const route = useRoute();
+        const link = ref('messagesManage');
         const messages = ref([]);
         const response = ref({});
         const isShow = ref(false);
@@ -49,10 +40,10 @@ export default {
         const params = computed(() => route.query);
         const getMessages = async () => {
             isShow.value = false;
-            await Promise.all([apiGetMessages(params.value)])
-                .then((results) => {
-                    messages.value = results[0].data.data
-                    response.value = results[0].data;
+            await apiGetMessages(params.value)
+                .then((res) => {
+                    messages.value = res.data.data
+                    response.value = res.data;
                     isShow.value = true;
                 });
         }
@@ -61,6 +52,7 @@ export default {
         watch(params, getMessages);
 
         return {
+            link,
             messages,
             response,
             isShow,

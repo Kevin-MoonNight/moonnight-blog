@@ -47,7 +47,16 @@ export default {
     components: {
         MenuItem
     },
-    props: ['isOpen', 'closeNav'],
+    props: {
+        isOpen: {
+            type: Boolean,
+            required: true
+        },
+        closeNav: {
+            type: Boolean,
+            required: true
+        }
+    },
     data() {
         return {
             items: [

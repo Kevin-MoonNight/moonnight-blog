@@ -1,5 +1,11 @@
 <template>
-    <manage-layout :data="response" :link="link" :is-show="isShow" :search="true" :paginate="true">
+    <manage-layout
+        :data="response"
+        :link="link"
+        :is-show="isShow"
+        :search="true"
+        :paginate="true"
+    >
         <articles-table
             :articles="articles"
             :refresh-articles="getArticles"

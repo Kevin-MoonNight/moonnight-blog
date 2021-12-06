@@ -21,14 +21,12 @@
                     </div>
                 </div>
                 <div class="col-span-1">
-                    <button @click="toUserEdit"
-                            class="px-6 py-3 mr-1 mb-1 font-medium text-left text-white uppercase rounded shadow transition-all duration-150 ease-linear outline-none text-md bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none">
+                    <base-button @click="toUserEdit">
                         更新資料
-                    </button>
-                    <button @click="toUserEditPassword"
-                            class="px-6 py-3 mr-1 mb-1 font-medium text-left text-white uppercase rounded shadow transition-all duration-150 ease-linear outline-none text-md bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none">
+                    </base-button>
+                    <base-button @click="toUserEditPassword">
                         更新密碼
-                    </button>
+                    </base-button>
                 </div>
             </div>
         </div>
@@ -41,8 +39,10 @@ import {onBeforeMount, ref} from "vue";
 import {useRouter} from "vue-router";
 import {useStore} from "vuex";
 import {apiGetUser} from "../../api/users";
+import BaseButton from "../components/BaseButton";
 
 export default {
+    components: {BaseButton},
     setup() {
         const store = useStore();
         const router = useRouter();
@@ -56,14 +56,13 @@ export default {
         });
         const isShow = ref(false);
 
-        const getData = async () => {
-            await Promise.all([apiGetUser(store.state.auth.user.id)])
-                .then((results) => {
-                    user.value = results[0].data;
+        onBeforeMount(async () => {
+            await apiGetUser(store.state.auth.user.id)
+                .then((res) => {
+                    user.value = res.data;
                     isShow.value = true;
                 });
-        }
-        onBeforeMount(getData);
+        });
 
         const toUserEdit = () => {
             router.push({name: 'usersEdit', params: {id: user.value.id}});

@@ -40,7 +40,7 @@
                 </div>
 
                 <div class="mt-4 w-full">
-                    <base-label htmlFor="slug">摘要</base-label>
+                    <base-label htmlFor="excerpt">摘要</base-label>
 
                     <base-input-text
                         v-model:value="article.excerpt"

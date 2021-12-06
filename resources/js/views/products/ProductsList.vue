@@ -1,14 +1,11 @@
 <template>
-    <table class="w-full h-full bg-white rounded-md table-auto min-w-lg">
-        <thead>
-        <tr class="font-light rounded-t-md border-b text-blueGray-800">
+    <table-layout>
+        <template v-slot:header>
             <th class="py-2 border-r">名稱</th>
             <th class="py-2 border-r">摘要</th>
             <th class="py-2">動作</th>
-        </tr>
-        </thead>
-        <transition name="fade">
-            <tbody v-show="isShow">
+        </template>
+        <template v-slot:body>
             <tr v-for="product in products" class="h-14 border-b group hover:bg-blueGray-200">
                 <td class="px-2 h-14 text-center min-w-32 group-hover:text-indigo-500">
                     {{ product.name }}
@@ -28,28 +25,28 @@
                     </button>
                 </td>
             </tr>
-            </tbody>
-        </transition>
-    </table>
+        </template>
+    </table-layout>
 </template>
 
 <script>
-import moment from "moment";
 import {useRouter} from "vue-router";
 import {toRefs} from "vue";
 import {useStore} from "vuex";
 import {apiDeleteProduct} from "../../api/product";
+import {date} from "../../api/time";
+import TableLayout from "../layouts/TableLayout";
 
 export default {
+    components: {TableLayout},
     props: {
         products: {
-            type: Object
+            type: Object,
+            required: true
         },
         refreshProducts: {
-            type: Function
-        },
-        isShow: {
-            type: Boolean
+            type: Function,
+            required: true
         }
     },
     setup(props) {
@@ -63,21 +60,17 @@ export default {
 
         const store = useStore();
         const deleteProduct = async (id) => {
-            await Promise.all([apiDeleteProduct(id)])
+            await apiDeleteProduct(id)
                 .then(() => {
                     store.dispatch('addNotice', {message: '作品刪除成功!', color: true});
                     refreshProducts.value();
                 });
         }
 
-        function date(create_at) {
-            return moment(create_at).format('YYYY-MM-DD');
-        }
-
         return {
             editProduct,
             deleteProduct,
-            date,
+            date: date
         }
     }
 }

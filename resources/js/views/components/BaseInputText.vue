@@ -2,7 +2,7 @@
     <input v-model="text"
            :id="name"
            :name="name"
-           type="text"
+           :type="type"
            :placeholder="placeholder"
            class="block px-3 py-2 mt-1 w-full bg-white rounded-md border-2 border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
     >
@@ -25,6 +25,10 @@ export default {
             type: String,
             required: true
         },
+        type: {
+            type: String,
+            default: 'text'
+        }
     },
     emits: ["update:value"],
     setup(props, {emit}) {

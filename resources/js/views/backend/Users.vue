@@ -1,47 +1,37 @@
 <template>
-    <search-box :link="'usersManage'"></search-box>
-
-    <div class="mt-10 bg-white rounded-sm shadow-md">
-        <div class="overflow-x-auto w-full h-full min-h-screen" :class="!isShow ? 'h-screen' : ''">
-            <div v-if="!isShow" class="flex flex-wrap place-content-center w-full h-full">
-                <loading-icon></loading-icon>
-            </div>
-
-            <users-list
-                v-if="isShow"
-                :users="users"
-                :refresh-users="getUsers"
-                :is-show="isShow">
-            </users-list>
-            <p v-if="users.length === 0 && isShow" class="mt-10 w-full text-xl text-center text-red-500">
-                找不到文章!
-            </p>
-        </div>
-    </div>
-
-    <div v-if="isShow" class="mt-10 w-full h-auto bg-white rounded-sm">
-        <paginator :items="response" :link="'usersManage'"></paginator>
-    </div>
+    <manage-layout
+        :data="response"
+        :link="link"
+        :is-show="isShow"
+        :search="true"
+        :paginate="true"
+    >
+        <users-list
+            :users="users"
+            :refresh-users="getUsers"
+        >
+        </users-list>
+        <p v-if="users.length === 0" class="mt-10 w-full text-xl text-center text-red-500">
+            找不到文章!
+        </p>
+    </manage-layout>
 </template>
 
 <script>
-import UsersList from "../users/UsersList";
-import paginator from "../components/Paginator";
-import SearchBox from "../components/SearchBox";
-import LoadingIcon from "../components/LoadingIcon";
 import {useRoute} from "vue-router";
 import {computed, onBeforeMount, ref, watch} from "vue";
 import {apiGetUsers} from "../../api/users";
+import UsersList from "../users/UsersList";
+import ManageLayout from "../layouts/ManageLayout";
 
 export default {
     components: {
         UsersList,
-        LoadingIcon,
-        SearchBox,
-        paginator
+        ManageLayout
     },
     setup() {
         const route = useRoute();
+        const link = ref('usersManage');
         const users = ref([]);
         const response = ref({});
         const isShow = ref(false);
@@ -49,10 +39,10 @@ export default {
         const params = computed(() => route.query);
         const getUsers = async () => {
             isShow.value = false;
-            await Promise.all([apiGetUsers(params.value)])
-                .then((results) => {
-                    users.value = results[0].data.data
-                    response.value = results[0].data;
+            await apiGetUsers(params.value)
+                .then((res) => {
+                    users.value = res.data.data
+                    response.value = res.data;
                     isShow.value = true;
                 });
         }
@@ -61,6 +51,7 @@ export default {
         watch(params, getUsers);
 
         return {
+            link,
             users,
             response,
             isShow,

@@ -24,21 +24,25 @@
                     </div>
                     <div>
                         <div class="w-full">
-                            <label htmlFor="email"
-                                   class="block mb-2 ml-1 font-bold text-left uppercase text-md text-blueGray-600">
-                                電子信箱
-                            </label>
-                            <input v-model="account.email" type="email" name="email" id="email" placeholder="電子信箱"
-                                   autocomplete="email" class="input-style">
+                            <base-label html-for="email">電子信箱</base-label>
+                            <base-input-text
+                                v-model:value="account.email"
+                                type="email"
+                                name="email"
+                                placeholder="電子信箱"
+                            >
+                            </base-input-text>
                         </div>
 
                         <div class="mt-3 w-full">
-                            <label htmlFor="name"
-                                   class="block mb-2 ml-1 font-bold text-left uppercase text-md text-blueGray-600">
-                                密碼
-                            </label>
-                            <input v-model="account.password" type="password" name="name" id="name" placeholder="全名"
-                                   class="input-style"/>
+                            <base-label html-for="name">密碼</base-label>
+                            <base-input-text
+                                v-model:value="account.password"
+                                type="password"
+                                name="password"
+                                placeholder="密碼"
+                            >
+                            </base-input-text>
                         </div>
 
                         <div class="mt-4">
@@ -52,10 +56,11 @@
                         </div>
 
                         <div class="mt-6 text-center">
-                            <button @click="login(account)"
-                                    class="px-6 py-3 mr-1 mb-1 w-full text-sm font-bold text-white uppercase rounded shadow transition-all duration-150 ease-linear outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none">
+                            <base-button
+                                @click="login(account)"
+                            >
                                 登入
-                            </button>
+                            </base-button>
                         </div>
                     </div>
                 </div>
@@ -80,8 +85,16 @@
 import {ref} from "vue";
 import {login} from "../../api/utils";
 import google from "../assets/images/google.svg";
+import BaseLabel from "../components/BaseLabel";
+import BaseInputText from "../components/BaseInputText";
+import BaseButton from "../components/BaseButton";
 
 export default {
+    components: {
+        BaseButton,
+        BaseInputText,
+        BaseLabel
+    },
     data() {
         return {
             google

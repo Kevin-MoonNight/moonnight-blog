@@ -1,17 +1,15 @@
 <template>
-    <table class="w-full h-full bg-white rounded-md table-auto min-w-lg">
-        <thead>
-        <tr class="font-light rounded-t-md border-b text-blueGray-800">
+    <table-layout>
+        <template v-slot:header>
             <th class="py-2 border-r">名稱</th>
             <th class="py-2 border-r">電子信箱</th>
             <th class="py-2 border-r">訊息</th>
             <th class="py-2 border-r">案件類型</th>
             <th class="py-2 border-r">時間</th>
             <th class="py-2">動作</th>
-        </tr>
-        </thead>
-        <transition name="fade">
-            <tbody v-show="isShow">
+        </template>
+
+        <template v-slot:body>
             <tr v-for="message in messages" class="h-14 border-b group hover:bg-blueGray-200">
                 <td class="px-2 h-14 text-center min-w-32 group-hover:text-indigo-500">
                     {{ message.name }}
@@ -43,28 +41,28 @@
                     </button>
                 </td>
             </tr>
-            </tbody>
-        </transition>
-    </table>
+        </template>
+    </table-layout>
 </template>
 
 <script>
-import moment from "moment";
 import {useRouter} from "vue-router";
 import {toRefs} from "vue";
 import {useStore} from "vuex";
 import {apiDeleteMessage} from "../../api/message";
+import {date} from "../../api/time";
+import TableLayout from "../layouts/TableLayout";
 
 export default {
+    components: {TableLayout},
     props: {
         messages: {
-            type: Object
+            type: Object,
+            required: true
         },
         refreshMessages: {
-            type: Function
-        },
-        isShow: {
-            type: Boolean
+            type: Function,
+            required: true
         }
     },
     setup(props) {
@@ -78,21 +76,17 @@ export default {
 
         const store = useStore();
         const deleteMessage = async (id) => {
-            await Promise.all([apiDeleteMessage(id)])
+            await apiDeleteMessage(id)
                 .then(() => {
                     store.dispatch('addNotice', {message: '訊息刪除成功!', color: true});
                     refreshMessages.value();
                 });
         }
 
-        function date(create_at) {
-            return moment(create_at).format('YYYY-MM-DD');
-        }
-
         return {
             editMessage,
             deleteMessage,
-            date,
+            date: date
         }
     }
 }

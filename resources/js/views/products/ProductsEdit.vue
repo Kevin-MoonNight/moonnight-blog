@@ -3,18 +3,18 @@
         <div v-show="isShow" class="w-full h-auto bg-white rounded-sm shadow-md">
             <div class="p-5">
                 <div class="w-full">
-                    <label htmlFor="name"
-                           class="block mb-2 ml-1 font-bold text-left uppercase text-md text-blueGray-600">
-                        名稱
-                    </label>
-                    <input v-model="product.name" id="name" type="text" name="name" placeholder="名稱"
-                           class="input-style">
+                    <base-label html-for="name">名稱</base-label>
+
+                    <base-input-text
+                        v-model:value="product.name"
+                        name="name"
+                        placeholder="名稱"
+                    >
+                    </base-input-text>
                 </div>
                 <div class="mt-4 w-full">
-                    <label htmlFor="thumbnail"
-                           class="block mb-2 ml-1 font-bold text-left uppercase text-md text-blueGray-600">
-                        縮圖
-                    </label>
+                    <base-label html-for="thumbnail">縮圖</base-label>
+
                     <div class="flex">
                         <input type="file" @change="getThumbnail($event)" id="thumbnail" name="thumbnail"
                                placeholder="縮圖">
@@ -24,19 +24,20 @@
                 </div>
 
                 <div class="mt-4 w-full">
-                    <label htmlFor="excerpt"
-                           class="block mb-2 ml-1 font-bold text-left uppercase text-md text-blueGray-600">
-                        摘要
-                    </label>
-                    <input v-model="product.excerpt" id="excerpt" type="text" name="excerpt" placeholder="摘要"
-                           class="input-style">
+                    <base-label html-for="excerpt">摘要</base-label>
+
+                    <base-input-text
+                        v-model:value="product.excerpt"
+                        name="excerpt"
+                        placeholder="摘要"
+                    >
+                    </base-input-text>
                 </div>
 
                 <div class="flex justify-end mt-4 w-full">
-                    <button @click="updateProduct"
-                            class="px-6 py-3 mr-1 mb-1 font-medium text-left text-white uppercase rounded shadow transition-all duration-150 ease-linear outline-none text-md bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none">
+                    <base-button @click="updateProduct">
                         更新作品
-                    </button>
+                    </base-button>
                 </div>
             </div>
         </div>
@@ -48,8 +49,17 @@ import {onBeforeMount, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {useStore} from "vuex";
 import {apiGetProduct, apiUpdateProduct} from "../../api/product";
+import {transformToFormData} from "../../api/utils";
+import BaseButton from "../components/BaseButton";
+import BaseLabel from "../components/BaseLabel";
+import BaseInputText from "../components/BaseInputText";
 
 export default {
+    components: {
+        BaseInputText,
+        BaseLabel,
+        BaseButton
+    },
     setup() {
         const product = ref({
             name: '',
@@ -60,17 +70,16 @@ export default {
 
         const isShow = ref(false);
         const route = useRoute()
-        const productId = route.params.id;
-        const getData = async () => {
-            await Promise.all([apiGetProduct(productId)])
-                .then((results) => {
-                    product.value = results[0].data;
+        const id = route.params.id;
+        onBeforeMount(async () => {
+            await apiGetProduct(id)
+                .then((res) => {
+                    product.value = res.data;
                     thumbnailSrc.value = product.value.thumbnail;
                     product.value.thumbnail = null;
                     isShow.value = true;
                 });
-        }
-        onBeforeMount(getData);
+        });
 
         const getThumbnail = (event) => {
             const reader = new FileReader();
@@ -83,22 +92,11 @@ export default {
 
             product.value.thumbnail = event.target.files[0]
         }
-        const inputData = () => {
-            const data = new FormData();
-
-            Object.keys(product.value).forEach((key) => {
-                if(product.value[key] !== null){
-                    data.append(key, product.value[key])
-                }
-            });
-
-            return data;
-        }
 
         const router = useRouter();
         const store = useStore();
         const updateProduct = async () => {
-            await Promise.all([apiUpdateProduct(productId, inputData())])
+            await apiUpdateProduct(id, transformToFormData(product.value))
                 .then(() => {
                     store.dispatch('addNotice', {message: '作品更新成功!', color: true});
                     router.push({name: 'productsManage'});

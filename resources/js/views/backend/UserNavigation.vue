@@ -31,7 +31,12 @@ import {logout} from "../../api/utils";
 import {useStore} from "vuex";
 
 export default {
-    props: ['changeOpen'],
+    props: {
+        changeOpen: {
+            type: Function,
+            required: true
+        }
+    },
     setup(props) {
         const store = useStore();
         const {changeOpen} = toRefs(props);
