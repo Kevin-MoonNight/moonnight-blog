@@ -19,11 +19,18 @@ class MessagesController extends Controller
         return Message::filter($request->all())->latest()->paginate(10)->withQueryString();
     }
 
+    public function create()
+    {
+        return view('frontend.contact');
+    }
+
     public function store(StoreMessageRequest $request)
     {
         $validated = $request->validated();
 
-        return Message::Create($validated);
+        Message::Create($validated);
+
+        return redirect()->route('messages.create');
     }
 
     public function show(Message $message)
@@ -35,7 +42,7 @@ class MessagesController extends Controller
     {
         $validated = $request->validated();
 
-        return  $message->update($validated);
+        return $message->update($validated);
     }
 
     public function destroy(Message $message)

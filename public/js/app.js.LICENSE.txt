@@ -5,6 +5,13 @@
   */
 
 /*!
+ * Vue3-Lazyload.js v0.2.2-beta
+ * A Vue3.x image lazyload plugin
+ * (c) 2020 MuRong <admin@imuboy.cn>
+ * Released under the MIT License.
+ */
+
+/*!
  * clipboard.js v2.0.6
  * https://clipboardjs.com/
  * 
@@ -17,10 +24,6 @@
  * @license MIT
  */
 
-/**
- * vue-meta v3.0.0-alpha.9
- * (c) 2021
- * - Pim (@pimlie)
- * - All the amazing contributors
- * @license MIT
- */
+//! moment.js
+
+//! moment.js locale configuration

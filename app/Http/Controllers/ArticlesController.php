@@ -5,20 +5,31 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdateArticleRequest;
 use App\Http\Requests\StoreArticleRequest;
 use App\Models\Article;
+use App\Models\Tag;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class ArticlesController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth:sanctum'])->except('index', 'show', 'popular');
-    }
-
     public function index(Request $request)
     {
-        return Article::published()->filter($request->all())->latest()->paginate(10)->withQueryString();
+        $articles = Article::published()->filter($request->all())->latest()->paginate(10)->withQueryString();
+
+        if ($request->route()->named('dashboard.articles.index')) {
+            if (Gate::denies('admin')) {
+                $articles = auth()->user()->articles();
+                $articles = $articles->published()->filter($request->all())->latest()->paginate(10)->withQueryString();
+            }
+
+            return view('backend.articles', ['articles' => $articles]);
+        } else {
+            return view('frontend.articles', ['articles' => $articles]);
+        }
+    }
+
+    public function create()
+    {
+        return view('articles.create', ['tags' => Tag::all()]);
     }
 
     public function store(StoreArticleRequest $request)
@@ -35,16 +46,7 @@ class ArticlesController extends Controller
             $article->tags()->attach($validated['tags']);
         }
 
-        return $article;
-    }
-
-    public function getArticle(Article $article)
-    {
-        if (Gate::any(['admin', 'article'], $article)) {
-            return $article->makeVisible('state');
-        } else {
-            abort(404);
-        }
+        return redirect()->route('dashboard.articles.index');
     }
 
     public function show(Article $article)
@@ -55,9 +57,16 @@ class ArticlesController extends Controller
             //更新文章
             $article->save();
 
-            return $article;
+            return view('articles.show', ['article' => $article]);
         } else {
             abort(404);
+        }
+    }
+
+    public function edit(Article $article)
+    {
+        if (Gate::any(['admin', 'article'], $article)) {
+            return view('articles.edit', ['article' => $article, 'tags' => Tag::all()]);
         }
     }
 
@@ -76,16 +85,16 @@ class ArticlesController extends Controller
             $article->tags()->attach($validated['tags']);
         }
 
-        return $article;
+        return redirect()->route('dashboard.articles.index');
     }
 
     public function destroy(Article $article)
     {
         if (Gate::any(['admin', 'article'], $article)) {
-            return $article->delete();
-        } else {
-            abort(403);
+            $article->delete();
         }
+
+        return redirect()->route('dashboard.articles.index');
     }
 
     public function popular()
@@ -96,37 +105,41 @@ class ArticlesController extends Controller
     public function draft(Request $request)
     {
         if (Gate::allows('admin')) {
-            return Article::draft()->filter($request->all())->latest()->paginate(10)->withQueryString();
+            $articles = Article::draft()->filter($request->all())->latest()->paginate(10)->withQueryString();
         } else {
-            return auth()->user()->articles()->draft()->filter($request->all())->latest()->paginate(10)->withQueryString();
+            $articles = auth()->user()->articles()->draft()->filter($request->all())->latest()->paginate(10)->withQueryString();
         }
+
+        return view('articles.draft', ['articles' => $articles]);
     }
 
     public function trashed(Request $request)
     {
         if (Gate::allows('admin')) {
-            return Article::onlyTrashed()->filter($request->all())->paginate(10)->withQueryString();
+            $articles = Article::onlyTrashed()->filter($request->all())->paginate(10)->withQueryString();
         } else {
-            return auth()->user()->articles()->onlyTrashed()->filter($request->all())->paginate(10)->withQueryString();
+            $articles = auth()->user()->articles()->onlyTrashed()->filter($request->all())->paginate(10)->withQueryString();
         }
+
+        return view('articles.trashed', ['articles' => $articles]);
     }
 
     public function restore(Article $article)
     {
         if (Gate::any(['admin', 'article'], $article)) {
-            return Article::onlyTrashed()->findOrFail($article->id)->restore();
-        } else {
-            abort(403);
+            Article::onlyTrashed()->findOrFail($article->id)->restore();
         }
+
+        return redirect()->route('dashboard.articles.trashed');
     }
 
     public function deleteTrashed(Article $article)
     {
         if (Gate::any(['admin', 'article'], $article)) {
-            return Article::onlyTrashed()->findOrFail($article->id)->forceDelete();
-        } else {
-            abort(403);
+            Article::onlyTrashed()->findOrFail($article->id)->forceDelete();
         }
+
+        return redirect()->route('dashboard.articles.trashed');
     }
 
     private function saveThumbnail($thumbnail, $article = null)

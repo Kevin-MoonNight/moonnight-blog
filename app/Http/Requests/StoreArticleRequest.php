@@ -60,9 +60,4 @@ class StoreArticleRequest extends FormRequest
             "state.required" => '狀態為必填資料',
         ];
     }
-
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response($this->validator->errors(), 400));
-    }
 }

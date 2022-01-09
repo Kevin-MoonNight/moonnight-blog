@@ -1,11 +1,10 @@
 <template>
-    <div @click="redirectToArticle(article.slug)" :title="article.title"
-         class="block w-full h-60 bg-white rounded-md shadow-md cursor-pointer group hover:shadow-lg">
+    <div class="block w-full h-60 bg-white rounded-md shadow-md cursor-pointer group hover:shadow-lg">
         <div class="grid grid-cols-3 w-full">
             <div class="col-span-2 p-4 h-60">
                 <div class="h-4/5 truncate whitespace-normal">
                     <p class="">
-                        {{ article.author.name + '．' + date(article.created_at) }}
+                        <!--                        {{ article.author.name + '．' + date(article.created_at) }}-->
                     </p>
                     <h1 class="mt-3 text-2xl font-bold">
                         {{ article.title }}
@@ -24,15 +23,16 @@
             </div>
 
             <div class="object-cover col-span-1 h-60 bg-white rounded-r-md">
-                <img class="object-none object-center w-full h-full rounded-r-md"
-                     v-lazy="{src: article.thumbnail}" alt="圖片無法載入...">
+                <img v-lazy="{src: article.thumbnail}"
+                     alt="圖片無法載入..."
+                     class="object-none object-center w-full h-full rounded-r-md"
+                >
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import {useRouter} from "vue-router";
 import {fromNow} from "../../api/time";
 
 export default {
@@ -43,14 +43,8 @@ export default {
         }
     },
     setup() {
-        const router = useRouter();
-        const redirectToArticle = (slug) => {
-            router.push({name: 'article', params: {slug: slug}});
-        }
-
         return {
-            date: fromNow,
-            redirectToArticle
+            date: fromNow
         }
     }
 }

@@ -8,8 +8,10 @@
                     </p>
                 </div>
             </div>
-            <img class="object-none object-center w-full h-full rounded-t-md"
-                 v-lazy="{src: product.thumbnail}" :alt="product.name">
+            <img v-lazy="{src: product.thumbnail}"
+                 :alt="product.name"
+                 class="object-none object-center w-full h-full rounded-t-md"
+            >
         </div>
         <div class="p-4">
             <p class="text-blueGray-200">

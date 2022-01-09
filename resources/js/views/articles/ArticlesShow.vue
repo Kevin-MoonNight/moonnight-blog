@@ -51,10 +51,9 @@
     </article>
 </template>
 <script>
-import {computed, onBeforeMount, ref, watch} from "vue";
+import {computed, ref, watch} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {apiShowArticle} from "../../api/article";
-import {useMeta} from 'vue-meta'
 import {date} from "../../api/time";
 import LoadingIcon from "../components/LoadingIcon";
 
@@ -91,13 +90,6 @@ export default {
             }
         };
 
-        const computedMeta = computed(() => ({
-            title: article.value.title ? article.value.title : '',
-            description: article.value.excerpt ? article.value.excerpt : ''
-        }))
-        useMeta(computedMeta);
-
-        onBeforeMount(getArticle);
         watch(slug, getArticle);
 
         const router = useRouter();

@@ -1,12 +1,12 @@
 <template>
     <div class="w-full break-words rounded-lg shadow-lg bg-blueGray-200">
-        <div class="flex-auto p-5 lg:p-10">
+        <form class="flex-auto p-5 lg:p-10">
             <div class="mb-3 w-full">
                 <label htmlFor="name" class="block mb-2 ml-1 font-bold text-left uppercase text-md text-blueGray-600">
                     全名
                 </label>
                 <input v-model="message.name" type="text" name="name" id="name" placeholder="全名"
-                       class="input-style"/>
+                       class="input-style">
             </div>
 
             <div class="mb-3 w-full">
@@ -22,7 +22,7 @@
                     訊息
                 </label>
                 <textarea v-model="message.remark" name="remark" id="remark" placeholder="這裡可以留下你想要說的話"
-                          rows="4" cols="80" class="input-style"/>
+                          rows="4" cols="80" class="input-style"></textarea>
             </div>
 
             <div class="mb-3 w-full">
@@ -43,7 +43,7 @@
                     傳送
                 </button>
             </div>
-        </div>
+        </form>
     </div>
 </template>
 

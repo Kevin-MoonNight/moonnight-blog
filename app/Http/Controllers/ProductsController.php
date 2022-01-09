@@ -15,7 +15,7 @@ class ProductsController extends Controller
 
     public function index()
     {
-        return Product::latest()->paginate(10);
+        return view('frontend.products', ['products' => Product::latest()->paginate(10)]);
     }
 
     public function store(StoreProductRequest $request)
