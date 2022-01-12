@@ -1,5 +1,5 @@
 <x-layout.frontend-layout>
-    <main class="select-none bg-blueGray-200">
+    <main class="select-none">
         <section class="py-10 bg-blueGray-800">
             <div class="flex items-stretch md:min-h-screen">
                 <div class="container px-4 mx-auto md:px-14">
@@ -44,7 +44,7 @@
             </div>
         </section>
 
-        <section id="about" class="py-20 bg-blueGray-200">
+        <section id="about" class="py-20 bg-blueGray-100">
             <div class="flex items-center md:min-h-screen">
                 <div class="container px-4 mx-auto md:px-14">
                     <div class="grid grid-cols-1 gap-10 w-full h-full lg:grid-cols-2">
@@ -58,10 +58,10 @@
                         </div>
 
                         <div class="bottom">
-                            <div class="w-full h-full bg-white rounded-lg shadow-lg">
+                            <div class="w-full h-full">
                                 <img src="{{mix('/images/about.avif')}}"
                                      alt="關於我們"
-                                     class="w-full h-auto rounded-lg"
+                                     class="w-full h-auto"
                                 />
                             </div>
                         </div>
@@ -70,9 +70,7 @@
             </div>
         </section>
 
-        <hr class="my-3 border-blueGray-300"/>
-
-        <section id="service" class="py-20 bg-blueGray-200">
+        <section id="service" class="py-20 bg-blueGray-100">
             <div class="container px-4 mx-auto md:px-14">
                 <div class="w-full h-full">
                     <div class="text-center text">
@@ -88,14 +86,14 @@
             </div>
         </section>
 
-        <section class="py-20 bg-blueGray-200">
+        <section class="py-20 bg-blueGray-100">
             <div class="container px-4 mx-auto md:px-14">
                 <div class="grid grid-cols-1 gap-10 w-full h-full lg:grid-cols-2">
                     <div class="bottom">
-                        <div class="w-full h-auto bg-white rounded-lg shadow-lg">
+                        <div class="w-full h-auto">
                             <img src="{{mix('/images/algorithm.avif')}}"
                                  alt="services.algorithm.title"
-                                 class="w-full h-auto rounded-lg"
+                                 class="w-full h-auto"
                             />
                         </div>
                     </div>
@@ -117,9 +115,7 @@
             </div>
         </section>
 
-        <hr class="my-3 border-blueGray-300"/>
-
-        <section class="py-20 bg-blueGray-200">
+        <section class="py-20 bg-blueGray-100">
             <div class="container px-4 mx-auto md:px-14">
                 <div class="grid grid-cols-1 gap-10 w-full h-full lg:grid-cols-2">
                     <div class="h-full text">
@@ -146,11 +142,11 @@
                     </div>
 
                     <div class="bottom">
-                        <div class="w-full h-auto bg-white rounded-lg shadow-lg">
+                        <div class="w-full h-auto">
                             <img src="{{mix('/images/corporation.avif')}}"
                                  alt="網頁設計"
                                  loading="lazy"
-                                 class="w-full h-auto rounded-lg"
+                                 class="w-full h-auto"
                             />
                         </div>
                     </div>

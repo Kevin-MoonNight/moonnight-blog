@@ -1,28 +1,28 @@
 <x-layout.backend-layout
-    title="垃圾桶"
+    title="標籤列表"
 >
     <x-search-box
-        name="搜尋文章"
-        link="dashboard.articles.index"
+        name="搜尋標籤"
+        link="dashboard.tags.index"
     ></x-search-box>
 
     <div class="overflow-hidden mt-10 bg-white rounded-sm shadow-md">
         <div class="overflow-x-auto w-full h-full min-h-table">
 
-            @if($articles->count() == 0)
+            @if($tags->count() == 0)
                 <p class="mt-10 w-full text-xl text-center text-red-500">
-                    找不到文章!
+                    找不到標籤!
                 </p>
             @else
-                <x-articles-trashed-table
-                    :articles="$articles"
-                ></x-articles-trashed-table>
+                <x-tag.tags-table
+                    :tags="$tags"
+                ></x-tag.tags-table>
             @endif
 
         </div>
     </div>
 
     <div class="mt-10 w-full h-auto">
-        {{$articles->links()}}
+        {{$tags->links()}}
     </div>
 </x-layout.backend-layout>

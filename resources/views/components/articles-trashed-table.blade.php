@@ -1,52 +1,46 @@
-<table class="w-full h-full bg-white rounded-md table-auto min-w-lg">
+<table class="w-full h-full border-collapse table-auto min-w-lg">
     <thead>
-    <tr class="font-light rounded-t-md border-b text-blueGray-800">
-        <th class="py-2 border-r">標題</th>
-        <th class="py-2 border-r">觀看數</th>
-        <th class="py-2 border-r">時間</th>
-        <th class="py-2 border-r">作者</th>
-        <th class="py-2">動作</th>
+    <tr class="font-light text-blueGray-800">
+        <th class="py-2">標題</th>
+        <th class="py-2 border-l">觀看數</th>
+        <th class="py-2 border-l">時間</th>
+        <th class="py-2 border-l">作者</th>
+        <th class="py-2 border-l">動作</th>
     </tr>
     </thead>
     <tbody>
     @foreach($articles as $article)
-        <tr class="h-14 border-b group hover:bg-blueGray-200">
-            <td class="px-2 h-14 text-center min-w-32 group-hover:text-indigo-500">
+        <x-table.tr>
+            <x-table.td>
                 {{ $article->title }}
-            </td>
+            </x-table.td>
 
-            <td class="px-2 h-14 text-center min-w-32 group-hover:text-indigo-500">
+            <x-table.td>
                 {{ $article->views }}
-            </td>
 
-            <td class="px-2 h-14 text-center min-w-32 group-hover:text-indigo-500">
+            </x-table.td>
+
+            <x-table.td>
                 {{ $article->created_at }}
-            </td>
+            </x-table.td>
 
-            <td class="px-2 h-14 text-center min-w-32 group-hover:text-indigo-500">
+            <x-table.td>
                 {{ $article->author->name }}
-            </td>
 
-            <td class="flex justify-around items-center px-2 h-14 text-center min-w-32">
-                <a href="{{route('dashboard.articles.restore',['trashed_article'=>$article->slug])}}"
-                   class="hover:text-indigo-500"
-                   title="復原文章"
-                >
-                    <i class="fas fa-trash-restore-alt"></i>
-                </a>
+            </x-table.td>
 
-                <form
-                    method="post"
-                    action="{{route('dashboard.articles.delete-trashed',['trashed_article'=>$article->slug])}}"
-                >
-                    @csrf
-                    @method('DELETE')
-                    <button class="cursor-pointer hover:text-indigo-500" title="刪除文章">
-                        <i class="far fa-trash-alt"></i>
-                    </button>
-                </form>
-            </td>
-        </tr>
+            <x-table.td>
+                <div class="flex justify-around items-center">
+                    <x-table.action.restore
+                        link="{{route('dashboard.articles.restore',['trashed_article'=>$article->slug])}}"
+                    ></x-table.action.restore>
+
+                    <x-table.action.delete
+                        link="{{route('dashboard.articles.delete-trashed',['trashed_article'=>$article->slug])}}"
+                    ></x-table.action.delete>
+                </div>
+            </x-table.td>
+        </x-table.tr>
     @endforeach
     </tbody>
 </table>

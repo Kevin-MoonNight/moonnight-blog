@@ -9,37 +9,51 @@ use Illuminate\Http\Request;
 
 class TagsController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth:sanctum', 'can:admin'])->except('index', 'show');
-    }
-
     public function index(Request $request)
     {
-        return Tag::filter($request->all())->get();
+        $tags = Tag::filter($request->all())->latest()->paginate(10)->withQueryString();
+
+        return view('backend.tags', ['tags' => $tags]);
+    }
+
+    public function create()
+    {
+        return view('tags.create');
     }
 
     public function store(StoreTagRequest $request)
     {
         $validated = $request->validated();
 
-        return Tag::create($validated);
+        Tag::create($validated);
+
+        return redirect()->route('dashboard.tags.index');
     }
 
     public function show(Tag $tag)
     {
+//        return view('tags.show', ['tag' => $tag]);
         return $tag;
+    }
+
+    public function edit(Tag $tag)
+    {
+        return view('tags.edit', ['tag' => $tag]);
     }
 
     public function update(UpdateTagRequest $request, Tag $tag)
     {
         $validated = $request->validated();
 
-        return $tag->update($validated);
+        $tag->update($validated);
+
+        return redirect()->route('dashboard.tags.index');
     }
 
     public function destroy(Tag $tag)
     {
-        return $tag->delete();
+        $tag->delete();
+
+        return redirect()->route('dashboard.tags.index');
     }
 }

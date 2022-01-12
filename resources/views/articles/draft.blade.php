@@ -6,8 +6,8 @@
         link="dashboard.articles.index"
     ></x-search-box>
 
-    <div class="mt-10 bg-white rounded-sm shadow-md">
-        <div class="overflow-x-auto w-full h-full min-h-screen">
+    <div class="overflow-hidden mt-10 bg-white rounded-sm shadow-md">
+        <div class="overflow-x-auto w-full h-full min-h-table">
 
             @if($articles->count() == 0)
                 <p class="mt-10 w-full text-xl text-center text-red-500">

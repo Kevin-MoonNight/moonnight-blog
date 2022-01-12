@@ -40,7 +40,8 @@ Route::middleware(['verified'])->prefix('/dashboard')->group(function () {
             Route::delete('/articles/trashed/{trashed_article}', [ArticlesController::class, 'deleteTrashed'])->name('delete-trashed');
         });
 
-        //    Route::get('/tags', [TagsController::class, 'index'])->name('tags.manage');
+        Route::resource('/tags', TagsController::class);
+
 //    Route::get('/products', [ProductsController::class, 'index'])->name('products.manage');
 //    Route::get('/messages', [MessagesController::class, 'index'])->name('messages.manage');
 //    Route::get('/users', [UsersController::class, 'index'])->name('users.manage');

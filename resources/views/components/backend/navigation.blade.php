@@ -38,11 +38,11 @@
     >
         <nav-item
             name="標籤列表"
-            link="{{route('dashboard')}}"
+            link="{{route('dashboard.tags.index')}}"
         ></nav-item>
         <nav-item
             name="新增標籤"
-            link="{{route('dashboard')}}"
+            link="{{route('dashboard.tags.create')}}"
         ></nav-item>
     </nav-item>
 

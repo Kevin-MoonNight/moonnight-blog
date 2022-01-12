@@ -50,9 +50,4 @@ class StoreTagRequest extends FormRequest
             "slug.unique" => "slug重複"
         ];
     }
-
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response($this->validator->errors(), 400));
-    }
 }
