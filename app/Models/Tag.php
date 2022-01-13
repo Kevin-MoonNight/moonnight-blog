@@ -27,7 +27,6 @@ class Tag extends Model
                 $query->where('name', 'like', '%' . $search . '%')
                     ->orWhere('slug', 'like', '%' . $search . '%');
             });
-
         });
     }
 

@@ -53,11 +53,11 @@
     >
         <nav-item
             name="作品列表"
-            link="{{route('dashboard')}}"
+            link="{{route('dashboard.products.index')}}"
         ></nav-item>
         <nav-item
             name="新增作品"
-            link="{{route('dashboard')}}"
+            link="{{route('dashboard.products.create')}}"
         ></nav-item>
     </nav-item>
 

@@ -43,9 +43,4 @@ class UpdateProductRequest extends FormRequest
             "thumbnail.image" => '縮圖為必須為圖片',
         ];
     }
-
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response($this->validator->errors(), 400));
-    }
 }

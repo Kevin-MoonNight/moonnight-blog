@@ -1,9 +1,10 @@
 <x-layout.backend-layout
-    title="新增標籤"
+    title="新增作品"
 >
     <form
         method="post"
-        action="{{route('dashboard.tags.store')}}"
+        action="{{route('dashboard.products.store')}}"
+        enctype="multipart/form-data"
         class="w-full h-auto bg-white rounded-sm shadow-md"
     >
         @csrf
@@ -16,14 +17,20 @@
             </x-form.input>
 
             <x-form.input
-                name="slug"
-                value="{{old('slug')}}"
+                name="excerpt"
+                value="{{old('excerpt')}}"
             >
-                slug
+                摘要
             </x-form.input>
 
+            <x-form.file-selector
+                name="thumbnail"
+            >
+                縮圖
+            </x-form.file-selector>
+
             <div class="flex justify-end items-end mt-4 w-full">
-                <x-form.button>新增標籤</x-form.button>
+                <x-form.button>新增作品</x-form.button>
             </div>
         </div>
     </form>

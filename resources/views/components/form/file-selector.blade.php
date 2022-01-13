@@ -4,6 +4,7 @@
     </x-form.label>
 
     <input
+        {{$attributes}}
         type="file"
         id="{{$name}}"
         name="{{$name}}"

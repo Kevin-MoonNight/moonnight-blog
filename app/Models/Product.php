@@ -20,4 +20,13 @@ class Product extends Model
         'updated_at',
     ];
 
+    public function scopeFilter($query, array $filter)
+    {
+        $query->when($filter['search'] ?? false, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('excerpt', 'like', '%' . $search . '%');
+            });
+        });
+    }
 }

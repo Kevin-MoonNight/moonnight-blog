@@ -41,8 +41,8 @@ Route::middleware(['verified'])->prefix('/dashboard')->group(function () {
         });
 
         Route::resource('/tags', TagsController::class);
+        Route::resource('/products', ProductsController::class);
 
-//    Route::get('/products', [ProductsController::class, 'index'])->name('products.manage');
 //    Route::get('/messages', [MessagesController::class, 'index'])->name('messages.manage');
 //    Route::get('/users', [UsersController::class, 'index'])->name('users.manage');
     });

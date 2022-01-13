@@ -13,7 +13,7 @@
                 name="name"
                 value="{{old('name',$tag->name)}}"
             >
-                標題
+                名稱
             </x-form.input>
 
             <x-form.input
