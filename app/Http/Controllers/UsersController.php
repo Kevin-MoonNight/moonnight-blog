@@ -12,21 +12,11 @@ use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth:sanctum'])->except('store');
-    }
-
     public function index(Request $request)
     {
-        if (Gate::denies('admin')) {
-            abort(403);
-        }
-
         $users = User::filter($request->all())->paginate(10)->withQueryString();
-        $users->makeVisible(['id', 'username', 'email', 'is_admin']);
 
-        return $users;
+        return view('backend.users', ['users' => $users]);
     }
 
     public function store(StoreUserRequest $request)
@@ -48,11 +38,18 @@ class UsersController extends Controller
         return $user->makeVisible(['id', 'username', 'email', 'is_admin']);
     }
 
+    public function edit(User $user)
+    {
+        return view('users.edit', ['user' => $user]);
+    }
+
     public function update(UpdateUserRequest $request, User $user)
     {
         $validated = $request->validated();
 
-        return $user->update($validated);
+        $user->update($validated);
+
+        return redirect()->route('dashboard.users.index');
     }
 
     public function updatePassword(UpdatePasswordRequest $request, User $user)
@@ -67,10 +64,8 @@ class UsersController extends Controller
 
     public function destroy(User $user)
     {
-        if (!Gate::any(['user', 'admin'], $user)) {
-            abort(403);
-        }
+        $user->delete();
 
-        return $user->delete();
+        return redirect()->route('dashboard.users.index');
     }
 }

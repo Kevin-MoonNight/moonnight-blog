@@ -43,8 +43,7 @@ Route::middleware(['verified'])->prefix('/dashboard')->group(function () {
         Route::resource('/tags', TagsController::class);
         Route::resource('/products', ProductsController::class);
         Route::resource('/messages', MessagesController::class)->except('create','store');
-
-//    Route::get('/users', [UsersController::class, 'index'])->name('users.manage');
+        Route::resource('/users', UsersController::class)->except('create','store');
     });
 });
 

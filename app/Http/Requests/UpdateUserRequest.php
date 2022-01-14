@@ -51,9 +51,4 @@ class UpdateUserRequest extends FormRequest
             "email.unique" => "電子信箱已經被註冊了",
         ];
     }
-
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response($this->validator->errors(), 400));
-    }
 }

@@ -77,7 +77,7 @@
     >
         <nav-item
             name="所有會員"
-            link="{{route('dashboard')}}"
+            link="{{route('dashboard.users.index')}}"
         ></nav-item>
     </nav-item>
 

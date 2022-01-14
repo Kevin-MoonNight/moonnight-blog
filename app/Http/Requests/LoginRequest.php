@@ -41,9 +41,4 @@ class LoginRequest extends FormRequest
             "password.string" => '密碼必須為字串',
         ];
     }
-
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response($this->validator->errors(), 400));
-    }
 }

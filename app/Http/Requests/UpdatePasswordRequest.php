@@ -39,9 +39,4 @@ class UpdatePasswordRequest extends FormRequest
             "password.confirmed" => '密碼必須一致',
         ];
     }
-
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response($this->validator->errors(), 400));
-    }
 }

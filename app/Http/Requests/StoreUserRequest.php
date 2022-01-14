@@ -53,9 +53,4 @@ class StoreUserRequest extends FormRequest
             "password.confirmed" => '密碼不一樣',
         ];
     }
-
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response($this->validator->errors(), 400));
-    }
 }
