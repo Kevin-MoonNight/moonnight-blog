@@ -46,9 +46,4 @@ class UpdateMessageRequest extends FormRequest
             "caseType.required" => '委託類型為必填資料',
         ];
     }
-
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response($this->validator->errors(), 400));
-    }
 }

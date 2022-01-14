@@ -67,7 +67,7 @@
     >
         <nav-item
             name="所有訊息"
-            link="{{route('dashboard')}}"
+            link="{{route('dashboard.messages.index')}}"
         ></nav-item>
     </nav-item>
 

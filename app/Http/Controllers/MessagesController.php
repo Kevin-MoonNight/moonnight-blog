@@ -9,14 +9,11 @@ use Illuminate\Http\Request;
 
 class MessagesController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth:sanctum', 'can:admin'])->except('store');
-    }
-
     public function index(Request $request)
     {
-        return Message::filter($request->all())->latest()->paginate(10)->withQueryString();
+        $messages = Message::filter($request->all())->latest()->paginate(10)->withQueryString();
+
+        return view('backend.messages', ['messages' => $messages]);
     }
 
     public function create()
@@ -30,7 +27,7 @@ class MessagesController extends Controller
 
         Message::Create($validated);
 
-        return redirect()->route('messages.create');
+        return redirect()->route('contact');
     }
 
     public function show(Message $message)
@@ -38,15 +35,24 @@ class MessagesController extends Controller
         return $message;
     }
 
+    public function edit(Message $message)
+    {
+        return view('messages.edit', ['message' => $message]);
+    }
+
     public function update(UpdateMessageRequest $request, Message $message)
     {
         $validated = $request->validated();
 
-        return $message->update($validated);
+        $message->update($validated);
+
+        return redirect()->route('dashboard.messages.index');
     }
 
     public function destroy(Message $message)
     {
-        return $message->delete();
+        $message->delete();
+
+        return redirect()->route('dashboard.messages.index');
     }
 }
