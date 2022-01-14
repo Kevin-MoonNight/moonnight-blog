@@ -1,23 +1,40 @@
 <x-layout.backend-layout
     title="後台"
 >
-    <div class="overflow-x-auto pb-10 w-auto h-full">
-        <div class="grid grid-cols-1 gap-5 md:grid-cols-3 xl:grid-cols-4">
-
-            <div class="col-span-1">
-                <div class="p-3 bg-white rounded-sm shadow-md">
-                    <h1 class="font-bold text-center text-blueGray-600">文章管理</h1>
-                    <hr class="my-3 border-blueGray-200"/>
-
-                    <div class="flex flex-wrap gap-2 w-full">
-                        <a href="{{}}"
-                           class="px-4 py-1 w-auto text-sm rounded-sm cursor-pointer bg-blueGray-200 hover:text-indigo-500 hover:bg-blueGray-300">
-                            文章列表
-                        </a>
-                    </div>
+    <div class="w-full h-auto bg-white rounded-sm shadow-md">
+        <div class="grid grid-cols-1 gap-5 p-5 w-full h-full md:grid-cols-4">
+            <div class="object-contain col-span-1">
+                <img src="{{auth()->user()->profile_photo_url}}"
+                     alt="無法顯示圖片"
+                     loading="lazy"
+                     class="w-full h-auto">
+            </div>
+            <div class="col-span-1 md:col-span-2">
+                <div class="block mb-2 ml-1 font-bold text-left text-blueGray-600">
+                    名稱：{{ auth()->user()->name }}
+                </div>
+                <div class="block mb-2 ml-1 font-bold text-left text-blueGray-600">
+                    帳號：{{ auth()->user()->username }}
+                </div>
+                <div class="block mb-2 ml-1 font-bold text-left text-blueGray-600">
+                    電子信箱：{{ auth()->user()->email }}
+                </div>
+                <div class="block mb-2 ml-1 font-bold text-left text-blueGray-600">
+                    權限：{{ auth()->user()->is_admin }}
                 </div>
             </div>
-
+            <div class="col-span-1 flex">
+                <a href="{{route('dashboard.users.edit',['user'=>auth()->user()])}}">
+                    <x-form.button>
+                        更新資料
+                    </x-form.button>
+                </a>
+                <a href="{{}}">
+                    <x-form.button>
+                        更新密碼
+                    </x-form.button>
+                </a>
+            </div>
         </div>
     </div>
 </x-layout.backend-layout>

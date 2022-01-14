@@ -2,7 +2,7 @@
     title="登入"
 >
     <div class="flex justify-center items-center min-h-screen bg-blueGray-800">
-        <div class="px-4 w-full md:w-2/3 lg:w-1/3">
+        <div class="px-4 py-20 w-full md:w-2/3 lg:w-1/3">
             <div
                 class="mb-6 w-full break-words rounded-lg border-0 shadow-lg bg-blueGray-200">
                 <div class="px-6 py-6 mb-0 rounded-t">
@@ -27,7 +27,6 @@
                         <x-form.input
                             name="username"
                             value="{{old('username')}}"
-                            class="w-full"
                         >
                             帳號
                         </x-form.input>
@@ -35,7 +34,6 @@
                         <x-form.input
                             type="password"
                             name="password"
-                            class="mt-3 w-full"
                         >
                             密碼
                         </x-form.input>

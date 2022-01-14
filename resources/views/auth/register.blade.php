@@ -24,70 +24,41 @@
 
                     <form method="post" action="{{route('register')}}">
                         @csrf
-                        <div class="w-full">
-                            <x-form.label for="name">
-                                姓名
-                            </x-form.label>
-                            <x-form.input
-                                type="text"
-                                id="name"
-                                name="name"
-                                placeholder="姓名"
-                                value="{{old('name')}}"
-                            >
-                            </x-form.input>
-                        </div>
+                        <x-form.input
+                            name="name"
+                            value="{{old('name')}}"
+                        >
+                            姓名
+                        </x-form.input>
 
-                        <div class="mt-3 w-full">
-                            <x-form.label for="username">
-                                帳號
-                            </x-form.label>
-                            <x-form.input
-                                type="text"
-                                id="username"
-                                name="username"
-                                placeholder="帳號"
-                                value="{{old('username')}}"
-                            >
-                            </x-form.input>
-                        </div>
+                        <x-form.input
+                            name="username"
+                            value="{{old('username')}}"
+                        >
+                            帳號
+                        </x-form.input>
 
-                        <div class="mt-3 w-full">
-                            <x-form.label for="email">
-                                電子信箱
-                            </x-form.label>
-                            <x-form.input
-                                type="email"
-                                id="email"
-                                name="email"
-                                placeholder="電子信箱"
-                                value="{{old('email')}}"
-                            >
-                            </x-form.input>
-                        </div>
+                        <x-form.input
+                            name="email"
+                            value="{{old('email')}}"
+                        >
+                            電子信箱
+                        </x-form.input>
 
-                        <div class="mt-3 w-full">
-                            <x-form.label for="password">密碼</x-form.label>
-                            <x-form.input
-                                type="password"
-                                id="password"
-                                name="password"
-                                placeholder="密碼"
-                            >
-                            </x-form.input>
-                        </div>
-                        <div class="mt-3 w-full">
-                            <x-form.label for="password_confirmation">確認密碼</x-form.label>
-                            <x-form.input
-                                type="password"
-                                id="password_confirmation"
-                                name="password_confirmation"
-                                placeholder="確認密碼"
-                            >
-                            </x-form.input>
-                        </div>
+                        <x-form.input
+                            type="password"
+                            name="password"
+                        >
+                            密碼
+                        </x-form.input>
+                        <x-form.input
+                            type="password"
+                            name="password_confirmation"
+                        >
+                            確認密碼
+                        </x-form.input>
 
-                        <div class="mt-6 text-center">
+                        <div class="text-center">
                             <x-form.button>
                                 註冊
                             </x-form.button>

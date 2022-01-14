@@ -574,6 +574,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .-ml-px {
   margin-left: -1px;
 }
+.mt-12 {
+  margin-top: 3rem;
+}
 .block {
   display: block;
 }
@@ -637,6 +640,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-40 {
   height: 10rem;
 }
+.h-fit {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
 .max-h-40 {
   max-height: 10rem;
 }
@@ -672,6 +680,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .w-40 {
   width: 10rem;
+}
+.w-32 {
+  width: 8rem;
 }
 .min-w-lg {
   min-width: 1024px;
@@ -823,6 +834,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .whitespace-normal {
   white-space: normal;
+}
+.whitespace-nowrap {
+  white-space: nowrap;
 }
 .break-words {
   overflow-wrap: break-word;

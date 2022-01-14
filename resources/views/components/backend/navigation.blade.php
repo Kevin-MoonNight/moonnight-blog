@@ -82,12 +82,6 @@
     </nav-item>
 
     <nav-item
-        name="個人設定"
-        icon="<i class='far fa-user'></i>"
-        link="{{route('dashboard')}}"
-    ></nav-item>
-
-    <nav-item
         name="返回首頁"
         icon="<i class='fas fa-reply'></i>"
         link="{{route('root')}}"
