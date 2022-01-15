@@ -7,10 +7,7 @@ import VueLazyLoad from 'vue3-lazyload';
 
 
 import Carousel from "./views/components/Carousel";
-import ArticlesCard from "./views/articles/ArticlesCard";
 import SideBox from "./views/components/SideBox";
-import ContactInfo from "./views/components/ContactInfo";
-import ProductsCard from "./views/products/ProductsCard";
 import ContactItem from "./views/components/ContactItem";
 import GoogleMaps from "./views/components/GoogleMaps";
 import NavItem from "./views/components/NavItem";
@@ -23,10 +20,7 @@ app.use(VueClipboard);
 // app.use(CKEditor);
 
 app.component('carousel', Carousel);
-app.component('articles-card', ArticlesCard);
 app.component('side-box', SideBox);
-app.component('contact-info', ContactInfo);
-app.component('products-card', ProductsCard);
 app.component('contact-item', ContactItem);
 app.component('google-maps', GoogleMaps);
 app.component('nav-item', NavItem);

@@ -1,4 +1,4 @@
-<x-layout.backend-layout
+<x-layouts.backend-layout
     title="後台"
 >
     <div class="w-full h-auto bg-white rounded-sm shadow-md">
@@ -29,7 +29,7 @@
                         更新資料
                     </x-form.button>
                 </a>
-                <a href="{{}}">
+                <a href="">
                     <x-form.button>
                         更新密碼
                     </x-form.button>
@@ -37,4 +37,4 @@
             </div>
         </div>
     </div>
-</x-layout.backend-layout>
+</x-layouts.backend-layout>

@@ -1,4 +1,4 @@
-<x-layout.articles-layout>
+<x-layouts.articles-layout>
     <div class="flex flex-wrap content-between px-4 min-h-screen md:px-0">
         <x-search-box
             name="搜尋文章"
@@ -15,7 +15,7 @@
             @foreach($articles as $article)
                 <li>
                     <a href="{{route('articles.show',['article'=>$article->slug])}}">
-                        <x-articles-card :article="$article"></x-articles-card>
+                        <x-articles.articles-card :article="$article"></x-articles.articles-card>
                     </a>
                 </li>
             @endforeach
@@ -25,4 +25,4 @@
             {{$articles->links()}}
         </div>
     </div>
-</x-layout.articles-layout>
+</x-layouts.articles-layout>

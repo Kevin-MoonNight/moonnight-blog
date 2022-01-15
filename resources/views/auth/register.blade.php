@@ -1,4 +1,4 @@
-<x-layout.frontend-layout
+<x-layouts.frontend-layout
     title="註冊"
 >
     <div class="flex justify-center items-center min-h-screen bg-blueGray-800">
@@ -11,16 +11,6 @@
                             註冊
                         </h6>
                     </div>
-
-                    @if ($errors->any())
-                        <div class="px-3 mb-4">
-                            <ol class="list-disc list-inside">
-                                @foreach ($errors->all() as $error)
-                                    <li class="text-red-500">{{ $error }}</li>
-                                @endforeach
-                            </ol>
-                        </div>
-                    @endif
 
                     <form method="post" action="{{route('register')}}">
                         @csrf
@@ -85,4 +75,4 @@
             </div>
         </div>
     </div>
-</x-layout.frontend-layout>
+</x-layouts.frontend-layout>

@@ -1,4 +1,4 @@
-<x-layout.backend-layout
+<x-layouts.backend-layout
     title="新增作品"
 >
     <form
@@ -34,4 +34,4 @@
             </div>
         </div>
     </form>
-</x-layout.backend-layout>
+</x-layouts.backend-layout>

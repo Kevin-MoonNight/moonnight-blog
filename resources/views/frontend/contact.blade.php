@@ -1,4 +1,4 @@
-<x-layout.frontend-layout
+<x-layouts.frontend-layout
     title="聯絡我們"
 >
     <section id="contact" class="py-20 bg-blueGray-800">
@@ -11,10 +11,10 @@
                     </p>
                 </div>
                 <div class="grid grid-cols-1 gap-5 place-items-stretch lg:grid-cols-2">
-                    <x-contact-infomation></x-contact-infomation>
-                    <x-contact-form></x-contact-form>
+                    <x-frontend.contact-infomation></x-frontend.contact-infomation>
+                    <x-frontend.contact-form></x-frontend.contact-form>
                 </div>
             </div>
         </div>
     </section>
-</x-layout.frontend-layout>
+</x-layouts.frontend-layout>

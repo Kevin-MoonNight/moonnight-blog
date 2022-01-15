@@ -1,4 +1,4 @@
-<x-layout.backend-layout
+<x-layouts.backend-layout
     title="更新使用者資料"
 >
     <form
@@ -36,4 +36,4 @@
             </div>
         </div>
     </form>
-</x-layout.backend-layout>
+</x-layouts.backend-layout>

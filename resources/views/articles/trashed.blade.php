@@ -1,4 +1,4 @@
-<x-layout.backend-layout
+<x-layouts.backend-layout
     title="垃圾桶"
 >
     <x-search-box
@@ -14,9 +14,9 @@
                     找不到文章!
                 </p>
             @else
-                <x-articles-trashed-table
+                <x-articles.articles-trashed-table
                     :articles="$articles"
-                ></x-articles-trashed-table>
+                ></x-articles.articles-trashed-table>
             @endif
 
         </div>
@@ -25,4 +25,4 @@
     <div class="mt-10 w-full h-auto">
         {{$articles->links()}}
     </div>
-</x-layout.backend-layout>
+</x-layouts.backend-layout>

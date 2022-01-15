@@ -1,4 +1,4 @@
-<x-layout.backend-layout
+<x-layouts.backend-layout
     title="標籤列表"
 >
     <x-search-box
@@ -14,9 +14,9 @@
                     找不到標籤!
                 </p>
             @else
-                <x-tag.tags-table
+                <x-tags.tags-table
                     :tags="$tags"
-                ></x-tag.tags-table>
+                ></x-tags.tags-table>
             @endif
 
         </div>
@@ -25,4 +25,4 @@
     <div class="mt-10 w-full h-auto">
         {{$tags->links()}}
     </div>
-</x-layout.backend-layout>
+</x-layouts.backend-layout>

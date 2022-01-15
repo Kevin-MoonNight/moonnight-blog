@@ -1,4 +1,4 @@
-<x-layout.frontend-layout
+<x-layouts.frontend-layout
     title="專案作品"
 >
     <section class="pt-5 bg-blueGray-200 md:py-10">
@@ -13,7 +13,7 @@
 
                 <div class="grid grid-cols-1 gap-5 place-items-stretch w-full sm:grid-cols-2 lg:grid-cols-3">
                     @foreach($products as $product)
-                        <x-products-card :product="$product"></x-products-card>
+                        <x-products.products-card :product="$product"></x-products.products-card>
                     @endforeach
                 </div>
 
@@ -23,4 +23,4 @@
             </div>
         </div>
     </section>
-</x-layout.frontend-layout>
+</x-layouts.frontend-layout>

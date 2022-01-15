@@ -1,4 +1,4 @@
-<x-layout.backend-layout
+<x-layouts.backend-layout
     title="文章列表"
 >
     <x-search-box
@@ -14,9 +14,9 @@
                     找不到文章!
                 </p>
             @else
-                <x-articles-table
+                <x-articles.articles-table
                     :articles="$articles"
-                ></x-articles-table>
+                ></x-articles.articles-table>
             @endif
 
         </div>
@@ -25,4 +25,4 @@
     <div class="mt-10 w-full h-auto">
         {{$articles->links()}}
     </div>
-</x-layout.backend-layout>
+</x-layouts.backend-layout>

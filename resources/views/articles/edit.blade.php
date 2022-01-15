@@ -1,4 +1,4 @@
-<x-layout.backend-layout
+<x-layouts.backend-layout
     title="更新文章"
 >
     <form
@@ -87,4 +87,4 @@
             </div>
         </div>
     </form>
-</x-layout.backend-layout>
+</x-layouts.backend-layout>

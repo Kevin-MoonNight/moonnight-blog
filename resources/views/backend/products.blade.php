@@ -1,4 +1,4 @@
-<x-layout.backend-layout
+<x-layouts.backend-layout
     title="作品列表"
 >
     <x-search-box
@@ -25,4 +25,4 @@
     <div class="mt-10 w-full h-auto">
         {{$products->links()}}
     </div>
-</x-layout.backend-layout>
+</x-layouts.backend-layout>

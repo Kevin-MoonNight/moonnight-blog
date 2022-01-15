@@ -1,4 +1,4 @@
-<x-layout.backend-layout
+<x-layouts.backend-layout
     title="更新標籤"
 >
     <form
@@ -28,4 +28,4 @@
             </div>
         </div>
     </form>
-</x-layout.backend-layout>
+</x-layouts.backend-layout>

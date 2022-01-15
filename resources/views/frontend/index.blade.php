@@ -1,4 +1,4 @@
-<x-layout.frontend-layout>
+<x-layouts.frontend-layout>
     <main class="select-none">
         <section class="py-10 bg-blueGray-800">
             <div class="flex items-stretch md:min-h-screen">
@@ -154,4 +154,4 @@
             </div>
         </section>
     </main>
-</x-layout.frontend-layout>
+</x-layouts.frontend-layout>

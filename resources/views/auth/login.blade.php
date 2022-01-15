@@ -1,4 +1,4 @@
-<x-layout.frontend-layout
+<x-layouts.frontend-layout
     title="登入"
 >
     <div class="flex justify-center items-center min-h-screen bg-blueGray-800">
@@ -93,4 +93,4 @@
             </div>
         </div>
     </div>
-</x-layout.frontend-layout>
+</x-layouts.frontend-layout>

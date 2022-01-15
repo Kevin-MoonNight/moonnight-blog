@@ -1,4 +1,4 @@
-<x-layout.articles-layout
+<x-layouts.articles-layout
     title="{{$article->title}}"
     description="{{$article->excerpt}}"
 >
@@ -54,4 +54,4 @@
             </div>
         </div>
     </article>
-</x-layout.articles-layout>
+</x-layouts.articles-layout>

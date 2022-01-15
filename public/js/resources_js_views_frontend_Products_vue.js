@@ -104,7 +104,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm-bundler.js");
 /* harmony import */ var _components_Paginator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Paginator */ "./resources/js/views/components/Paginator.vue");
-/* harmony import */ var _products_ProductsCard__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../products/ProductsCard */ "./resources/js/views/products/ProductsCard.vue");
+Object(function webpackMissingModule() { var e = new Error("Cannot find module '../products/ProductsCard'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
 /* harmony import */ var _api_product__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../api/product */ "./resources/js/api/product.js");
 /* harmony import */ var _components_LoadingIcon__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/LoadingIcon */ "./resources/js/views/components/LoadingIcon.vue");
 
@@ -122,7 +122,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     LoadingIcon: _components_LoadingIcon__WEBPACK_IMPORTED_MODULE_5__["default"],
-    ProductCard: _products_ProductsCard__WEBPACK_IMPORTED_MODULE_3__["default"],
+    ProductCard: Object(function webpackMissingModule() { var e = new Error("Cannot find module '../products/ProductsCard'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()),
     Paginator: _components_Paginator__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   metaInfo: function metaInfo() {
