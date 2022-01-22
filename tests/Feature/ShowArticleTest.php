@@ -14,11 +14,15 @@ class ShowArticleTest extends TestCase
     {
         $article = Article::factory(['state' => 1])->create();
 
-        $response = $this->get(route('articles.show', ['article' => $article->getAttribute('slug')]))
+        $this->get(route('articles.show', ['article' => $article->getAttribute('slug')]))
             ->assertOk();
+    }
 
-        $this->assertEquals($article->getAttribute('slug'), $response->json('slug'));
+    public function test_draft_article_can_not_be_show()
+    {
+        $article = Article::factory(['state' => 0])->create();
 
-        $article->forceDelete();
+        $this->get(route('articles.show', ['article' => $article->getAttribute('slug')]))
+            ->assertNotFound();
     }
 }

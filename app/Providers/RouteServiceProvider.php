@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Article;
+use App\Repositories\ArticleRepository;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -51,7 +52,7 @@ class RouteServiceProvider extends ServiceProvider
 
         //顯式綁定
         Route::bind('trashed_article', function ($slug) {
-            return Article::onlyTrashed()->where('slug', $slug)->firstOrFail();
+            return (new ArticleRepository())->findTrashed($slug);
         });
     }
 

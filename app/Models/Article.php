@@ -34,16 +34,6 @@ class Article extends Model
         'tags', 'author'
     ];
 
-    public function scopePublished($query)
-    {
-        $query->where('state', true);
-    }
-
-    public function scopeDraft($query)
-    {
-        $query->where('state', false);
-    }
-
     public function scopeFilter($query, array $filters)
     {
         $query->when($filters['search'] ?? false, function ($query, $search) {
@@ -62,9 +52,19 @@ class Article extends Model
         });
     }
 
+    public function scopeDraft($query)
+    {
+        $query->where('state', false);
+    }
+
+    public function scopePublished($query)
+    {
+        $query->where('state', true);
+    }
+
     public function scopePopular($query)
     {
-        return $query->orderBy('views', 'desc');
+        $query->orderBy('views', 'desc');
     }
 
     public function getRouteKeyName()

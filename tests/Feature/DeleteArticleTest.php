@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Article;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
@@ -12,58 +13,151 @@ class DeleteArticleTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_article_can_be_soft_deleted()
+    public function test_user_can_not_be_soft_deleted()
     {
         $user = User::factory()->create();
-        Sanctum::actingAs($user);
+        $user->roles()->attach(4);
+        $this->actingAs($user);
 
-        $article = Article::factory(['user_id' => $user->id])->create();
+        $article = Article::factory(['user_id' => $user->getAttribute('id')])->create();
 
         //軟刪除
-        $this->delete(route('articles.destroy', ['article' => $article->getAttribute('slug')]))
-            ->assertOk();
+        $this->delete(route('dashboard.articles.destroy', ['article' => $article->getAttribute('slug')]))
+            ->assertForbidden();
 
-        $this->assertSoftDeleted($article);
-        $this->assertDatabaseCount('articles', 1);
-
-        $article->forceDelete();
+        $this->assertNotSoftDeleted($article);
     }
 
-    public function test_article_can_be_deleted()
+    public function test_user_can_not_be_deleted()
     {
         $user = User::factory()->create();
-        Sanctum::actingAs($user);
+        $user->roles()->attach(4);
+        $this->actingAs($user);
 
-        $article = Article::factory(['user_id' => $user->id])->create();
+        $article = Article::factory(['user_id' => $user->getAttribute('id')])->create();
 
         $article->delete();
 
         //完全刪除
-        $this->delete(route('articles.delete-trashed', ['trashed_article' => $article->getAttribute('slug')]))
-            ->assertOk();
+        $this->delete(route('dashboard.articles.force-delete', ['trashed_article' => $article->getAttribute('slug')]))
+            ->assertForbidden();
 
-        $this->assertDatabaseCount('articles', 0);
-        $this->assertDeleted($article);
-    }
-
-    public function test_article_can_be_restored()
-    {
-        $user = User::factory()->create();
-        Sanctum::actingAs($user);
-
-        $article = Article::factory(['user_id' => $user->id])->create();
-
-        $article->delete();
-
-        //完全刪除
-        $this->get(route('articles.restore', ['trashed_article' => $article->getAttribute('slug')]))
-            ->assertStatus(200);
-
-        $this->assertDatabaseCount('articles', 1);
         $this->assertDatabaseHas('articles', [
             'slug' => $article->getAttribute('slug')
         ]);
+    }
 
-        $article->forceDelete();
+    public function test_user_can_not_be_restored()
+    {
+        $user = User::factory()->create();
+        $user->roles()->attach(4);
+        $this->actingAs($user);
+
+        $article = Article::factory(['user_id' => $user->getAttribute('id')])->create();
+
+        $article->delete();
+
+        $this->get(route('dashboard.articles.restore', ['trashed_article' => $article->getAttribute('slug')]))
+            ->assertForbidden();
+    }
+
+    public function test_author_can_be_soft_deleted()
+    {
+        $user = User::factory()->create();
+        $user->roles()->attach(3);
+        $this->actingAs($user);
+
+        $article = Article::factory(['user_id' => $user->getAttribute('id')])->create();
+
+        //軟刪除
+        $this->delete(route('dashboard.articles.destroy', ['article' => $article->getAttribute('slug')]))
+            ->assertRedirect(route('dashboard.articles.index'));
+
+        $this->assertSoftDeleted($article);
+    }
+
+    public function test_author_can_be_deleted()
+    {
+        $user = User::factory()->create();
+        $user->roles()->attach(3);
+        $this->actingAs($user);
+
+        $article = Article::factory(['user_id' => $user->getAttribute('id')])->create();
+
+        $article->delete();
+
+        //完全刪除
+        $this->delete(route('dashboard.articles.force-delete', ['trashed_article' => $article->getAttribute('slug')]))
+            ->assertRedirect(route('dashboard.articles.trashed'));
+
+        $this->assertDatabaseMissing('articles', [
+            'slug' => $article->getAttribute('slug')
+        ]);
+    }
+
+    public function test_author_can_be_restored()
+    {
+        $user = User::factory()->create();
+        $user->roles()->attach(3);
+        $this->actingAs($user);
+
+        $article = Article::factory(['user_id' => $user->getAttribute('id')])->create();
+
+        $article->delete();
+
+        $this->get(route('dashboard.articles.restore', ['trashed_article' => $article->getAttribute('slug')]))
+            ->assertRedirect(route('dashboard.articles.trashed'));
+
+        $this->assertNotSoftDeleted($article);
+    }
+
+    public function test_admin_can_be_soft_deleted()
+    {
+        $user = User::factory()->create();
+        $user->roles()->attach(1);
+        $this->actingAs($user);
+
+        $article = Article::factory(['user_id' => $user->getAttribute('id')])->create();
+
+        //軟刪除
+        $this->delete(route('dashboard.articles.destroy', ['article' => $article->getAttribute('slug')]))
+            ->assertRedirect(route('dashboard.articles.index'));
+
+        $this->assertSoftDeleted($article);
+    }
+
+    public function test_admin_can_be_deleted()
+    {
+        $user = User::factory()->create();
+        $user->roles()->attach(1);
+        $this->actingAs($user);
+
+        $article = Article::factory(['user_id' => $user->getAttribute('id')])->create();
+
+        $article->delete();
+
+        //完全刪除
+        $this->delete(route('dashboard.articles.force-delete', ['trashed_article' => $article->getAttribute('slug')]))
+            ->assertRedirect(route('dashboard.articles.trashed'));
+
+        $this->assertDatabaseMissing('articles', [
+            'slug' => $article->getAttribute('slug')
+        ]);
+    }
+
+    public function test_admin_can_be_restored()
+    {
+        $user = User::factory()->create();
+        $user->roles()->attach(1);
+        $this->actingAs($user);
+
+        $article = Article::factory(['user_id' => $user->getAttribute('id')])->create();
+
+        $article->delete();
+
+        $this->get(route('dashboard.articles.restore', ['trashed_article' => $article->getAttribute('slug')]))
+            ->assertRedirect(route('dashboard.articles.trashed'));
+
+        $this->assertNotSoftDeleted($article);
     }
 }

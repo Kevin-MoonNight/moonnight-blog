@@ -61,8 +61,39 @@ class User extends Authenticatable
         });
     }
 
+    public function isAdmin(): bool
+    {
+
+        return $this->roles()->where('slug', '=', 'administrator')->count() > 0;
+    }
+
+    public function isAuthor(): bool
+    {
+        return $this->roles()->where('slug', '=', 'author')->count() > 0;
+    }
+
+    public function isCustomerService(): bool
+    {
+        return $this->roles()->whereRelation('slug', '=', 'customer-service')->count() > 0;
+    }
+
+    public function isNormalUser(): bool
+    {
+        return $this->roles()->whereRelation('slug', '=', 'user')->count() > 0;
+    }
+
     public function articles()
     {
         return $this->hasMany(Article::class);
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function likes()
+    {
+//        return $this->belongsToMany();
     }
 }

@@ -2,22 +2,21 @@
 
 namespace App\View\Components\Articles;
 
-use App\Http\Controllers\ArticlesController;
+use App\Repositories\ArticleRepository;
 use Illuminate\View\Component;
 
 class PopularArticlesSideBox extends Component
 {
-
-    private $articlesService;
+    private ArticleRepository $articleRepository;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(ArticlesController $articlesService)
+    public function __construct(ArticleRepository $articleRepository)
     {
-        $this->articlesService = $articlesService;
+        $this->articleRepository = $articleRepository;
     }
 
     /**
@@ -27,7 +26,7 @@ class PopularArticlesSideBox extends Component
      */
     public function render()
     {
-        $articles = $this->articlesService->popular();
+        $articles = $this->articleRepository->getPopularArticles();
 
         return view('components.articles.popular-articles-side-box', ['articles' => $articles]);
     }

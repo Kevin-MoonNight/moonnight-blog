@@ -22,22 +22,27 @@ class ArticleFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
-        $title = $this->faker->sentence;
-
-        $image = new UploadedFile(storage_path('app/test-files/thumbnail.jpg'), 'thumbnail.jpg', null, null, true);
-        $imagePath = "storage/" . $image->store('thumbnail');
-
         return [
             'title' => $this->faker->realText(10),
-            'slug' => Str::slug($title),
+            'slug' => Str::slug($this->faker->sentence),
             'excerpt' => $this->faker->sentence,
             'content' => $this->faker->realTextBetween(160, 200),
             'views' => $this->faker->numberBetween(100, 500),
-            'thumbnail' => $imagePath,
+            'thumbnail' => UploadedFile::fake()->image('thumbnail.jpg', 100, 100)->size(100),
             'state' => $this->faker->boolean,
             'user_id' => User::factory()
         ];
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function (Article $article) {
+            $image = UploadedFile::fake()->image('thumbnail.jpg', 100, 100)->size(100);
+            $imagePath = "storage/" . $image->store('thumbnail');
+            $article->setAttribute('thumbnail', $imagePath);
+            $article->save();
+        });
     }
 }

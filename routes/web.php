@@ -31,13 +31,14 @@ Route::middleware(['verified'])->prefix('/dashboard')->group(function () {
     })->name('dashboard');
 
     Route::name('dashboard.')->group(function () {
-        Route::resource('/articles', ArticlesController::class)->except('show');
+        Route::resource('/articles', ArticlesController::class)->except('index', 'show');
 
         Route::name('articles.')->group(function () {
+            Route::get('/articles', [ArticlesController::class, 'dashboard'])->name('index');
             Route::get('/articles/draft', [ArticlesController::class, 'draft'])->name('draft');
             Route::get('/articles/trashed', [ArticlesController::class, 'trashed'])->name('trashed');
             Route::get('/articles/restore/{trashed_article}', [ArticlesController::class, 'restore'])->name('restore');
-            Route::delete('/articles/trashed/{trashed_article}', [ArticlesController::class, 'deleteTrashed'])->name('delete-trashed');
+            Route::delete('/articles/forceDelete/{trashed_article}', [ArticlesController::class, 'forceDelete'])->name('force-delete');
         });
 
         Route::resource('/tags', TagsController::class);

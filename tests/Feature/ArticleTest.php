@@ -12,60 +12,100 @@ class ArticleTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_articles_can_be_get()
+    public function test_articles_can_be_render()
     {
-        $article = Article::factory(['state' => 1])->create();
-
-        $response = $this->get(route('articles.index'))
+        $this->get(route('articles.index'))
             ->assertOk();
-
-        $this->assertCount(1, $response->json('data'));
-
-        $article->forceDelete();
     }
 
-    public function test_popular_articles_can_be_get()
-    {
-        $article = Article::factory(['state' => 1])->create();
-
-        $response = $this->get(route('articles.popular'))
-            ->assertOk();
-
-        $this->assertCount(1, $response->json());
-
-        $article->forceDelete();
-    }
-
-    public function test_draft_articles_can_be_get()
+    public function test_user_can_not_be_render_dashboard_articles()
     {
         $user = User::factory()->create();
-        Sanctum::actingAs($user);
+        $user->roles()->attach(4);
+        $this->actingAs($user);
 
-        $article = Article::factory(['user_id' => $user->getAttribute('id'), 'state' => 0])->create();
-
-        $response = $this->get(route('articles.draft'))
-            ->assertOk();
-
-        $this->assertCount(1, $response->json('data'));
-
-        $article->forceDelete();
+        $this->get(route('dashboard.articles.index'))
+            ->assertForbidden();
     }
 
-    public function test_trashed_articles_can_be_get()
+    public function test_user_can_not_be_render_draft_articles()
     {
         $user = User::factory()->create();
-        Sanctum::actingAs($user);
+        $user->roles()->attach(4);
+        $this->actingAs($user);
 
-        $article = Article::factory(['user_id' => $user->getAttribute('id'), 'state' => 1])->create();
+        $this->get(route('dashboard.articles.draft'))
+            ->assertForbidden();
+    }
 
-        $article->delete();
+    public function test_user_can_not_be_render_trashed_articles()
+    {
+        $user = User::factory()->create();
+        $user->roles()->attach(4);
+        $this->actingAs($user);
 
-        $response = $this->get(route('articles.trashed'))
+        $this->get(route('dashboard.articles.trashed'))
+            ->assertForbidden();
+    }
+
+    public function test_author_can_not_be_render_dashboard_articles()
+    {
+        $user = User::factory()->create();
+        $user->roles()->attach(3);
+        $this->actingAs($user);
+
+        $this->get(route('dashboard.articles.index'))
             ->assertOk();
+    }
 
-        $this->assertCount(1, $response->json('data'));
+    public function test_author_can_not_be_render_draft_articles()
+    {
+        $user = User::factory()->create();
+        $user->roles()->attach(3);
+        $this->actingAs($user);
 
-        $article->forceDelete();
+        $this->get(route('dashboard.articles.draft'))
+            ->assertOk();
+    }
+
+    public function test_author_can_not_be_render_trashed_articles()
+    {
+        $user = User::factory()->create();
+        $user->roles()->attach(3);
+        $this->actingAs($user);
+
+        $this->get(route('dashboard.articles.trashed'))
+            ->assertOk();
+    }
+
+    public function test_admin_can_not_be_render_dashboard_articles()
+    {
+        $user = User::factory()->create();
+        $user->roles()->attach(1);
+        $this->actingAs($user);
+
+        $this->get(route('dashboard.articles.index'))
+            ->assertOk();
+    }
+
+    public function test_admin_can_not_be_render_draft_articles()
+    {
+        $user = User::factory()->create();
+        $user->roles()->attach(1);
+        $this->actingAs($user);
+
+        $this->get(route('dashboard.articles.draft'))
+            ->assertOk();
+    }
+
+    public function test_admin_can_not_be_render_trashed_articles()
+    {
+        $user = User::factory()->create();
+        $user->roles()->attach(1);
+        $this->actingAs($user);
+
+        $this->get(route('dashboard.articles.trashed'))
+            ->assertOk();
     }
 }
 

@@ -176,7 +176,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-        App\Providers\FortifyServiceProvider::class
+        App\Providers\FortifyServiceProvider::class,
+        App\Providers\RepositoryServiceProvider::class,
     ],
 
     /*

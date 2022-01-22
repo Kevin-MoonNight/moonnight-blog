@@ -64,49 +64,49 @@
             @endauth
         </ul>
 
-        <div @click="isOpen = !isOpen" class="px-4 cursor-pointer md:hidden">
-            <div v-if="isOpen">
-                <i class="fas fa-times"></i>
-            </div>
-            <div v-else>
-                <i class="fas fa-bars"></i>
-            </div>
-        </div>
+{{--        <div @click="isOpen = !isOpen" class="px-4 cursor-pointer md:hidden">--}}
+{{--            <div v-if="isOpen">--}}
+{{--                <i class="fas fa-times"></i>--}}
+{{--            </div>--}}
+{{--            <div v-else>--}}
+{{--                <i class="fas fa-bars"></i>--}}
+{{--            </div>--}}
+{{--        </div>--}}
 
-        <transition name="list" class="md:hidden">
-            <div v-show="isOpen" @click="isOpen=false"
-                 class="fixed top-14 w-full h-screen bg-opacity-30 bg-blueGray-700">
-                <ul class="w-full text-center bg-white bg-opacity-80">
-                    <li>
-                        <a href="{{route('root')}}">
-                            <p class="py-4 w-full hover:text-indigo-500">
-                                首頁
-                            </p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{route('articles.index')}}">
-                            <p class="py-4 w-full hover:text-indigo-500">
-                                文章
-                            </p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{route('products.index')}}">
-                            <p class="py-4 w-full hover:text-indigo-500">
-                                專案作品
-                            </p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{route('contact')}}">
-                            <p class="py-4 w-full hover:text-indigo-500">
-                                聯絡我們
-                            </p>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </transition>
+{{--        <transition name="list" class="md:hidden">--}}
+{{--            <div v-show="isOpen" @click="isOpen=false"--}}
+{{--                 class="fixed top-14 w-full h-screen bg-opacity-30 bg-blueGray-700">--}}
+{{--                <ul class="w-full text-center bg-white bg-opacity-80">--}}
+{{--                    <li>--}}
+{{--                        <a href="{{route('root')}}">--}}
+{{--                            <p class="py-4 w-full hover:text-indigo-500">--}}
+{{--                                首頁--}}
+{{--                            </p>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
+{{--                    <li>--}}
+{{--                        <a href="{{route('articles.index')}}">--}}
+{{--                            <p class="py-4 w-full hover:text-indigo-500">--}}
+{{--                                文章--}}
+{{--                            </p>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
+{{--                    <li>--}}
+{{--                        <a href="{{route('products.index')}}">--}}
+{{--                            <p class="py-4 w-full hover:text-indigo-500">--}}
+{{--                                專案作品--}}
+{{--                            </p>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
+{{--                    <li>--}}
+{{--                        <a href="{{route('contact')}}">--}}
+{{--                            <p class="py-4 w-full hover:text-indigo-500">--}}
+{{--                                聯絡我們--}}
+{{--                            </p>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
+{{--                </ul>--}}
+{{--            </div>--}}
+{{--        </transition>--}}
     </nav>
 </header>

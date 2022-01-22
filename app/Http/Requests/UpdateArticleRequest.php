@@ -19,7 +19,7 @@ class UpdateArticleRequest extends FormRequest
      */
     public function authorize()
     {
-        return Gate::any(['article', 'admin'], $this->route('article'));
+        return true;
     }
 
     /**

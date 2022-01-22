@@ -8,6 +8,11 @@ use Intervention\Image\Facades\Image;
 
 class ImagesController extends Controller
 {
+    /**
+     *
+     * @param $image
+     * @return string
+     */
     public function create($image)
     {
         $imagePath = "storage/" . $image->store('thumbnail');
@@ -22,8 +27,13 @@ class ImagesController extends Controller
         return $imagePath;
     }
 
+    /**
+     * delete image
+     *
+     * @return boolean
+     */
     public function destroy($thumbnailPath)
     {
-        Storage::delete(Str::of($thumbnailPath)->remove('storage/'));
+        return Storage::delete(Str::of($thumbnailPath)->remove('storage/'));
     }
 }

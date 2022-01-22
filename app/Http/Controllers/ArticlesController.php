@@ -6,39 +6,55 @@ use App\Http\Requests\UpdateArticleRequest;
 use App\Http\Requests\StoreArticleRequest;
 use App\Models\Article;
 use App\Models\Tag;
+use App\Repositories\ArticleRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class ArticlesController extends Controller
 {
+    private ImagesController $imageService;
+    private ArticleRepository $articleRepository;
+
+    public function __construct(ImagesController $imageService, ArticleRepository $articleRepository)
+    {
+        $this->imageService = $imageService;
+        $this->articleRepository = $articleRepository;
+    }
+
     public function index(Request $request)
     {
-        $articles = Article::published()->filter($request->all())->latest()->paginate(10)->withQueryString();
+        $this->authorize('viewAny', Article::class);
 
-        if ($request->route()->named('dashboard.articles.index')) {
-            if (Gate::denies('admin')) {
-                $articles = auth()->user()->articles();
-                $articles = $articles->published()->filter($request->all())->latest()->paginate(10)->withQueryString();
-            }
+        $articles = $this->articleRepository->getPublishedArticles($request->all());
 
-            return view('backend.articles', ['articles' => $articles]);
-        } else {
-            return view('frontend.articles', ['articles' => $articles]);
-        }
+        return view('frontend.articles', ['articles' => $articles]);
+    }
+
+    public function dashboard(Request $request)
+    {
+        $this->authorize('dashboard', Article::class);
+
+        $articles = $this->articleRepository->getUserPublishedArticles(Auth::user(), $request->all());
+
+        return view('backend.articles', ['articles' => $articles]);
     }
 
     public function create()
     {
+        $this->authorize('create', Article::class);
+
         return view('articles.create', ['tags' => Tag::all()]);
     }
 
     public function store(StoreArticleRequest $request)
     {
+        $this->authorize('create', Article::class);
+
         $validated = $request->validated();
 
         $validated['thumbnail'] = $this->saveThumbnail($validated['thumbnail']);
 
-        $validated['user_id'] = auth()->id();
+        $validated['user_id'] = Auth::id();
 
         $article = Article::create($validated);
 
@@ -51,6 +67,8 @@ class ArticlesController extends Controller
 
     public function show(Article $article)
     {
+        $this->authorize('view', $article);
+
         if ($article->getAttribute('state')) {
             //新增觀看數
             $article->views += 1;
@@ -65,13 +83,15 @@ class ArticlesController extends Controller
 
     public function edit(Article $article)
     {
-        if (Gate::any(['admin', 'article'], $article)) {
-            return view('articles.edit', ['article' => $article, 'tags' => Tag::all()]);
-        }
+        $this->authorize('update', $article);
+
+        return view('articles.edit', ['article' => $article, 'tags' => Tag::all()]);
     }
 
     public function update(UpdateArticleRequest $request, Article $article)
     {
+        $this->authorize('update', $article);
+
         $validated = $request->validated();
 
         $validated['thumbnail'] = isset($validated['thumbnail']) ? $this->saveThumbnail($validated['thumbnail'], $article) : $article->thumbnail;
@@ -81,7 +101,6 @@ class ArticlesController extends Controller
         $article->update($validated);
 
         if (isset($validated['tags'])) {
-            $article->tags()->detach();
             $article->tags()->attach($validated['tags']);
         }
 
@@ -90,54 +109,45 @@ class ArticlesController extends Controller
 
     public function destroy(Article $article)
     {
-        if (Gate::any(['admin', 'article'], $article)) {
-            $article->delete();
-        }
+        $this->authorize('delete', $article);
+
+        $article->delete();
 
         return redirect()->route('dashboard.articles.index');
     }
 
-    public function popular()
-    {
-        return Article::published()->popular()->take(10)->get();
-    }
-
     public function draft(Request $request)
     {
-        if (Gate::allows('admin')) {
-            $articles = Article::draft()->filter($request->all())->latest()->paginate(10)->withQueryString();
-        } else {
-            $articles = auth()->user()->articles()->draft()->filter($request->all())->latest()->paginate(10)->withQueryString();
-        }
+        $this->authorize('draft', Article::class);
+
+        $articles = $this->articleRepository->getUserDraftArticles(Auth::user(), $request->all());
 
         return view('articles.draft', ['articles' => $articles]);
     }
 
     public function trashed(Request $request)
     {
-        if (Gate::allows('admin')) {
-            $articles = Article::onlyTrashed()->filter($request->all())->paginate(10)->withQueryString();
-        } else {
-            $articles = auth()->user()->articles()->onlyTrashed()->filter($request->all())->paginate(10)->withQueryString();
-        }
+        $this->authorize('trashed', Article::class);
+
+        $articles = $this->articleRepository->getUserTrashedArticles(Auth::user(), $request->all());
 
         return view('articles.trashed', ['articles' => $articles]);
     }
 
     public function restore(Article $article)
     {
-        if (Gate::any(['admin', 'article'], $article)) {
-            Article::onlyTrashed()->findOrFail($article->id)->restore();
-        }
+        $this->authorize('restore', $article);
+
+        $article->restore();
 
         return redirect()->route('dashboard.articles.trashed');
     }
 
-    public function deleteTrashed(Article $article)
+    public function forceDelete(Article $article)
     {
-        if (Gate::any(['admin', 'article'], $article)) {
-            Article::onlyTrashed()->findOrFail($article->id)->forceDelete();
-        }
+        $this->authorize('forceDelete', $article);
+
+        $article->forceDelete();
 
         return redirect()->route('dashboard.articles.trashed');
     }
@@ -145,9 +155,9 @@ class ArticlesController extends Controller
     private function saveThumbnail($thumbnail, $article = null)
     {
         if (isset($article)) {
-            (new ImagesController)->destroy($article->thumbnail);
+            $this->imageService->destroy($article->thumbnail);
         }
 
-        return (new ImagesController)->create($thumbnail);
+        return $this->imageService->create($thumbnail);
     }
 }
