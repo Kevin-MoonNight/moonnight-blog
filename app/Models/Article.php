@@ -81,4 +81,14 @@ class Article extends Model
     {
         return $this->belongsToMany(Tag::class);
     }
+
+    public function likes()
+    {
+        return $this->belongsToMany(User::class, 'likes');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }
