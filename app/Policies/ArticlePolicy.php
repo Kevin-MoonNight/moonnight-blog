@@ -10,11 +10,6 @@ class ArticlePolicy
 {
     use HandlesAuthorization;
 
-    public function __construct()
-    {
-        //
-    }
-
     public function before(?User $user, $ability): ?bool
     {
         if (optional($user)->isAdmin()) {

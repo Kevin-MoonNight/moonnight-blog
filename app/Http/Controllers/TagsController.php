@@ -5,13 +5,22 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTagRequest;
 use App\Http\Requests\UpdateTagRequest;
 use App\Models\Tag;
+use App\Repositories\TagRepository;
 use Illuminate\Http\Request;
 
 class TagsController extends Controller
 {
+    private TagRepository $tagRepository;
+
+    public function __construct(TagRepository $tagRepository)
+    {
+        $this->tagRepository = $tagRepository;
+        $this->authorizeResource(Tag::class);
+    }
+
     public function index(Request $request)
     {
-        $tags = Tag::filter($request->all())->latest()->paginate(10)->withQueryString();
+        $tags = $this->tagRepository->getTags($request->all());
 
         return view('backend.tags', ['tags' => $tags]);
     }
@@ -32,7 +41,6 @@ class TagsController extends Controller
 
     public function show(Tag $tag)
     {
-//        return view('tags.show', ['tag' => $tag]);
         return $tag;
     }
 

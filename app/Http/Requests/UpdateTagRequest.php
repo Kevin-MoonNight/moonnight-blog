@@ -18,7 +18,7 @@ class UpdateTagRequest extends FormRequest
      */
     public function authorize()
     {
-        return Gate::allows('admin');
+        return true;
     }
 
     /**
@@ -39,15 +39,5 @@ class UpdateTagRequest extends FormRequest
         $this->merge([
             'slug' => Str::slug($this->slug ?: $this->name)
         ]);
-    }
-
-    public function messages()
-    {
-        return [
-            "name.required" => "名稱為必填資料",
-            "name.unique" => "名稱重複",
-            "slug.required" => "slug為必填資料",
-            "slug.unique" => "slug重複"
-        ];
     }
 }

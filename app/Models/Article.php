@@ -26,6 +26,7 @@ class Article extends Model
         'id',
         'state',
         'user_id',
+        'created_at',
         'updated_at',
         'deleted_at'
     ];
