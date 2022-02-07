@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Message;
 
 use App\Models\Message;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -15,7 +15,7 @@ class CreateMessageTest extends TestCase
         $message = Message::factory(['email' => 'test@example.com'])->make();
 
         $this->post(route('messages.store'), $message->getAttributes())
-            ->assertCreated();
+            ->assertRedirect(route('contact'));
 
         $this->assertDatabaseCount('messages', 1);
         $this->assertDatabaseHas('messages', [

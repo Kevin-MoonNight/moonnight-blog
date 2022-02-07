@@ -23,7 +23,7 @@ Route::get('/articles/{article}', [ArticlesController::class, 'show'])->name('ar
 Route::get('/products', [ProductsController::class, 'index'])->name('products.index');
 
 Route::get('/contact', [MessagesController::class, 'create'])->name('contact');
-Route::post('/message', [MessagesController::class, 'store'])->name('messages.store');
+Route::post('/messages', [MessagesController::class, 'store'])->name('messages.store');
 
 Route::middleware(['verified'])->prefix('/dashboard')->group(function () {
     Route::get('/', function () {

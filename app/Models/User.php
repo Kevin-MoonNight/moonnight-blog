@@ -74,12 +74,12 @@ class User extends Authenticatable
 
     public function isCustomerService(): bool
     {
-        return $this->roles()->whereRelation('slug', '=', 'customer-service')->count() > 0;
+        return $this->roles()->where('slug', '=', 'customer-service')->count() > 0;
     }
 
     public function isNormalUser(): bool
     {
-        return $this->roles()->whereRelation('slug', '=', 'user')->count() > 0;
+        return $this->roles()->where('slug', '=', 'user')->count() > 0;
     }
 
     public function articles()

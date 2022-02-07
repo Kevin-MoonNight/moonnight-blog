@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Article;
 
 use App\Models\Article;
 use App\Models\User;
@@ -48,7 +48,7 @@ class ArticleTest extends TestCase
             ->assertForbidden();
     }
 
-    public function test_author_can_not_be_render_dashboard_articles()
+    public function test_author_can_be_render_dashboard_articles()
     {
         $user = User::factory()->create();
         $user->roles()->attach(3);
@@ -58,7 +58,7 @@ class ArticleTest extends TestCase
             ->assertOk();
     }
 
-    public function test_author_can_not_be_render_draft_articles()
+    public function test_author_can_be_render_draft_articles()
     {
         $user = User::factory()->create();
         $user->roles()->attach(3);
@@ -68,7 +68,7 @@ class ArticleTest extends TestCase
             ->assertOk();
     }
 
-    public function test_author_can_not_be_render_trashed_articles()
+    public function test_author_can_be_render_trashed_articles()
     {
         $user = User::factory()->create();
         $user->roles()->attach(3);
@@ -78,7 +78,7 @@ class ArticleTest extends TestCase
             ->assertOk();
     }
 
-    public function test_admin_can_not_be_render_dashboard_articles()
+    public function test_admin_can_be_render_dashboard_articles()
     {
         $user = User::factory()->create();
         $user->roles()->attach(1);
@@ -88,7 +88,7 @@ class ArticleTest extends TestCase
             ->assertOk();
     }
 
-    public function test_admin_can_not_be_render_draft_articles()
+    public function test_admin_can_be_render_draft_articles()
     {
         $user = User::factory()->create();
         $user->roles()->attach(1);
@@ -98,7 +98,7 @@ class ArticleTest extends TestCase
             ->assertOk();
     }
 
-    public function test_admin_can_not_be_render_trashed_articles()
+    public function test_admin_can_be_render_trashed_articles()
     {
         $user = User::factory()->create();
         $user->roles()->attach(1);

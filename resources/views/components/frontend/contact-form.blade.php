@@ -18,17 +18,17 @@
         </x-form.input>
 
         <x-form.textarea
-            name="remark"
+            name="message"
             rows="4"
             cols="80"
-            value="{{old('remark')}}"
+            value="{{old('message')}}"
         >
             訊息
         </x-form.textarea>
 
         <x-form.select
-            name="caseType"
-            value="{{old('caseType')}}"
+            name="type"
+            value="{{old('type')}}"
         >
             委託類型
             <x-slot name="options">
