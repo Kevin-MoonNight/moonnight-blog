@@ -1,35 +1,45 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Product;
 
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\UploadedFile;
-use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class UpdateProductTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_product_can_be_updated()
+    public function test_user_can_not_be_updated()
     {
-        $user = User::factory(['is_admin' => 1])->create();
-        Sanctum::actingAs($user);
+        $user = User::factory()->create();
+        $user->roles()->attach(4);
+        $this->actingAs($user);
 
         $product = Product::factory()->create();
-        $newProduct = [
-            'name' => 'test',
-            'excerpt' => 'test',
-            'thumbnail' => new UploadedFile(storage_path('app/test-files/thumbnail.jpg'), 'thumbnail.jpg', null, null, true)
-        ];
 
-        $this->post(route('products.update', ['product' => $product->getAttribute('id')]), $newProduct)
-            ->assertOk();
+        $newProduct = Product::factory(['slug' => 'test'])->make();
 
-        $this->assertEquals('test', $product->fresh()->getAttribute('name'));
+        $this->put(route('dashboard.products.update', ['product' => $product->getAttribute('slug')]), $newProduct->getAttributes())
+            ->assertForbidden();
 
-        $product->fresh()->delete();
+        $this->assertNotEquals($product->getAttribute('slug'), $newProduct->getAttribute('slug'));
+    }
+
+    public function test_admin_can_be_updated()
+    {
+        $user = User::factory()->create();
+        $user->roles()->attach(1);
+        $this->actingAs($user);
+
+        $product = Product::factory()->create();
+
+        $newProduct = Product::factory(['slug' => 'test'])->make();
+
+        $this->put(route('dashboard.products.update', ['product' => $product->getAttribute('slug')]), $newProduct->getAttributes())
+            ->assertRedirect(route('dashboard.products.index'));
+
+        $this->assertEquals($product->fresh()->getAttribute('slug'), $newProduct->getAttribute('slug'));
     }
 }

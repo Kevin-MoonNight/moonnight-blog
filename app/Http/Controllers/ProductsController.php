@@ -5,20 +5,33 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
+use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 
 class ProductsController extends Controller
 {
+    private ProductRepository $productRepository;
+
+    public function __construct(ProductRepository $productRepository)
+    {
+        $this->productRepository = $productRepository;
+        $this->authorizeResource(Product::class);
+    }
+
     public function index(Request $request)
     {
-        $products = Product::filter($request->all())->latest()->paginate(10)->withQueryString();
+        $products = $this->productRepository->getProducts($request->all());
 
-        if ($request->route()->named('dashboard.products.index')) {
-            return view('backend.products', ['products' => $products]);
-        } else {
-            return view('frontend.products', ['products' => $products]);
-        }
+        return view('frontend.products', ['products' => $products]);
+    }
+
+    public function dashboard(Request $request)
+    {
+        $this->authorize('dashboard', Product::class);
+
+        $products = $this->productRepository->getProducts($request->all());
+
+        return view('backend.products', ['products' => $products]);
     }
 
     public function create()

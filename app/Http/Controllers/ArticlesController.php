@@ -19,12 +19,11 @@ class ArticlesController extends Controller
     {
         $this->imageService = $imageService;
         $this->articleRepository = $articleRepository;
+        $this->authorizeResource(Article::class);
     }
 
     public function index(Request $request)
     {
-        $this->authorize('viewAny', Article::class);
-
         $articles = $this->articleRepository->getPublishedArticles($request->all());
 
         return view('frontend.articles', ['articles' => $articles]);
@@ -41,15 +40,11 @@ class ArticlesController extends Controller
 
     public function create()
     {
-        $this->authorize('create', Article::class);
-
         return view('articles.create', ['tags' => Tag::all()]);
     }
 
     public function store(StoreArticleRequest $request)
     {
-        $this->authorize('create', Article::class);
-
         $validated = $request->validated();
 
         $validated['thumbnail'] = $this->saveThumbnail($validated['thumbnail']);
@@ -67,8 +62,6 @@ class ArticlesController extends Controller
 
     public function show(Article $article)
     {
-        $this->authorize('view', $article);
-
         if ($article->getAttribute('state')) {
             //新增觀看數
             $article->views += 1;
@@ -83,15 +76,11 @@ class ArticlesController extends Controller
 
     public function edit(Article $article)
     {
-        $this->authorize('update', $article);
-
         return view('articles.edit', ['article' => $article, 'tags' => Tag::all()]);
     }
 
     public function update(UpdateArticleRequest $request, Article $article)
     {
-        $this->authorize('update', $article);
-
         $validated = $request->validated();
 
         $validated['thumbnail'] = isset($validated['thumbnail']) ? $this->saveThumbnail($validated['thumbnail'], $article) : $article->thumbnail;
@@ -109,8 +98,6 @@ class ArticlesController extends Controller
 
     public function destroy(Article $article)
     {
-        $this->authorize('delete', $article);
-
         $article->delete();
 
         return redirect()->route('dashboard.articles.index');

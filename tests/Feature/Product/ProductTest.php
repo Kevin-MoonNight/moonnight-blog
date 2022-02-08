@@ -1,8 +1,9 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Product;
 
-use App\Models\Product;
+use App\Models\User;
+use Database\Seeders\ProductSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -10,14 +11,35 @@ class ProductTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_products_can_be_get()
+    public function test_products_can_be_render()
     {
-        $product = Product::factory()->create();
+        $this->seed(ProductSeeder::class);
 
         $this->get(route('products.index'))
-            ->assertJsonCount(1, 'data')
             ->assertOk();
+    }
 
-        $product->delete();
+    public function test_user_can_not_be_render_dashboard_products()
+    {
+        $this->seed(ProductSeeder::class);
+
+        $user = User::factory()->create();
+        $user->roles()->attach(4);
+        $this->actingAs($user);
+
+        $this->get(route('dashboard.products.index'))
+            ->assertForbidden();
+    }
+
+    public function test_admin_can_be_render_dashboard_products()
+    {
+        $this->seed(ProductSeeder::class);
+
+        $user = User::factory()->create();
+        $user->roles()->attach(1);
+        $this->actingAs($user);
+
+        $this->get(route('dashboard.products.index'))
+            ->assertOk();
     }
 }

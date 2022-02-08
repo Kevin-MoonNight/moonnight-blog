@@ -1,5 +1,3 @@
 *
 !public/
 !.gitignore
-!test-files
-!test-files/thumbnail.jpg

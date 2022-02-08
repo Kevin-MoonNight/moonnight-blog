@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use App\Repositories\ArticleRepository;
+use App\Repositories\MessageRepository;
+use App\Repositories\ProductRepository;
+use App\Repositories\TagRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -16,6 +19,15 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         $this->app->bind(
             ArticleRepository::class
+        );
+        $this->app->bind(
+            MessageRepository::class
+        );
+        $this->app->bind(
+            TagRepository::class
+        );
+        $this->app->bind(
+            ProductRepository::class
         );
     }
 
@@ -38,6 +50,9 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         return [
             ArticleRepository::class,
+            MessageRepository::class,
+            TagRepository::class,
+            ProductRepository::class
         ];
     }
 }

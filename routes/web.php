@@ -42,7 +42,9 @@ Route::middleware(['verified'])->prefix('/dashboard')->group(function () {
         });
 
         Route::resource('/tags', TagsController::class);
-        Route::resource('/products', ProductsController::class);
+        Route::resource('/products', ProductsController::class)->except('index', 'show');
+        Route::get('/products', [ProductsController::class, 'dashboard'])->name('products.index');
+
         Route::resource('/messages', MessagesController::class)->except('create', 'store');
         Route::resource('/users', UsersController::class)->except('create', 'store');
     });

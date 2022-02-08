@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class StoreProductRequest extends FormRequest
 {
@@ -16,7 +15,7 @@ class StoreProductRequest extends FormRequest
      */
     public function authorize()
     {
-        return Gate::allows('admin', $this->user());
+        return true;
     }
 
     /**
@@ -28,20 +27,16 @@ class StoreProductRequest extends FormRequest
     {
         return [
             'name' => ['required', 'max:255'],
+            'slug' => ['required', Rule::unique('products', 'slug')],
             'excerpt' => ['required', 'max:255'],
             'thumbnail' => ['required', 'image'],
         ];
     }
 
-    public function messages()
+    protected function prepareForValidation()
     {
-        return [
-            "name.required" => "名稱為必填資料",
-            "name.max" => "名稱字數必須小於255",
-            "excerpt.required" => "摘要為必填資料",
-            "excerpt.max" => "摘要字數必須小於255",
-            "thumbnail.required" => '縮圖為必填資料',
-            "thumbnail.image" => '縮圖為必須為圖片',
-        ];
+        $this->merge([
+            'slug' => Str::slug($this->slug ?: $this->title)
+        ]);
     }
 }
