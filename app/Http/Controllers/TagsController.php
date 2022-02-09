@@ -22,6 +22,15 @@ class TagsController extends Controller
     {
         $tags = $this->tagRepository->getTags($request->all());
 
+        return $tags;
+    }
+
+    public function dashboard(Request $request)
+    {
+        $this->authorize('dashboard', Tag::class);
+
+        $tags = $this->tagRepository->getTags($request->all());
+
         return view('backend.tags', ['tags' => $tags]);
     }
 

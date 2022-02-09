@@ -10,76 +10,73 @@
         link="{{route('dashboard')}}"
     ></nav-item>
 
-    <nav-item
-        name="文章管理"
-        icon="<i class='far fa-newspaper'></i>"
-    >
+    @can('dashboard',\App\Models\Article::class)
         <nav-item
-            name="文章列表"
-            link="{{route('dashboard.articles.index')}}"
-        ></nav-item>
-        <nav-item
-            name="新增文章"
-            link="{{route('dashboard.articles.create')}}"
-        ></nav-item>
-        <nav-item
-            name="草稿"
-            link="{{route('dashboard.articles.draft')}}"
-        ></nav-item>
-        <nav-item
-            name="垃圾桶"
-            link="{{route('dashboard.articles.trashed')}}"
-        ></nav-item>
-    </nav-item>
+            name="文章管理"
+            icon="<i class='far fa-newspaper'></i>"
+        >
+            <nav-item
+                name="文章列表"
+                link="{{route('dashboard.articles.index')}}"
+            ></nav-item>
+            <nav-item
+                name="新增文章"
+                link="{{route('dashboard.articles.create')}}"
+            ></nav-item>
+            <nav-item
+                name="草稿"
+                link="{{route('dashboard.articles.draft')}}"
+            ></nav-item>
+            <nav-item
+                name="垃圾桶"
+                link="{{route('dashboard.articles.trashed')}}"
+            ></nav-item>
+        </nav-item>
+    @endcan
 
-    <nav-item
-        name="標籤管理"
-        icon="<i class='fas fa-tags'></i>"
-    >
+    @can('dashboard',\App\Models\Tag::class)
         <nav-item
-            name="標籤列表"
-            link="{{route('dashboard.tags.index')}}"
-        ></nav-item>
-        <nav-item
-            name="新增標籤"
-            link="{{route('dashboard.tags.create')}}"
-        ></nav-item>
-    </nav-item>
+            name="標籤管理"
+            icon="<i class='fas fa-tags'></i>"
+        >
+            <nav-item
+                name="標籤列表"
+                link="{{route('dashboard.tags.index')}}"
+            ></nav-item>
+            <nav-item
+                name="新增標籤"
+                link="{{route('dashboard.tags.create')}}"
+            ></nav-item>
+        </nav-item>
+    @endcan
 
+    @can('dashboard',\App\Models\Product::class)
+        <nav-item
+            name="作品管理"
+            icon="<i class='fas fa-code'></i>"
+        >
+            <nav-item
+                name="作品列表"
+                link="{{route('dashboard.products.index')}}"
+            ></nav-item>
+            <nav-item
+                name="新增作品"
+                link="{{route('dashboard.products.create')}}"
+            ></nav-item>
+        </nav-item>
+    @endcan
 
-    <nav-item
-        name="作品管理"
-        icon="<i class='fas fa-code'></i>"
-    >
+    @can('viewAny',\App\Models\Message::class)
         <nav-item
-            name="作品列表"
-            link="{{route('dashboard.products.index')}}"
-        ></nav-item>
-        <nav-item
-            name="新增作品"
-            link="{{route('dashboard.products.create')}}"
-        ></nav-item>
-    </nav-item>
-
-    <nav-item
-        name="訊息管理"
-        icon="<i class='far fa-comment-dots'></i>"
-    >
-        <nav-item
-            name="所有訊息"
-            link="{{route('dashboard.messages.index')}}"
-        ></nav-item>
-    </nav-item>
-
-    <nav-item
-        name="會員管理"
-        icon="<i class='fas fa-users'></i>"
-    >
-        <nav-item
-            name="所有會員"
-            link="{{route('dashboard.users.index')}}"
-        ></nav-item>
-    </nav-item>
+            name="訊息管理"
+            icon="<i class='far fa-comment-dots'></i>"
+        >
+            <nav-item
+                name="所有訊息"
+                link="{{route('dashboard.messages.index')}}"
+            ></nav-item>
+        </nav-item>
+    @endcan
 
     <nav-item
         name="返回首頁"

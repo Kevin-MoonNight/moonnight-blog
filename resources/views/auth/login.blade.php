@@ -12,16 +12,6 @@
                         </h6>
                     </div>
 
-                    @if ($errors->any())
-                        <div class="px-3 mb-4">
-                            <ol class="list-disc list-inside">
-                                @foreach ($errors->all() as $error)
-                                    <li class="text-red-500">{{ $error }}</li>
-                                @endforeach
-                            </ol>
-                        </div>
-                    @endif
-
                     <form method="post" action="{{route('login')}}">
                         @csrf
                         <x-form.input
@@ -81,7 +71,7 @@
             </div>
             <div class="flex flex-wrap mt-6">
                 <div class="w-1/2">
-                    <a href="" class="text-blueGray-200">
+                    <a href="{{route('password.request')}}" class="text-blueGray-200">
                         <small>忘記密碼?</small>
                     </a>
                 </div>

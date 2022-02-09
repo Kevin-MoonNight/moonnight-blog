@@ -1,15 +1,15 @@
 <x-layouts.backend-layout
     title="後台"
 >
-    <div class="w-full h-auto bg-white rounded-sm shadow-md">
-        <div class="grid grid-cols-1 gap-5 p-5 w-full h-full md:grid-cols-4">
-            <div class="object-contain col-span-1">
+    <div class="grid grid-cols-3 gap-5 w-full h-auto">
+        <div class="col-span-1 p-5 bg-white rounded-sm shadow-md">
+            <div class="object-contain col-span-1 h-60">
                 <img src="{{auth()->user()->profile_photo_url}}"
                      alt="無法顯示圖片"
                      loading="lazy"
-                     class="w-full h-auto">
+                     class="">
             </div>
-            <div class="col-span-1 md:col-span-2">
+            <div class="">
                 <div class="block mb-2 ml-1 font-bold text-left text-blueGray-600">
                     名稱：{{ auth()->user()->name }}
                 </div>
@@ -20,16 +20,22 @@
                     電子信箱：{{ auth()->user()->email }}
                 </div>
                 <div class="block mb-2 ml-1 font-bold text-left text-blueGray-600">
-                    權限：{{ auth()->user()->is_admin }}
+                    權限：
+                    <ol class="">
+                        @foreach(auth()->user()->roles()->get() as $role)
+                            <li class="list-disc list-inside">{{ $role->name }}</li>
+                        @endforeach
+                    </ol>
                 </div>
             </div>
-            <div class="col-span-1 flex">
-                <a href="{{route('dashboard.users.edit',['user'=>auth()->user()])}}">
+
+            <div class="flex">
+                <a href="{{route('user-profile-information.update')}}">
                     <x-form.button>
                         更新資料
                     </x-form.button>
                 </a>
-                <a href="">
+                <a href="{{route('user-password.update')}}">
                     <x-form.button>
                         更新密碼
                     </x-form.button>

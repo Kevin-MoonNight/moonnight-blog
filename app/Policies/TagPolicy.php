@@ -24,6 +24,11 @@ class TagPolicy
         return false;
     }
 
+    public function dashboard(User $user): bool
+    {
+        return false;
+    }
+
     public function view(User $user, Tag $tag): bool
     {
         return false;
