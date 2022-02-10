@@ -29,14 +29,16 @@
 
                 <hr class="my-4 border-blueGray-300"/>
 
-                <h6 class="text-lg">
-                    {{$article->content}}
-                </h6>
+                <div id="preview">
+                    <preview-markdown
+                        text="{{$article->content}}"
+                    ></preview-markdown>
+                </div>
             </div>
 
             <div class="flex flex-wrap gap-2 mt-20 w-full h-auto">
                 @foreach($article->tags as $tag)
-                    <a href="{{route('articles.index',['tag'=>$tags->slug])}}"></a>
+                    <a href="{{route('articles.index',['tag'=>$tag->slug])}}"></a>
                     <p class="px-3 py-1 text-sm rounded-sm cursor-pointer bg-blueGray-200 hover:bg-blueGray-300">
                         {{ $tag->name }}
                     </p>

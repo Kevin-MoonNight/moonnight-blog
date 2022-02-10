@@ -4,7 +4,6 @@ use App\Http\Controllers\ArticlesController;
 use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\TagsController;
-use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -50,10 +49,6 @@ Route::middleware(['verified'])->group(function () {
             Route::get('/products', [ProductsController::class, 'dashboard'])->name('products.index');
 
             Route::resource('/messages', MessagesController::class)->except('create', 'store');
-
-            Route::middleware(['password.confirm'])->group(function () {
-                Route::resource('/users', UsersController::class)->except('create', 'store');
-            });
         });
     });
 });

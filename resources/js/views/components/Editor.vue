@@ -1,36 +1,63 @@
 <template>
-    <ckeditor :editor="editor" :content="content" @ready="onReady"></ckeditor>
+    <v-md-editor
+        v-model="text"
+        height="500px"
+        :placeholder="placeholder"
+        @copy-code-success="handleCopyCodeSuccess"
+        @upload-image="handleUploadImage"
+        left-toolbar="undo redo clear | h bold italic strikethrough quote | ul ol table hr | link image code emoji| save"
+    ></v-md-editor>
+    <textarea
+        hidden
+        :name="name"
+        v-model="text"
+    ></textarea>
 </template>
 
 <script>
-import DecoupledEditor from "@ckeditor/ckeditor5-build-decoupled-document";
-import {toRefs} from "vue";
+import {ref, toRefs} from "vue";
 
 export default {
     props: {
-        content: {
-            type: String
+        name: {
+            type: String,
+            required: true
+        },
+        placeholder: {
+            type: String,
+            required: true
+        },
+        value: {
+            type: String,
+            required: false
         }
-    },
-    data() {
-        return {
-            editor: DecoupledEditor,
-        };
     },
     setup(props) {
-        const {content} = toRefs(props);
+        const text = ref('');
+        text.value = props.value ? props.value : '';
 
-        function onReady(editor) {
-            // Insert the toolbar before the editable area.
-            editor.ui.getEditableElement().parentElement.insertBefore(
-                editor.ui.view.toolbar.element,
-                editor.ui.getEditableElement()
-            );
-        }
+        const handleCopyCodeSuccess = () => {
+            //todo 新增notice訊息
+        };
+
+        const handleUploadImage = (event, insertImage, files) => {
+            // Get the files and upload them to the file server, then insert the corresponding content into the editor
+            console.log(files);
+
+            // Here is just an example
+            insertImage({
+                url:
+                    'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1269952892,3525182336&fm=26&gp=0.jpg',
+                desc: 'desc',
+                // width: 'auto',
+                // height: 'auto',
+            });
+        };
 
         return {
-            content,
-            onReady
+            text,
+            handleCopyCodeSuccess,
+            handleUploadImage
         }
     }
 }

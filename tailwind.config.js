@@ -9,7 +9,7 @@ module.exports = {
     theme: {
         extend: {
             colors: {
-                blueGray: colors.blueGray,
+                blueGray: colors.slate,
             }
         },
         minHeight: {

@@ -37,18 +37,16 @@
             </x-form.input>
 
             <div class="mt-4 w-full">
-                <x-form.textarea
+                <x-form.markdown-editor
                     name="content"
-                    rows="10"
-                    cols="80"
                     value="{{old('content')}}"
                 >
                     內容
-                </x-form.textarea>
+                </x-form.markdown-editor>
             </div>
 
             <x-form.select
-                name="tags"
+                name="tags[]"
                 multiple
             >
                 標籤

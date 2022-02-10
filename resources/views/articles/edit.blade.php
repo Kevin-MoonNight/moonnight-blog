@@ -38,7 +38,6 @@
                 >
             </div>
 
-
             <x-form.input
                 name="excerpt"
                 value="{{old('excerpt',$article->excerpt)}}"
@@ -47,24 +46,25 @@
             </x-form.input>
 
             <div class="mt-4 w-full">
-                <x-form.textarea
+                <x-form.markdown-editor
                     name="content"
-                    rows="10"
-                    cols="80"
                     value="{{old('content',$article->content)}}"
                 >
                     內容
-                </x-form.textarea>
+                </x-form.markdown-editor>
             </div>
 
             <x-form.select
-                name="tags"
+                name="tags[]"
                 multiple
             >
                 標籤
                 <x-slot name="options">
                     @foreach($tags as $tag)
-                        <option value="{{$tag->id}}">
+                        <option
+                            value="{{$tag->id}}"
+                            {{ (collect(old('tags[]',$oldTags))->contains($tag->id)) ? 'selected': '' }}
+                        >
                             {{ $tag->name }}
                         </option>
                     @endforeach

@@ -54,6 +54,7 @@ class ArticlesController extends Controller
         $article = Article::create($validated);
 
         if (isset($validated['tags'])) {
+            $article->tags()->detach();
             $article->tags()->attach($validated['tags']);
         }
 
@@ -76,7 +77,9 @@ class ArticlesController extends Controller
 
     public function edit(Article $article)
     {
-        return view('articles.edit', ['article' => $article, 'tags' => Tag::all()]);
+        $oldTags = $article->tags()->pluck('tags.id')->toArray();
+
+        return view('articles.edit', ['article' => $article, 'tags' => Tag::all(), 'oldTags' => $oldTags]);
     }
 
     public function update(UpdateArticleRequest $request, Article $article)
@@ -90,6 +93,7 @@ class ArticlesController extends Controller
         $article->update($validated);
 
         if (isset($validated['tags'])) {
+            $article->tags()->detach();
             $article->tags()->attach($validated['tags']);
         }
 
