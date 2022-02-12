@@ -143,12 +143,12 @@ class ArticlesController extends Controller
         return redirect()->route('dashboard.articles.trashed');
     }
 
-    private function saveThumbnail($thumbnail, $article = null)
+    private function saveThumbnail($image, $article = null)
     {
         if (isset($article)) {
             $this->imageService->destroy($article->thumbnail);
         }
 
-        return $this->imageService->create($thumbnail);
+        return $this->imageService->create($image);
     }
 }

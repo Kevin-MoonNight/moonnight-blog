@@ -36,7 +36,7 @@
                     ></x-table.action.restore>
 
                     <x-table.action.delete
-                        link="{{route('dashboard.articles.delete-trashed',['trashed_article'=>$article->slug])}}"
+                        link="{{route('dashboard.articles.force-delete',['trashed_article'=>$article->slug])}}"
                     ></x-table.action.delete>
                 </div>
             </x-table.td>

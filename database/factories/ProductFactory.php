@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Http\Controllers\ImagesController;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Http\UploadedFile;
@@ -36,8 +37,7 @@ class ProductFactory extends Factory
     public function configure()
     {
         return $this->afterCreating(function (Product $product) {
-            $image = UploadedFile::fake()->image('thumbnail.jpg', 100, 100)->size(100);
-            $imagePath = "storage/" . $image->store('thumbnail');
+            $imagePath = (new ImagesController())->create(UploadedFile::fake()->image('thumbnail.jpg', 100, 100)->size(100));
             $product->setAttribute('thumbnail', $imagePath);
             $product->save();
         });

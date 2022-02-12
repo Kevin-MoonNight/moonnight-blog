@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
 class ImagesController extends Controller
@@ -15,16 +14,16 @@ class ImagesController extends Controller
      */
     public function create($image)
     {
-        $imagePath = "storage/" . $image->store('thumbnail');
-
-        $resizeImage = Image::make(public_path($imagePath))->resize(300, null, function ($constraint) {
+        $resizeImage = Image::make($image)->resize(300, null, function ($constraint) {
             $constraint->aspectRatio();
-        });
+        })->encode('jpg', 60)->stream()->detach();
 
-        $resizeImage->save(public_path($imagePath), 60);
-        $resizeImage->save();
+        $imagePath = 'images/' . uniqid(date('YmdHis')) . '_' . preg_replace('/\\.[^.\\s]{3,4}$/', '', $image->getClientOriginalName()) . '.jpg';
 
-        return $imagePath;
+        $s3 = Storage::disk('s3');
+        $s3->put($imagePath, $resizeImage);
+
+        return $s3->url($imagePath);
     }
 
     /**
@@ -32,8 +31,9 @@ class ImagesController extends Controller
      *
      * @return boolean
      */
-    public function destroy($thumbnailPath)
+    public function destroy($imageUrl)
     {
-        return Storage::delete(Str::of($thumbnailPath)->remove('storage/'));
+        $imagePath = parse_url($imageUrl);
+        return Storage::disk('s3')->delete($imagePath);
     }
 }
