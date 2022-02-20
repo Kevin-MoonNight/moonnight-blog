@@ -22,12 +22,12 @@
 </head>
 <body>
 <div id="app">
-    <div class="flex w-full h-screen bg-blueGray-700">
+    <div class="flex w-full h-screen">
         <div class="hidden select-none xl:z-50 xl:h-screen xl:w-1/5 xl:block">
             <x-backend.navigation></x-backend.navigation>
         </div>
 
-        <div class="overflow-y-auto p-5 w-full h-full xl:w-4/5">
+        <div class="overflow-y-auto p-5 w-full h-full xl:w-4/5 min-w-lg bg-blueGray-700">
             <x-backend.user-navigation></x-backend.user-navigation>
             {{$slot}}
         </div>

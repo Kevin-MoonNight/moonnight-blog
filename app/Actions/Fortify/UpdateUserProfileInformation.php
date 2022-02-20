@@ -12,15 +12,15 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     /**
      * Validate and update the given user's profile information.
      *
-     * @param  mixed  $user
-     * @param  array  $input
-     * @return void
+     * @param mixed $user
+     * @param array $input
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update($user, array $input)
     {
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
-
+            'avatar' => ['required', 'string', 'url'],
             'email' => [
                 'required',
                 'string',
@@ -28,7 +28,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 'max:255',
                 Rule::unique('users')->ignore($user->id),
             ],
-        ])->validateWithBag('updateProfileInformation');
+        ])->validate();
 
         if ($input['email'] !== $user->email &&
             $user instanceof MustVerifyEmail) {
@@ -37,15 +37,18 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $user->forceFill([
                 'name' => $input['name'],
                 'email' => $input['email'],
+                'profile_photo_url' => $input['avatar'],
             ])->save();
         }
+
+        return redirect()->route('dashboard');
     }
 
     /**
      * Update the given verified user's profile information.
      *
-     * @param  mixed  $user
-     * @param  array  $input
+     * @param mixed $user
+     * @param array $input
      * @return void
      */
     protected function updateVerifiedUser($user, array $input)

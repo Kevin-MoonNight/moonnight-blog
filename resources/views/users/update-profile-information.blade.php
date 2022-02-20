@@ -9,6 +9,12 @@
         @csrf
         @method('PUT')
         <div class="p-5">
+            <x-form.avatars-selector
+                name="avatar"
+                value="{{auth()->user()->profile_photo_url}}"
+            >
+                頭像
+            </x-form.avatars-selector>
             <x-form.input
                 name="name"
                 value="{{old('name',$user->name)}}"

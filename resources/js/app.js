@@ -10,6 +10,7 @@ import ContactItem from "./views/components/ContactItem";
 import GoogleMaps from "./views/components/GoogleMaps";
 import NavItem from "./views/components/NavItem";
 import DropDown from "./views/components/DropDown";
+import AvatarsSelector from "./views/components/AvatarsSelector";
 
 const app = createApp({});
 app.use(VueLazyLoad);
@@ -21,6 +22,7 @@ app.component('contact-item', ContactItem);
 app.component('google-maps', GoogleMaps);
 app.component('nav-item', NavItem);
 app.component('drop-down', DropDown);
+app.component('avatars-selector', AvatarsSelector);
 app.mount('#app');
 
 import VueMarkdownEditor from '@kangc/v-md-editor/lib/codemirror-editor';
