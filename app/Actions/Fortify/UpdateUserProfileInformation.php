@@ -2,6 +2,7 @@
 
 namespace App\Actions\Fortify;
 
+use App\Http\Controllers\ImagesController;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -19,8 +20,17 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     public function update($user, array $input)
     {
         Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
-            'avatar' => ['required', 'string', 'url'],
+            'name' => [
+                'required',
+                'string',
+                'max:255'
+            ],
+            'avatar' => [
+                'required',
+                'string',
+                'url',
+                Rule::in(ImagesController::getAvatars()->toArray())
+            ],
             'email' => [
                 'required',
                 'string',

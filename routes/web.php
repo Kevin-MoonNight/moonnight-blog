@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArticlesController;
+use App\Http\Controllers\LikesController;
 use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\TagsController;
@@ -17,6 +18,9 @@ Route::get('/products', [ProductsController::class, 'index'])->name('products.in
 
 Route::get('/contact', [MessagesController::class, 'create'])->name('contact');
 Route::post('/messages', [MessagesController::class, 'store'])->name('messages.store');
+
+Route::post('/likes',[LikesController::class,'store'])->name('likes.store');
+Route::delete('/likes/{article}',[LikesController::class,'destroy'])->name('likes.destroy');
 
 Route::middleware(['verified'])->group(function () {
     Route::get('/user/password', function () {
@@ -41,6 +45,8 @@ Route::middleware(['verified'])->group(function () {
                 Route::get('/articles/trashed', [ArticlesController::class, 'trashed'])->name('trashed');
                 Route::get('/articles/restore/{trashed_article}', [ArticlesController::class, 'restore'])->name('restore');
                 Route::delete('/articles/forceDelete/{trashed_article}', [ArticlesController::class, 'forceDelete'])->name('force-delete');
+
+                Route::get('/articles/likes',[LikesController::class,'index'])->name('likes');
             });
 
             Route::resource('/tags', TagsController::class)->except('index', 'show');
