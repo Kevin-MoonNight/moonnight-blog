@@ -19,7 +19,7 @@ class AvatarsSelector extends Component
     {
         $this->name = $name;
         $this->value = $value;
-        $this->avatars = (new ImagesController())->getAvatars();
+        $this->avatars = ImagesController::getAvatars();
     }
 
     /**

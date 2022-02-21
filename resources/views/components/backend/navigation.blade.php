@@ -1,4 +1,4 @@
-<nav class="overflow-y-auto py-8 w-full h-full text-blueGray-200 bg-blueGray-800">
+<nav class="overflow-y-auto py-8 px-5 w-full h-full text-blueGray-200 bg-blueGray-800">
 
     <div class="px-6 py-4 w-full text-indigo-500">
         <p class="text-2xl">MoonNight</p>

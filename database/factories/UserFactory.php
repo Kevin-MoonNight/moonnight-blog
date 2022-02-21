@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Http\Controllers\ImagesController;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -22,14 +23,16 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        $avatars = ImagesController::getAvatars();
+        $avatar = $avatars [array_rand($avatars->toArray())];
         return [
             'name' => $this->faker->name,
-            'username'=> $this->faker->userName,
+            'username' => $this->faker->userName,
             'email' => $this->faker->unique()->safeEmail,
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
-            'profile_photo_url' => $this->faker->imageUrl(300,300,'people')
+            'profile_photo_url' => $avatar
         ];
     }
 }

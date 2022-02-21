@@ -512,6 +512,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
 }
+.mx-6 {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
 .mt-4 {
   margin-top: 1rem;
 }
@@ -595,6 +599,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .-ml-px {
   margin-left: -1px;
+}
+.ml-6 {
+  margin-left: 1.5rem;
 }
 .block {
   display: block;
@@ -931,6 +938,18 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-bg-opacity: 1;
   background-color: rgb(51 65 85 / var(--tw-bg-opacity));
 }
+.bg-red-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(252 165 165 / var(--tw-bg-opacity));
+}
+.bg-red-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(248 113 113 / var(--tw-bg-opacity));
+}
+.bg-green-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(74 222 128 / var(--tw-bg-opacity));
+}
 .bg-opacity-30 {
   --tw-bg-opacity: 0.3;
 }
@@ -1037,6 +1056,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .pb-2 {
   padding-bottom: 0.5rem;
+}
+.pl-6 {
+  padding-left: 1.5rem;
+}
+.pl-4 {
+  padding-left: 1rem;
 }
 .text-left {
   text-align: left;
@@ -1485,6 +1510,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .hover\:pl-1:hover {
   padding-left: 0.25rem;
+}
+
+.hover\:pl-7:hover {
+  padding-left: 1.75rem;
 }
 
 .hover\:text-indigo-500:hover {

@@ -22,14 +22,14 @@ class DatabaseSeeder extends Seeder
             'name' => 'Kevin'
         ]);
 
-        Article::factory(80)->create([
+        Article::factory(50)->create([
             'user_id' => $user->id,
-            'state' => 1
+            'state' => true
         ]);
 
         Tag::factory(20)->create();
-
         Message::factory(20)->create();
         Product::factory(20)->create();
+        User::factory(10)->create();
     }
 }

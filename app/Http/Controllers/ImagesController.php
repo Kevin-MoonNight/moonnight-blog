@@ -7,7 +7,7 @@ use Intervention\Image\Facades\Image;
 
 class ImagesController extends Controller
 {
-    public function getAvatars()
+    public static function getAvatars()
     {
         $s3 = Storage::disk('s3');
         $filePath = $s3->allFiles('/avatars');
