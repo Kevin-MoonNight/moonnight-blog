@@ -8,15 +8,17 @@ use Illuminate\View\Component;
 class ArticlesCard extends Component
 {
     public $article;
+    public $link;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($article)
+    public function __construct($article, $link)
     {
         $this->article = $article;
+        $this->link = $link;
     }
 
     /**

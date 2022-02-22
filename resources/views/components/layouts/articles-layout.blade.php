@@ -1,5 +1,7 @@
 <x-layouts.frontend-layout
-    title="所有文章"
+    :title="$title"
+    :description="$description"
+    :keywords="$keywords"
 >
     <section class="pt-5 bg-blueGray-200 md:py-10">
         <div class="container mx-auto w-full max-w-screen-xl min-h-screen md:px-14">

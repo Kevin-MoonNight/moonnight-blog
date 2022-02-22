@@ -20,7 +20,7 @@ class CreateLikeTest extends TestCase
 
         $article = Article::factory()->create();
 
-        $this->post(route('likes.store'), ['article_id' => $article->id])
+        $this->post(route('likes.store'), ['article_slug' => $article->slug])
             ->assertCreated();
 
         $like = Like::first();

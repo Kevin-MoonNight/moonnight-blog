@@ -7,9 +7,9 @@
     <meta http-equiv="Content-Language" content="zh-TW">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{$getTitle()}}</title>
-    <meta name="description" content="{{$getDescription()}}">
-    <meta name="keywords" content="{{$getKeywords()}}">
+    <title>{{$title}}</title>
+    <meta name="description" content="{{$description}}">
+    <meta name="keywords" content="{{$keywords}}">
     <meta name="author" content="{{env('AUTHOR')}}">
     <meta name="copyright" content="{{env('AUTHOR')}}">
 

@@ -9,7 +9,13 @@
                value="{{app('request')->input('tag')}}"
         />
     @endif
-
+    @if(app('request')->has('author'))
+        <input type="hidden"
+               id="tag"
+               name="tag"
+               value="{{app('request')->input('author')}}"
+        />
+    @endif
     <input type="search"
            id="search"
            name="search"

@@ -25,7 +25,7 @@ class ArticleFactory extends Factory
      */
     public function definition(): array
     {
-        $title = $this->faker->unique()->realText(10);
+        $title = $this->faker->unique()->realText(100);
 
         return [
             'title' => $title,

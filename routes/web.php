@@ -19,9 +19,6 @@ Route::get('/products', [ProductsController::class, 'index'])->name('products.in
 Route::get('/contact', [MessagesController::class, 'create'])->name('contact');
 Route::post('/messages', [MessagesController::class, 'store'])->name('messages.store');
 
-Route::post('/likes',[LikesController::class,'store'])->name('likes.store');
-Route::delete('/likes/{article}',[LikesController::class,'destroy'])->name('likes.destroy');
-
 Route::middleware(['verified'])->group(function () {
     Route::get('/user/password', function () {
         return view('users.update-password', ['user' => auth()->user()]);

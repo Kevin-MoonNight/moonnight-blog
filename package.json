@@ -30,6 +30,7 @@
         "@kangc/v-md-editor": "^2.3.13",
         "@popperjs/core": "^2.10.2",
         "@soerenmartius/vue3-clipboard": "^0.1.2",
+        "async-mutex": "^0.3.2",
         "canvas-nest.js": "^2.0.4",
         "codemirror": "^5.65.1",
         "headroom.js": "^0.12.0",

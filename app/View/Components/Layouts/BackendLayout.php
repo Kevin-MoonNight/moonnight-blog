@@ -6,20 +6,18 @@ use Illuminate\View\Component;
 
 class BackendLayout extends Component
 {
-    public $title;
-    public $description;
-    public $keywords;
+    public string $title, $description, $keywords;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($title = null, $description = null, $keywords = null)
+    public function __construct(string $title = null, string $description = null, string $keywords = null)
     {
-        $this->title = $title;
-        $this->description = $description;
-        $this->keywords = $keywords;
+        $this->title = $title !== null ? $title . '-MoonNight 慕耐程式工作室' : env('APP_NAME');
+        $this->description = $description !== null ? $description : env('APP_DESCRIPTION');
+        $this->keywords = $keywords !== null ? $keywords : env('APP_KEYWORDS');
     }
 
     /**
@@ -30,20 +28,5 @@ class BackendLayout extends Component
     public function render()
     {
         return view('components.layouts.backend-layout');
-    }
-
-    public function getTitle()
-    {
-        return $this->title !== null ? $this->title . '-MoonNight 慕耐程式工作室' : env('APP_NAME');
-    }
-
-    public function getDescription()
-    {
-        return $this->description !== null ? $this->description : env('APP_DESCRIPTION');
-    }
-
-    public function getKeywords()
-    {
-        return $this->keywords !== null ? $this->keywords : env('APP_KEYWORDS');
     }
 }

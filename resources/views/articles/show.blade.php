@@ -1,8 +1,8 @@
 <x-layouts.articles-layout
-    title="{{$article->title}}"
-    description="{{$article->excerpt}}"
+    :title="$article->title"
+    :description="$article->excerpt"
 >
-    <article class="min-h-screen bg-white shadow-md md:rounded-md">
+    <article class="min-h-screen bg-white shadow-md md:rounded">
         <div class="p-8 w-full">
             <div class="flex items-center">
                 <i class="far fa-calendar"></i>
@@ -46,13 +46,16 @@
             </div>
 
             <div class="flex justify-between mt-10">
-                <p class="">
-                    {{ $article->views }} views
-                </p>
-                <a href="{{route('articles.index')}}"
-                   class="font-semibold cursor-pointer text-blueGray-400 hover:text-indigo-500">
-                    回文章列表
-                </a>
+                <div class="flex items-center text-gray-700 select-none">
+                    <i class="fas fa-eye"></i>
+                    <small class="ml-1">
+                        {{ $article->views }}
+                    </small>
+                </div>
+
+                <x-articles.like-button
+                    :article="$article"
+                ></x-articles.like-button>
             </div>
         </div>
     </article>

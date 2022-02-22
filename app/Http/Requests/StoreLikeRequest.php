@@ -25,7 +25,7 @@ class StoreLikeRequest extends FormRequest
     public function rules()
     {
         return [
-            'article_id' => ['required', 'integer', Rule::exists('articles', 'id')]
+            'article_slug' => ['required', Rule::exists('articles', 'slug')]
         ];
     }
 }
