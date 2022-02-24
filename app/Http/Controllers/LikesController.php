@@ -13,9 +13,9 @@ class LikesController extends Controller
     {
         $this->authorize('viewAny', Like::class);
 
-        $articles = Auth::user()->likes()->get();
+        $articles = Auth::user()->likes()->latest()->paginate(10);
 
-        return view('backend.likes', ['articles' => $articles]);
+        return view('articles.likes', ['articles' => $articles]);
     }
 
     public function store(StoreLikeRequest $request)
@@ -25,7 +25,7 @@ class LikesController extends Controller
         $validated = $request->validated();
 
         return Like::create([
-            'article_id' => Article::where('slug',$validated['article_slug'])->first()->id,
+            'article_id' => Article::where('slug', $validated['article_slug'])->first()->id,
             'user_id' => Auth::id()
         ]);
     }

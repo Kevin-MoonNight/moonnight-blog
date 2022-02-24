@@ -4,30 +4,38 @@
 >
     <article class="min-h-screen bg-white shadow-md md:rounded">
         <div class="p-8 w-full">
-            <div class="flex items-center">
-                <i class="far fa-calendar"></i>
-                <p class="ml-3">
-                    {{ $article->author->name . '．' . ($article->created_at) }}
-                </p>
-            </div>
+            <a href="{{route('articles.index',['author'=> $article->author->name])}}"
+               class="flex items-center"
+               title="{{$article->author->name}}"
+            >
+                <img class="mr-4 w-10 h-10 rounded-full" src="{{$article->author->profile_photo_url}}"
+                     alt="Avatar"
+                     loading="lazy"
+                >
+                <div class="text-sm">
+                    <p class="leading-none text-gray-900">{{$article->author->name}}</p>
+                    <p class="text-gray-600">{{$article->created_at}}</p>
+                </div>
+            </a>
+
 
             <div class="mt-5">
-                <h1 class="mb-5 text-4xl">
+                <h1 class="text-4xl font-bold text-gray-900">
                     {{ $article->title }}
                 </h1>
 
-                <div class="mb-5 h-60">
+                <div class="mt-10">
                     <img src="{{asset($article->thumbnail)}}"
-                         class="object-none object-center w-full h-full"
-                         alt="圖片無法載入..."
+                         class="w-full"
+                         alt="Thumbnail"
                     >
                 </div>
 
-                <h2 class="mb-5 text-xl text-blueGray-500">
+                <h2 class="mx-10 mt-10 text-2xl text-gray-700">
                     {{ $article->excerpt }}
                 </h2>
 
-                <hr class="my-4 border-blueGray-300"/>
+                <hr class="my-5 border-blueGray-300"/>
 
                 <div id="preview">
                     <preview-markdown
@@ -36,12 +44,13 @@
                 </div>
             </div>
 
-            <div class="flex flex-wrap gap-2 mt-20 w-full h-auto">
+            <div class="flex flex-wrap gap-2 mt-20">
                 @foreach($article->tags as $tag)
-                    <a href="{{route('articles.index',['tag'=>$tag->slug])}}"></a>
-                    <p class="px-3 py-1 text-sm rounded-sm cursor-pointer bg-blueGray-200 hover:bg-blueGray-300">
-                        {{ $tag->name }}
-                    </p>
+                    <a href="{{route('articles.index',['tag'=>$tag->slug])}}">
+                        <p class="px-3 py-1 text-sm rounded-sm transition duration-100 ease-in-out cursor-pointer bg-blueGray-200 hover:bg-blueGray-300 hover:text-indigo-500">
+                            {{ $tag->name }}
+                        </p>
+                    </a>
                 @endforeach
             </div>
 

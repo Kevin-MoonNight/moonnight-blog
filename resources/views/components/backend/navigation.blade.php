@@ -24,6 +24,10 @@
                 link="{{route('dashboard.articles.create')}}"
             ></nav-item>
             <nav-item
+                name="喜歡列表"
+                link="{{route('dashboard.articles.likes')}}"
+            ></nav-item>
+            <nav-item
                 name="草稿"
                 link="{{route('dashboard.articles.draft')}}"
             ></nav-item>

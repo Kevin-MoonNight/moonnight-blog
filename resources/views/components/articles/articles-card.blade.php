@@ -1,4 +1,4 @@
-<div class="overflow-hidden w-full max-w-full bg-white rounded shadow-md md:flex">
+<div class="overflow-hidden w-full max-w-full bg-white rounded-sm shadow-md md:flex">
     <div
         class="flex-none h-48 text-center bg-cover md:h-auto md:w-56"
         style="background-image: url('{{$article->thumbnail}}')"
