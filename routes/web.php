@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArticlesController;
+use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\LikesController;
 use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\ProductsController;
@@ -44,6 +45,7 @@ Route::middleware(['verified'])->group(function () {
                 Route::delete('/articles/forceDelete/{trashed_article}', [ArticlesController::class, 'forceDelete'])->name('force-delete');
 
                 Route::get('/articles/likes',[LikesController::class,'index'])->name('likes');
+                Route::get('/comments',[CommentsController::class,'index'])->name('comments');
             });
 
             Route::resource('/tags', TagsController::class)->except('index', 'show');

@@ -24,10 +24,7 @@ class LikesController extends Controller
 
         $validated = $request->validated();
 
-        return Like::create([
-            'article_id' => Article::where('slug', $validated['article_slug'])->first()->id,
-            'user_id' => Auth::id()
-        ]);
+        return Like::create($validated);
     }
 
     public function destroy(Article $article)

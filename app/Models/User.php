@@ -77,7 +77,6 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function isAdmin(): bool
     {
-
         return $this->roles()->where('slug', '=', 'administrator')->count() > 0;
     }
 
