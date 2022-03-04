@@ -2,7 +2,7 @@
     :title="$article->title"
     :description="$article->excerpt"
 >
-    <article class="min-h-screen bg-white shadow-md md:rounded">
+    <article class="min-h-screen bg-white shadow-md md:rounded-sm">
         <div class="p-8 w-full">
             <a href="{{route('articles.index',['author'=> $article->author->name])}}"
                class="flex items-center"
@@ -68,4 +68,8 @@
             </div>
         </div>
     </article>
+
+    <livewire:comments.comment-list
+        :article="$article"
+    />
 </x-layouts.articles-layout>

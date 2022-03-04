@@ -47,7 +47,7 @@
 
             <div class="mt-4 w-full">
                 <x-form.markdown-editor
-                    name="content"
+                    :name="'content'"
                     value="{{old('content',$article->content)}}"
                 >
                     內容

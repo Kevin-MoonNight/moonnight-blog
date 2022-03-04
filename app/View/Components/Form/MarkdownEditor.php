@@ -6,14 +6,16 @@ use Illuminate\View\Component;
 
 class MarkdownEditor extends Component
 {
+    public string $name;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(string $name)
     {
-        //
+        $this->name = $name;
     }
 
     /**

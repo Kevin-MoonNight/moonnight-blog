@@ -36,14 +36,12 @@
                 摘要
             </x-form.input>
 
-            <div class="mt-4 w-full">
-                <x-form.markdown-editor
-                    name="content"
-                    value="{{old('content')}}"
-                >
-                    內容
-                </x-form.markdown-editor>
-            </div>
+            <x-form.markdown-editor
+                :name="'content'"
+                value="{{old('content')}}"
+            >
+                內容
+            </x-form.markdown-editor>
 
             <x-form.select
                 name="tags[]"
@@ -59,7 +57,7 @@
                 </x-slot>
             </x-form.select>
 
-            <div class="flex justify-between items-end mt-4 w-full">
+            <div class="flex justify-between items-end w-full">
                 <x-form.select
                     name="state"
                     value="{{old('state',0)}}"

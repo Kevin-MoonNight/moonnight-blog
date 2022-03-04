@@ -25,7 +25,11 @@ class CommentsController extends Controller
 
         $validated = $request->validated();
 
-        return Comment::create($validated);
+        $validated['user_id'] = Auth::id();
+
+        $comment = Comment::create($validated);
+
+        return redirect()->route('articles.show', ['article' => $comment->article->slug]);
     }
 
     public function update(UpdateCommentRequest $request, Comment $comment)
@@ -34,13 +38,19 @@ class CommentsController extends Controller
 
         $validated = $request->validated();
 
-        return $comment->update($validated);
+        $comment->update($validated);
+
+        return redirect()->route('articles.show', ['article' => $comment->article->slug]);
     }
 
     public function destroy(Comment $comment)
     {
         $this->authorize('delete', $comment);
 
-        return $comment->delete();
+        $article = $comment->article;
+
+        $comment->delete();
+
+        return redirect()->route('articles.show', ['article' => $article->slug]);
     }
 }

@@ -19,12 +19,16 @@
 
     <script src="https://kit.fontawesome.com/240a2f8f32.js" crossorigin="anonymous" defer></script>
     <base href="{{ env('APP_URL','https://moonnight.me/') }}" target="_self">
+
+    @livewireStyles
 </head>
 <body>
 <div id="app">
     <x-frontend.navigation></x-frontend.navigation>
     {{$slot}}
     <x-frontend.footer></x-frontend.footer>
+
+    @livewireScripts
 </div>
 </body>
 </html>

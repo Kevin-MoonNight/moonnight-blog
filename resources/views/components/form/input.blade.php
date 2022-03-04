@@ -1,4 +1,4 @@
-<div class="mt-4 w-full">
+<div class="mt-4">
     <x-form.label for="{{$name}}">
         {{$slot}}
     </x-form.label>

@@ -21,7 +21,8 @@ export default {
         liked: {
             required: true
         },
-        articleSlug: {
+        articleId: {
+            type:String,
             required: true
         },
     },
@@ -37,14 +38,14 @@ export default {
 
                 await mutex.runExclusive(async () => {
                     await apiLike({
-                        'article_slug': props.articleSlug
+                        'article_id': props.articleId
                     });
                 });
             } else {
                 count.value--;
 
                 await mutex.runExclusive(async () => {
-                    await apiUnlike(props.articleSlug);
+                    await apiUnlike(props.articleId);
                 });
             }
         }

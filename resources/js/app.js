@@ -12,6 +12,7 @@ import NavItem from "./views/components/NavItem";
 import DropDown from "./views/components/DropDown";
 import AvatarsSelector from "./views/components/AvatarsSelector";
 import LikeButton from "./views/components/LikeButton";
+import LoadingIcon from "./views/components/LoadingIcon";
 
 const app = createApp({});
 app.use(VueLazyLoad);
@@ -25,6 +26,7 @@ app.component('nav-item', NavItem);
 app.component('drop-down', DropDown);
 app.component('avatars-selector', AvatarsSelector);
 app.component('like-button', LikeButton);
+app.component('loading-icon', LoadingIcon);
 app.mount('#app');
 
 import VueMarkdownEditor from '@kangc/v-md-editor/lib/codemirror-editor';

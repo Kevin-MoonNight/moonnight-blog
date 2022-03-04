@@ -1,5 +1,5 @@
 import req from './https';
 
 export const apiLike = (data) => req('post', '/likes', data);
-export const apiUnlike = (articleSlug) => req('delete', '/likes/' + articleSlug);
+export const apiUnlike = (articleId) => req('delete', '/likes/' + articleId);
 
