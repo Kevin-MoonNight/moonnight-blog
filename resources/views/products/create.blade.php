@@ -17,6 +17,13 @@
             </x-form.input>
 
             <x-form.input
+                name="slug"
+                value="{{old('slug')}}"
+            >
+                slug
+            </x-form.input>
+
+            <x-form.input
                 name="excerpt"
                 value="{{old('excerpt')}}"
             >

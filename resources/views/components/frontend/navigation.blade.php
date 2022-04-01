@@ -1,112 +1,84 @@
-<header class="sticky top-0 z-50 bg-white shadow-lg">
-    <nav class="container flex justify-between items-center w-full h-14 rounded-md md:justify-start md:px-14">
-        <a href="{{route('root')}}">
-            <p class="px-4 text-xl">MoonNight</p>
-        </a>
+<div id="nav-app" class="">
+    <navigation>
+        <template v-slot:main>
+            <link-scroll
+                link="{{route('root')}}"
+                current-Link="{{$currentLink}}"
+            >
+                首頁
+            </link-scroll>
+            <link-scroll
+                link="{{route('articles.index')}}"
+                current-Link="{{$currentLink}}"
+            >
+                文章
+            </link-scroll>
+            <link-scroll
+                link="{{route('products.index')}}"
+                current-Link="{{$currentLink}}"
+            >
+                專案作品
+            </link-scroll>
+            <link-scroll
+                link="{{route('contact')}}"
+                current-Link="{{$currentLink}}"
+            >
+                聯絡我們
+            </link-scroll>
+        </template>
 
-        <ul class="hidden md:flex md:items-center">
-            <li>
-                <a href="{{route('root')}}">
-                    <p class="px-3 py-2 ml-3 text-center text-blueGray-800 hover:text-indigo-500">
-                        首頁
-                    </p>
-                </a>
-            </li>
-            <li>
-                <a href="{{route('articles.index')}}">
-                    <p class="px-3 py-2 ml-3 text-center text-blueGray-800 hover:text-indigo-500">
-                        文章
-                    </p>
-                </a>
-            </li>
-            <li>
-                <a href="{{route('products.index')}}">
-                    <p class="px-3 py-2 ml-3 text-center text-blueGray-800 hover:text-indigo-500">
-                        專案作品
-                    </p>
-                </a>
-            </li>
-            <li>
-                <a href="{{route('contact')}}">
-                    <p class="px-3 py-2 ml-3 text-center text-blueGray-800 hover:text-indigo-500">
-                        聯絡我們
-                    </p>
-                </a>
-            </li>
+        <template v-slot:side>
             @guest()
-                <li>
-                    <a href="{{route('login')}}">
-                        <p class="px-3 py-2 ml-3 text-center text-blueGray-800 hover:text-indigo-500">
-                            登入
-                        </p>
-                    </a>
-                </li>
+                <a href="{{route('login')}}"
+                   class="mx-2 font-semibold tracking-wide text-gray-600 transition-all sm:mx-4 hover:text-indigo-500">
+                    登入
+                </a>
+
+                <a href="{{route('register')}}">
+                    <button
+                        class="px-5 py-2 font-semibold tracking-wide text-indigo-500 bg-white rounded-r-full rounded-l-full border border-indigo-500 transition-all outline-none sm:px-8 hover:bg-indigo-500 hover:text-white hover:shadow-indigo">
+                        註冊
+                    </button>
+                </a>
             @endguest
             @auth()
-                <li>
-                    <a href="{{route('dashboard')}}">
-                        <p class="px-3 py-2 ml-3 text-center text-blueGray-800 hover:text-indigo-500">
-                            後台
-                        </p>
-                    </a>
-                </li>
-                <li>
-                    <form method="post" action="{{route('logout')}}">
-                        @csrf
-                        <button
-                            type="submit"
-                            class="px-3 py-2 ml-3 text-center text-blueGray-800 hover:text-indigo-500"
-                        >
-                            登出
-                        </button>
-                    </form>
-                </li>
+                <form method="post" action="{{route('logout')}}">
+                    @csrf
+                    <button
+                        type="submit"
+                        class="mx-2 font-semibold tracking-wide text-gray-600 capitalize transition-all sm:mx-4 hover:text-indigo-500">
+                        登出
+                    </button>
+                </form>
             @endauth
-        </ul>
+        </template>
 
-{{--        <div @click="isOpen = !isOpen" class="px-4 cursor-pointer md:hidden">--}}
-{{--            <div v-if="isOpen">--}}
-{{--                <i class="fas fa-times"></i>--}}
-{{--            </div>--}}
-{{--            <div v-else>--}}
-{{--                <i class="fas fa-bars"></i>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-
-{{--        <transition name="list" class="md:hidden">--}}
-{{--            <div v-show="isOpen" @click="isOpen=false"--}}
-{{--                 class="fixed top-14 w-full h-screen bg-opacity-30 bg-blueGray-700">--}}
-{{--                <ul class="w-full text-center bg-white bg-opacity-80">--}}
-{{--                    <li>--}}
-{{--                        <a href="{{route('root')}}">--}}
-{{--                            <p class="py-4 w-full hover:text-indigo-500">--}}
-{{--                                首頁--}}
-{{--                            </p>--}}
-{{--                        </a>--}}
-{{--                    </li>--}}
-{{--                    <li>--}}
-{{--                        <a href="{{route('articles.index')}}">--}}
-{{--                            <p class="py-4 w-full hover:text-indigo-500">--}}
-{{--                                文章--}}
-{{--                            </p>--}}
-{{--                        </a>--}}
-{{--                    </li>--}}
-{{--                    <li>--}}
-{{--                        <a href="{{route('products.index')}}">--}}
-{{--                            <p class="py-4 w-full hover:text-indigo-500">--}}
-{{--                                專案作品--}}
-{{--                            </p>--}}
-{{--                        </a>--}}
-{{--                    </li>--}}
-{{--                    <li>--}}
-{{--                        <a href="{{route('contact')}}">--}}
-{{--                            <p class="py-4 w-full hover:text-indigo-500">--}}
-{{--                                聯絡我們--}}
-{{--                            </p>--}}
-{{--                        </a>--}}
-{{--                    </li>--}}
-{{--                </ul>--}}
-{{--            </div>--}}
-{{--        </transition>--}}
-    </nav>
-</header>
+        <template v-slot:mobile>
+            <link-scroll-mobile
+                link="{{route('root')}}"
+                current-Link="{{$currentLink}}"
+            >
+                首頁
+            </link-scroll-mobile>
+            <link-scroll-mobile
+                link="{{route('articles.index')}}"
+                current-Link="{{$currentLink}}"
+            >
+                文章
+            </link-scroll-mobile>
+            <link-scroll-mobile
+                link="{{route('products.index')}}"
+                current-Link="{{$currentLink}}"
+            >
+                專案作品
+            </link-scroll-mobile>
+            <link-scroll-mobile
+                link="{{route('contact')}}"
+                current-Link="{{$currentLink}}"
+            >
+                聯絡我們
+            </link-scroll-mobile>
+        </template>
+    </navigation>
+</div>
+<script src="{{ mix('/js/nav/nav.js') }}" defer></script>

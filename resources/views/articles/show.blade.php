@@ -35,9 +35,9 @@
                     {{ $article->excerpt }}
                 </h2>
 
-                <hr class="my-5 border-blueGray-300"/>
+                <hr class="my-5 border-slate-300"/>
 
-                <div id="preview">
+                <div id="markdown-preview">
                     <preview-markdown
                         text="{{$article->content}}"
                     ></preview-markdown>
@@ -47,7 +47,7 @@
             <div class="flex flex-wrap gap-2 mt-20">
                 @foreach($article->tags as $tag)
                     <a href="{{route('articles.index',['tag'=>$tag->slug])}}">
-                        <p class="px-3 py-1 text-sm rounded-sm transition duration-100 ease-in-out cursor-pointer bg-blueGray-200 hover:bg-blueGray-300 hover:text-indigo-500">
+                        <p class="px-3 py-1 text-sm rounded-sm transition duration-100 ease-in-out cursor-pointer bg-slate-200 hover:bg-slate-300 hover:text-indigo-500">
                             {{ $tag->name }}
                         </p>
                     </a>
@@ -73,3 +73,4 @@
         :article="$article"
     />
 </x-layouts.articles-layout>
+<script src="{{ mix('/js/markdown-preview/markdown-preview.js') }}" defer></script>

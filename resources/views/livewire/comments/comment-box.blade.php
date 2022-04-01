@@ -26,7 +26,7 @@
                 <div class="flex items-center">
                     @isset($replyComment)
                         <p wire:click="cancelReply"
-                           class="px-3 py-3 mt-4 mr-3 font-bold text-gray-800 bg-gray-200 rounded transition duration-200 cursor-pointer select-none hover:bg-blueGray-300"
+                           class="px-3 py-3 mt-4 mr-3 font-bold text-gray-800 bg-gray-200 rounded transition duration-200 cursor-pointer select-none hover:bg-slate-300"
                         >
                             取消回覆
                         </p>

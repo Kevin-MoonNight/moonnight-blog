@@ -1,4 +1,4 @@
-<div>
+<div id="contact-app">
     <address class="grid grid-cols-1 gap-5 not-italic md:grid-cols-3">
         <contact-item
             title="電子信箱"
@@ -14,7 +14,6 @@
             <i class="fas fa-phone"></i>
         </contact-item>
 
-
         <contact-item
             title="地址"
             value="{{env('APP_ADDRESS')}}"
@@ -24,4 +23,5 @@
     </address>
     <google-maps></google-maps>
 </div>
+<script src="{{ mix('/js/contact/contact.js') }}" defer></script>
 

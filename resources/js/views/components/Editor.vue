@@ -3,9 +3,8 @@
         v-model="text"
         height="500px"
         :placeholder="placeholder"
-        @copy-code-success="handleCopyCodeSuccess"
         @upload-image="handleUploadImage"
-        left-toolbar="undo redo clear | h bold italic strikethrough quote | ul ol table hr | link image code emoji| save"
+        left-toolbar="undo redo clear | tip todo-list | h bold italic strikethrough quote | ul ol table hr | link image code emoji | save"
     ></v-md-editor>
     <textarea
         hidden
@@ -36,10 +35,6 @@ export default {
         const text = ref('');
         text.value = props.value ? props.value : '';
 
-        const handleCopyCodeSuccess = () => {
-            //todo 新增notice訊息
-        };
-
         const handleUploadImage = (event, insertImage, files) => {
             // Get the files and upload them to the file server, then insert the corresponding content into the editor
             console.log(files);
@@ -56,7 +51,6 @@ export default {
 
         return {
             text,
-            handleCopyCodeSuccess,
             handleUploadImage
         }
     }

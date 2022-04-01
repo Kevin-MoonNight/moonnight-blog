@@ -1,6 +1,6 @@
 <template>
-    <div class="flex justify-center items-center w-full h-auto select-none bg-blueGray-600 sm:h-screen">
-        <div class="py-20 w-full rounded-sm shadow-xl sm:w-auto sm:px-40 bg-blueGray-200">
+    <div class="flex justify-center items-center w-full h-auto select-none bg-slate-600 sm:h-screen">
+        <div class="py-20 w-full rounded-sm shadow-xl sm:w-auto sm:px-40 bg-slate-200">
             <div class="flex flex-col items-center">
                 <h1 class="text-9xl font-bold text-indigo-500">404</h1>
 
@@ -13,7 +13,7 @@
                 </p>
 
                 <button @click="redirectToHome"
-                        class="px-6 py-2 text-sm font-bold text-left text-white uppercase rounded shadow transition-all duration-150 ease-linear outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none">
+                        class="px-6 py-2 text-sm font-bold text-left text-white uppercase rounded shadow transition-all duration-150 ease-linear outline-none bg-slate-800 active:bg-slate-600 hover:shadow-lg focus:outline-none">
                     回到首頁
                 </button>
             </div>

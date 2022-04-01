@@ -8,7 +8,7 @@
         type="file"
         id="{{$name}}"
         name="{{$name}}"
-        class="file:mr-3 file:px-2 file:py-1 file:text-left file:text-white file:uppercase file:rounded file:transition-all file:duration-150 file:ease-linear file:outline-none file:text-md file:bg-blueGray-800 file:active:bg-blueGray-600 file:hover:shadow-lg file:focus:outline-none"
+        class="file:mr-3 file:px-2 file:py-1 file:text-left file:text-white file:uppercase file:rounded file:transition-all file:duration-150 file:ease-linear file:outline-none file:text-md file:bg-slate-800 file:active:bg-slate-600 file:hover:shadow-lg file:focus:outline-none"
     >
 
     @error($name)

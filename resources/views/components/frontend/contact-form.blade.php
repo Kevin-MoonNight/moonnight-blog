@@ -1,4 +1,4 @@
-<div class="w-full break-words rounded-lg shadow-lg bg-blueGray-200">
+<div class="w-full break-words rounded-lg shadow-lg bg-slate-200">
     <form method="post" action="{{route('messages.store')}}"
           class="flex-auto p-5 lg:p-10"
     >

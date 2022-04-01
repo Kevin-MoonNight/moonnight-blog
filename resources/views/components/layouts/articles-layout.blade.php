@@ -3,7 +3,7 @@
     :description="$description"
     :keywords="$keywords"
 >
-    <section class="pt-5 bg-blueGray-200 md:py-10">
+    <section id="articles-app" class="mt-20 bg-gray-100 lg:mt-30 md:py-10">
         <div class="container mx-auto w-full max-w-screen-xl min-h-screen md:px-14">
             <div class="grid grid-cols-3 gap-5 place-items-stretch w-full">
                 <main class="col-span-3 lg:col-span-2">
@@ -20,4 +20,4 @@
         </div>
     </section>
 </x-layouts.frontend-layout>
-
+<script src="{{ mix('/js/articles/articles.js') }}" defer></script>

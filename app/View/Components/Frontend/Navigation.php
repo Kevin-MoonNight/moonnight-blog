@@ -2,10 +2,13 @@
 
 namespace App\View\Components\Frontend;
 
+use Illuminate\Support\Facades\Request;
 use Illuminate\View\Component;
 
 class Navigation extends Component
 {
+    public string $currentLink;
+
     /**
      * Create a new component instance.
      *
@@ -13,7 +16,7 @@ class Navigation extends Component
      */
     public function __construct()
     {
-        //
+        $this->currentLink = Request::url();
     }
 
     /**

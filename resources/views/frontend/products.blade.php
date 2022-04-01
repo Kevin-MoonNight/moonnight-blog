@@ -1,7 +1,7 @@
 <x-layouts.frontend-layout
     title="專案作品"
 >
-    <section class="pt-5 bg-blueGray-200 md:py-10">
+    <section class="pt-5 bg-gray-100 md:py-10">
         <div class="container mx-auto w-full max-w-screen-xl min-h-screen md:px-14">
             <div class="flex flex-wrap content-between px-4 min-h-screen md:px-0">
 

@@ -1,5 +1,5 @@
 <fieldset class="p-3 border-2 border-gray-300 border-solid">
-    <legend class="block ml-1 font-bold text-left uppercase text-md text-blueGray-600">{{$slot}}</legend>
+    <legend class="block ml-1 font-bold text-left uppercase text-md text-slate-600">{{$slot}}</legend>
     <avatars-selector
         :avatars="{{$avatars->toJson()}}"
         name="{{$name}}"
