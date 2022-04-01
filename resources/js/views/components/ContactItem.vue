@@ -5,11 +5,11 @@
          class="px-4 w-full text-center cursor-pointer group">
 
         <div
-            class="inline-flex justify-center items-center p-3 w-12 h-12 bg-white rounded-full shadow-lg text-slate-800">
+            class="inline-flex justify-center items-center p-3 w-12 h-12 text-gray-800 bg-white rounded-full shadow-lg">
             <slot></slot>
         </div>
-        <h5 class="mt-5 text-xl text-white group-hover:text-indigo-500">{{ title }}</h5>
-        <p class="mt-2 mb-4 text-slate-400 group-hover:text-indigo-500">
+        <h5 class="mt-5 text-xl text-gray-600 group-hover:text-indigo-500">{{ title }}</h5>
+        <p class="mt-2 mb-4 text-gray-400 group-hover:text-indigo-500">
             {{ value }}
         </p>
     </div>

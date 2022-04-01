@@ -1,5 +1,5 @@
 <div id="contact-app">
-    <address class="grid grid-cols-1 gap-5 not-italic md:grid-cols-3">
+    <address class="grid grid-cols-3 gap-5 not-italic">
         <contact-item
             title="電子信箱"
             value="{{env('APP_EMAIL')}}"

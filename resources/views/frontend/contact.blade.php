@@ -1,19 +1,11 @@
 <x-layouts.frontend-layout
     title="聯絡我們"
 >
-    <section class="py-20 bg-slate-800">
-        <div class="container px-4 mx-auto md:px-14">
-            <div class="w-full h-full">
-                <div class="mb-20 text-center text">
-                    <h2 class="text-4xl font-medium leading-normal text-white">聯絡我們</h2>
-                    <p class="mt-4 text-lg leading-relaxed text-slate-400">
-                        如果我們收到訊息會盡快向您回復!
-                    </p>
-                </div>
-                <div class="grid grid-cols-1 gap-5 place-items-stretch lg:grid-cols-2">
-                    <x-frontend.contact-infomation></x-frontend.contact-infomation>
-                    <x-frontend.contact-form></x-frontend.contact-form>
-                </div>
+    <section class="py-20 bg-gray-100">
+        <div class="px-8 mx-auto max-w-screen-xl xl:px-16">
+            <div class="grid grid-cols-1 gap-5 place-items-stretch lg:grid-cols-2">
+                <x-frontend.contact-infomation></x-frontend.contact-infomation>
+                <x-frontend.contact-form></x-frontend.contact-form>
             </div>
         </div>
     </section>
