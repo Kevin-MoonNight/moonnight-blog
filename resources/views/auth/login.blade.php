@@ -1,10 +1,10 @@
 <x-layouts.frontend-layout
     title="登入"
 >
-    <div class="flex justify-center items-center min-h-screen bg-gray-800">
+    <div class="flex justify-center items-center min-h-screen bg-gray-100">
         <div class="px-4 py-20 w-full md:w-2/3 lg:w-1/3">
             <div
-                class="mb-6 w-full break-words rounded-lg border-0 shadow-lg bg-gray-200">
+                class="mb-6 w-full break-words rounded-lg border-0 shadow-lg bg-white">
                 <div class="px-6 py-6 mb-0 rounded-t">
                     <div class="mb-3 text-center">
                         <h6 class="text-lg font-bold text-gray-500">
@@ -34,7 +34,7 @@
                                     id="remember"
                                     name="remember"
                                     type="checkbox"
-                                    class="ml-1 w-5 h-5 rounded border-0 transition-all duration-150 ease-linear form-checkbox text-gray-700"
+                                    class="ml-1 w-5 h-5 rounded border-0 transition-all duration-150 ease-linear form-checkbox"
                                 />
                                 <span class="ml-2 text-sm font-semibold text-gray-600">
                                     記得我
@@ -49,10 +49,10 @@
                         </div>
                     </form>
 
-                    <hr class="mt-6 border-b-1 border-gray-300"/>
+                    <hr class="mt-6 border-b-1 border-gray-400"/>
                 </div>
                 <div class="flex-auto px-4 py-10 pt-0 lg:px-10">
-                    <div class="mb-3 font-bold text-center text-gray-400">
+                    <div class="mb-3 font-bold text-center text-gray-500">
                         <small>或使用其他方法登入</small>
                     </div>
 
@@ -71,12 +71,12 @@
             </div>
             <div class="flex flex-wrap mt-6">
                 <div class="w-1/2">
-                    <a href="{{route('password.request')}}" class="text-gray-200">
+                    <a href="{{route('password.request')}}" class="text-gray-600">
                         <small>忘記密碼?</small>
                     </a>
                 </div>
                 <div class="w-1/2 text-right">
-                    <a href="{{route('register')}}" class="text-gray-200">
+                    <a href="{{route('register')}}" class="text-gray-600">
                         <small>建立新帳號</small>
                     </a>
                 </div>

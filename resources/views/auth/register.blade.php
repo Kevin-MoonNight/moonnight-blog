@@ -1,10 +1,10 @@
 <x-layouts.frontend-layout
     title="註冊"
 >
-    <div class="flex justify-center items-center min-h-screen bg-gray-800">
+    <div class="flex justify-center items-center min-h-screen bg-gray-100">
         <div class="px-4 py-20 w-full md:w-2/3 lg:w-1/3">
             <div
-                class="mb-6 w-full break-words rounded-lg border-0 shadow-lg bg-gray-200">
+                class="mb-6 w-full break-words rounded-lg border-0 shadow-lg bg-white">
                 <div class="px-6 py-6 mb-0 rounded-t">
                     <div class="mb-3 text-center">
                         <h6 class="text-lg font-bold text-gray-500">
@@ -54,10 +54,10 @@
                             </x-form.button>
                         </div>
                     </form>
-                    <hr class="mt-6 border-b-1 border-gray-300"/>
+                    <hr class="mt-6 border-b-1 border-gray-400"/>
                 </div>
                 <div class="flex-auto px-4 py-10 pt-0 lg:px-10">
-                    <div class="mb-3 font-bold text-center text-gray-400">
+                    <div class="mb-3 font-bold text-center text-gray-600">
                         <small>或使用其他方法註冊</small>
                     </div>
                     <div class="text-center">

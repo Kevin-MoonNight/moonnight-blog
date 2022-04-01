@@ -165,7 +165,7 @@
 
                 <div class="text-center">
                     <h2 class="text-3xl font-medium leading-normal text-black xl:text-4xl">
-                        與我們的合作案例
+                        與我們合作的案例
                     </h2>
                 </div>
 

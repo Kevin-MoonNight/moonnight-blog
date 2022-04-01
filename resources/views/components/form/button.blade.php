@@ -1,6 +1,6 @@
-<div class="mt-4">
+<div class="mt-8">
     <button type="submit"
-            class="px-6 py-3 font-bold text-left text-white uppercase rounded transition-all duration-150 ease-linear outline-none bg-slate-800 active:bg-slate-600 focus:outline-none">
+            class="px-6 py-3 font-bold text-white bg-indigo-500 rounded-md transition-all outline-none hover:bg-indigo-600">
         {{$slot}}
     </button>
 </div>

@@ -36,7 +36,7 @@
 
                 <a href="{{route('register')}}">
                     <button
-                        class="px-5 py-2 font-semibold tracking-wide text-indigo-500 bg-white rounded-r-full rounded-l-full border border-indigo-500 transition-all outline-none sm:px-8 hover:bg-indigo-500 hover:text-white hover:shadow-indigo">
+                        class="animation-ping px-5 py-2 font-semibold tracking-wide text-indigo-500 bg-white rounded-r-full rounded-l-full border border-indigo-500 transition-all outline-none sm:px-8 hover:bg-indigo-500 hover:text-white hover:shadow-indigo">
                         註冊
                     </button>
                 </a>
