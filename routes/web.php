@@ -15,10 +15,13 @@ Route::get('/', function () {
 Route::get('/articles', [ArticlesController::class, 'index'])->name('articles.index');
 Route::get('/articles/{article}', [ArticlesController::class, 'show'])->name('articles.show');
 
+Route::apiResource('/comments', CommentsController::class)->except('index','show');
+
 Route::get('/products', [ProductsController::class, 'index'])->name('products.index');
 
 Route::get('/contact', [MessagesController::class, 'create'])->name('contact');
 Route::post('/messages', [MessagesController::class, 'store'])->name('messages.store');
+
 
 Route::middleware(['verified'])->group(function () {
     Route::get('/user/password', function () {

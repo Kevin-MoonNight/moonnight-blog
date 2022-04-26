@@ -172,7 +172,7 @@
                 <div class="mx-6 mt-20 md:mx-10 lg:mx-20">
                     <div class="flex items-center py-20 select-none">
                         <carousel
-                            :products="{{\App\Models\Product::all()->take(10)->toJson()}}"
+                            :products="{{\App\Models\Product::latest()->take(10)->get()->toJson()}}"
                         ></carousel>
                     </div>
                     <div class="flex justify-end mt-10">

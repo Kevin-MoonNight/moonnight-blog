@@ -1,14 +1,17 @@
 <template>
-    <div class="sk-grid">
-        <div class="sk-grid-cube"></div>
-        <div class="sk-grid-cube"></div>
-        <div class="sk-grid-cube"></div>
-        <div class="sk-grid-cube"></div>
-        <div class="sk-grid-cube"></div>
-        <div class="sk-grid-cube"></div>
-        <div class="sk-grid-cube"></div>
-        <div class="sk-grid-cube"></div>
-        <div class="sk-grid-cube"></div>
+    <div class="sk-circle">
+        <div class="sk-circle-dot"></div>
+        <div class="sk-circle-dot"></div>
+        <div class="sk-circle-dot"></div>
+        <div class="sk-circle-dot"></div>
+        <div class="sk-circle-dot"></div>
+        <div class="sk-circle-dot"></div>
+        <div class="sk-circle-dot"></div>
+        <div class="sk-circle-dot"></div>
+        <div class="sk-circle-dot"></div>
+        <div class="sk-circle-dot"></div>
+        <div class="sk-circle-dot"></div>
+        <div class="sk-circle-dot"></div>
     </div>
 </template>
 

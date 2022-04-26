@@ -9,8 +9,12 @@ class LikePolicy
 {
     use HandlesAuthorization;
 
-    public function before(?User $user, $ability): ?bool
+    public function before(?User $user, $ability)
     {
+        if (is_null($user)) {
+            return redirect()->guest(route('login'));
+        }
+
         if (optional($user)->isNormalUser()) {
             return true;
         }

@@ -1,5 +1,5 @@
 <form method="GET" action="{{route($link)}}"
-      class="flex justify-center w-full h-12 bg-white rounded-lg border-2 hover:border-gray-800"
+      class="flex justify-center w-full h-12 bg-white rounded-lg border-2 hover:border-indigo-500"
 >
 
     @if(app('request')->has('tag'))

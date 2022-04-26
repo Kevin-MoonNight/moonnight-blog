@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Comments;
+namespace App\Http\Livewire\Articles\Comments;
 
 use App\Models\Article;
 use Livewire\Component;
@@ -16,6 +16,6 @@ class CommentList extends Component
 
     public function render()
     {
-        return view('livewire.comments.comment-list');
+        return view('livewire.articles.comments.comment-list');
     }
 }

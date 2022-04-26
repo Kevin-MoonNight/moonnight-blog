@@ -2,7 +2,7 @@
     :title="$article->title"
     :description="$article->excerpt"
 >
-    <article class="min-h-screen bg-white shadow-md md:rounded-sm">
+    <article class="min-h-screen bg-white md:rounded-sm">
         <div class="p-8 w-full">
             <a href="{{route('articles.index',['author'=> $article->author->name])}}"
                class="flex items-center"
@@ -12,15 +12,14 @@
                      alt="Avatar"
                      loading="lazy"
                 >
-                <div class="text-sm">
+                <div class="text-sm break-words">
                     <p class="leading-none text-gray-900">{{$article->author->name}}</p>
                     <p class="text-gray-600">{{$article->created_at}}</p>
                 </div>
             </a>
 
-
             <div class="mt-5">
-                <h1 class="text-4xl font-bold text-gray-900">
+                <h1 class="text-4xl font-bold text-gray-900 break-words">
                     {{ $article->title }}
                 </h1>
 
@@ -31,7 +30,7 @@
                     >
                 </div>
 
-                <h2 class="mx-10 mt-10 text-2xl text-gray-700">
+                <h2 class="mx-10 mt-10 text-2xl text-gray-700 break-words">
                     {{ $article->excerpt }}
                 </h2>
 
@@ -47,7 +46,7 @@
             <div class="flex flex-wrap gap-2 mt-20">
                 @foreach($article->tags as $tag)
                     <a href="{{route('articles.index',['tag'=>$tag->slug])}}">
-                        <p class="px-3 py-1 text-sm rounded-sm transition duration-100 ease-in-out cursor-pointer bg-slate-200 hover:bg-slate-300 hover:text-indigo-500">
+                        <p class="px-4 py-1 w-auto text-sm bg-gray-200 rounded-sm transition duration-100 ease-in-out cursor-pointer hover:text-white hover:bg-indigo-500">
                             {{ $tag->name }}
                         </p>
                     </a>
@@ -62,14 +61,14 @@
                     </small>
                 </div>
 
-                <x-articles.like-button
+                <livewire:articles.like-button
                     :article="$article"
-                ></x-articles.like-button>
+                />
             </div>
         </div>
     </article>
 
-    <livewire:comments.comment-list
+    <livewire:articles.comments.comment-list
         :article="$article"
     />
 </x-layouts.articles-layout>

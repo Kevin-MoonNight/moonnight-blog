@@ -25,8 +25,6 @@ class CommentsController extends Controller
 
         $validated = $request->validated();
 
-        $validated['user_id'] = Auth::id();
-
         $comment = Comment::create($validated);
 
         return redirect()->route('articles.show', ['article' => $comment->article->slug]);

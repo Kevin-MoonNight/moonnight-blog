@@ -3,8 +3,8 @@
     :description="$description"
     :keywords="$keywords"
 >
-    <section id="articles-app" class="mt-20 bg-gray-100 lg:mt-30 md:py-10">
-        <div class="container mx-auto w-full max-w-screen-xl min-h-screen md:px-14">
+    <section id="articles-app" class="py-10 mt-20 bg-gray-100 lg:mt-30 md:py-20">
+        <div class="container mx-auto w-full max-w-screen-xl min-h-screen md:px-8 lg:px-14">
             <div class="grid grid-cols-3 gap-5 place-items-stretch w-full">
                 <main class="col-span-3 lg:col-span-2">
                     {{$slot}}

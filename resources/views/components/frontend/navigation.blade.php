@@ -81,4 +81,3 @@
         </template>
     </navigation>
 </div>
-<script src="{{ mix('/js/nav/nav.js') }}" defer></script>
