@@ -1,23 +1,17 @@
-<div class="rounded-md shadow-md cursor-pointer bg-slate-800 group">
-    <div class="object-cover relative h-60 bg-white rounded-t-md">
-        <div class="hidden absolute w-full h-full bg-opacity-60 rounded-t-md group-hover:block bg-slate-800">
-            <div class="overflow-y-auto w-full h-full">
-                <p class="p-4 text-white whitespace-normal">
-                    {{ $product->excerpt }}
-                </p>
-            </div>
-        </div>
-
-        <img
-            src="{{asset($product->thumbnail)}}"
-            loading="lazy"
-            alt="{{$product->name}}"
-            class="object-none object-center w-full h-full rounded-t-md"
-        >
+<div class="overflow-hidden bg-white rounded-sm transition duration-300 ease-in-out group hover:shadow-md">
+    <div class="overflow-hidden">
+        <div
+            class="bg-cover transition duration-300 ease-in-out min-h-48 group-hover:scale-125"
+            style="background-image: url('{{ $product->thumbnail }}')"
+        ></div>
     </div>
-    <div class="p-4">
-        <p class="text-slate-200">
+
+    <div class="p-4 bg-white">
+        <h5 class="text-lg font-semibold tracking-wide leading-relaxed text-gray-600">
             {{ $product->name }}
+        </h5>
+        <p class="mt-3 tracking-wide leading-relaxed text-gray-400">
+            {{ $product->excerpt }}
         </p>
     </div>
 </div>

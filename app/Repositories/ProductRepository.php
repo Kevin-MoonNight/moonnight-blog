@@ -16,6 +16,6 @@ class ProductRepository
 
     public function getProducts(array $filters)
     {
-        return $this->product->filter($filters)->latest()->paginate(10)->withQueryString();
+        return $this->product->filter($filters)->latest()->paginate(9)->withQueryString();
     }
 }

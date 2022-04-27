@@ -1,9 +1,8 @@
 <div
     class="overflow-hidden w-full max-w-full bg-white rounded-sm transition duration-300 ease-in-out hover:shadow-lg md:flex">
     <div
-        class="flex-none h-48 text-center bg-cover md:h-auto md:w-56"
+        class="flex-none h-48 bg-cover md:h-auto md:w-56"
         style="background-image: url('{{$article->thumbnail}}')"
-        title="Thumbnail"
     ></div>
 
     <div class="flex flex-col justify-between p-4 w-full leading-normal">
