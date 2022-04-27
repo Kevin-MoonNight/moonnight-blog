@@ -7,6 +7,7 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/articles.js', 'public/js/articles')
     .js('resources/js/markdown-edit.js', 'public/js/markdown-edit')
     .js('resources/js/markdown-preview.js', 'public/js/markdown-preview')
+    .js('resources/js/clipboard.js', 'public/js/clipboard')
     .vue()
     .postCss("resources/css/app.css", "public/css", [
         require('tailwindcss'),

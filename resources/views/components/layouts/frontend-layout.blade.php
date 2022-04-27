@@ -15,11 +15,10 @@
 
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <link rel="shortcut icon" href="{{mix('/images/blogIcon.ico')}}">
-{{--    <script src="{{ mix('/js/app.js') }}" defer></script>--}}
     <script src="{{ mix('/js/nav/nav.js') }}" defer></script>
 
     <script src="https://kit.fontawesome.com/240a2f8f32.js" crossorigin="anonymous" defer></script>
-    <base href="{{ env('APP_URL','https://moonnight.me/') }}" target="_self">
+    <base href="{{ env('APP_URL') }}" target="_self">
 
     <livewire:styles/>
 </head>

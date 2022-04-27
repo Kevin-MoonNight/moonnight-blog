@@ -1,5 +1,7 @@
 <template>
-    <div id="map" class="w-full h-96"></div>
+    <div class="p-5 rounded-sm">
+        <div id="map" class="w-full h-96"></div>
+    </div>
 </template>
 
 <script>
@@ -7,9 +9,15 @@ import {Loader} from "@googlemaps/js-api-loader";
 import {onMounted} from "vue";
 
 export default {
-    setup() {
+    props: {
+        apiKey: {
+            type: String,
+            required: true
+        }
+    },
+    setup(props) {
         const loader = new Loader({
-            apiKey: 'AIzaSyA8y_JaHqspYZIXz34oLJswiT8hOK6a3aM',
+            apiKey: props.apiKey,
             version: "weekly",
             libraries: ["places"],
             language: "zh-TW",

@@ -3,7 +3,7 @@
         class="fixed top-0 z-30 w-full bg-white transition-all"
         :class="(scrollActive ? 'shadow-md pt-0' : 'bg-gray-100 pt-4')"
     >
-        <nav class="grid grid-flow-col px-6 py-3 mx-auto max-w-screen-xl sm:px-8 lg:px-16 sm:py-4">
+        <nav class="grid grid-flow-col px-6 py-4 mx-auto max-w-screen-xl sm:px-8 lg:px-16">
             <div class="flex col-start-1 col-end-2 items-center">
                 <logo></logo>
             </div>
@@ -12,7 +12,7 @@
             </ul>
             <div class="flex col-start-10 col-end-12 justify-end items-center font-medium">
                 <slot name="side"></slot>
-                <div @click="openNav = !openNav" class="cursor-pointer ml-4 lg:hidden">
+                <div @click="openNav = !openNav" class="ml-4 cursor-pointer lg:hidden">
                     <i v-if="openNav" class="fas fa-times"></i>
                     <i v-else class="fas fa-bars"></i>
                 </div>

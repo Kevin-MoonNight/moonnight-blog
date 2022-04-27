@@ -1,10 +1,10 @@
 <?php
 
-namespace App\View\Components\Frontend;
+namespace App\View\Components\Contacts;
 
 use Illuminate\View\Component;
 
-class ContactForm extends Component
+class ContactInformation extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class ContactForm extends Component
      */
     public function render()
     {
-        return view('components.frontend.contact-form');
+        return view('components.contacts.contact-information');
     }
 }

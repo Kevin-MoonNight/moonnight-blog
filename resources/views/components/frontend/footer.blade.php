@@ -1,5 +1,5 @@
 <footer class="bg-gray-800">
-    <div class="px-8 py-8 md:py-16 mx-auto max-w-screen-xl xl:px-16">
+    <div class="px-8 py-8 mx-auto max-w-screen-xl md:py-16 xl:px-16">
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div class="">
                 <h4 class="text-4xl tracking-wide text-white">
@@ -34,32 +34,28 @@
             </div>
             <div class="mt-16 md:mt-0">
                 <div class="grid grid-cols-2 gap-5 justify-items-center">
-                    <address class="not-italic md:justify-self-end">
-                        <span class="block font-bold text-gray-300 uppercase text-md">
+                    <div class="not-italic md:justify-self-end">
+                        <h6 class="block font-bold text-gray-300 uppercase text-md">
                             聯絡資訊
-                        </span>
-                        <ul class="mt-6 space-y-4 list-unstyled">
-                            <li title="{{ env('APP_EMAIL') }}">
-                                <p class="block text-sm font-semibold text-gray-400 cursor-pointer hover:text-indigo-500">
-                                    電子信箱：{{ env('APP_EMAIL') }}
-                                </p>
-                            </li>
-                            <li title="{{ env('APP_PHONE') }}">
-                                <p class="block text-sm font-semibold text-gray-400 cursor-pointer hover:text-indigo-500">
-                                    電話：{{ env('APP_PHONE') }}
-                                </p>
-                            </li>
-                            <li title="{{ env('APP_ADDRESS') }}">
-                                <p class="block text-sm font-semibold text-gray-400 cursor-pointer hover:text-indigo-500">
-                                    地址：{{ env('APP_ADDRESS') }}
-                                </p>
-                            </li>
-                        </ul>
-                    </address>
+                        </h6>
+                        <address class="mt-6 space-y-4 not-italic break-words">
+                            <p class="text-sm font-semibold text-gray-400 transition duration-200 ease-in-out hover:text-indigo-500">
+                                電子信箱：{{ env('APP_EMAIL') }}
+                            </p>
+
+                            <p class="text-sm font-semibold text-gray-400 transition duration-200 ease-in-out hover:text-indigo-500">
+                                電話：{{ env('APP_PHONE') }}
+                            </p>
+
+                            <p class="text-sm font-semibold text-gray-400 transition duration-200 ease-in-out hover:text-indigo-500">
+                                地址：{{ env('APP_ADDRESS') }}
+                            </p>
+                        </address>
+                    </div>
                     <div class="">
-                        <span class="block font-bold text-gray-300 uppercase text-md">
+                        <h6 class="block font-bold text-gray-300 uppercase text-md">
                             所有連結
-                        </span>
+                        </h6>
                         <ul class="mt-6 space-y-4 font-semibold list-unstyled">
                             <li>
                                 <a href="{{route('root','#about')}}" title="關於我們"
