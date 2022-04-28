@@ -17,7 +17,6 @@
             @foreach($articles as $article)
                 <li>
                     <x-articles.articles-card
-                        link="{{route('articles.show',['article'=>$article->slug])}}"
                         :article="$article"
                     ></x-articles.articles-card>
                 </li>

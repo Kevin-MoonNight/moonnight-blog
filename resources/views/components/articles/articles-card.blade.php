@@ -6,7 +6,9 @@
     ></div>
 
     <div class="flex flex-col justify-between p-4 w-full leading-normal">
-        <a href="{{$link}}" class="mb-8 min-h-48" title="{{$article->title}}">
+        <a href="{{route('articles.show',['article'=>$article->slug])}}"
+           class="mb-8 min-h-48"
+           title="{{$article->title}}">
             <h2 class="mb-2 text-xl font-bold text-gray-900 break-words">
                 {{$article->title}}
             </h2>

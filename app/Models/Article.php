@@ -31,10 +31,6 @@ class Article extends Model
         'deleted_at'
     ];
 
-    protected $with = [
-        'tags', 'author'
-    ];
-
     public function scopeFilter($query, array $filters)
     {
         $query->when($filters['search'] ?? false, function ($query, $search) {

@@ -44,7 +44,7 @@ class ArticleRepository
 
     public function getPublishedArticles(array $filters)
     {
-        return $this->article->published()->filter($filters)->latest()->paginate(10)->withQueryString();
+        return $this->article->published()->filter($filters)->with(['author', 'likes'])->latest()->paginate(10)->withQueryString();
     }
 
     public function getDraftArticles(array $filters)

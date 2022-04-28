@@ -69,6 +69,8 @@ class ArticlesController extends Controller
             //更新文章
             $article->save();
 
+            $article->load('comments.replies', 'comments.user');
+
             return view('articles.show', ['article' => $article]);
         } else {
             abort(404);

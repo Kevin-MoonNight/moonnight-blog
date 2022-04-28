@@ -26,8 +26,11 @@ class LikeButton extends Component
 
     private function resetProperty()
     {
-        $this->article->refresh();
-        $this->isLiked = $this->article->likes->contains(Auth::user());
+        if (Auth::check()) {
+            $this->isLiked = $this->article->likes->contains(Auth::user());
+        } else {
+            $this->isLiked = false;
+        }
         $this->count = $this->article->likes->count();
     }
 
@@ -39,6 +42,7 @@ class LikeButton extends Component
             $this->like();
         }
 
+        $this->article->refresh();
         $this->resetProperty();
     }
 

@@ -7,6 +7,8 @@ use Illuminate\View\Component;
 
 class TagsSideBox extends Component
 {
+    public $tags;
+
     /**
      * Create a new component instance.
      *
@@ -14,7 +16,7 @@ class TagsSideBox extends Component
      */
     public function __construct()
     {
-        //
+        $this->tags = Tag::all();
     }
 
     /**
@@ -24,7 +26,7 @@ class TagsSideBox extends Component
      */
     public function render()
     {
-        return view('components.tags.tags-side-box', ['tags' => Tag::all()]);
+        return view('components.tags.tags-side-box');
     }
 
 

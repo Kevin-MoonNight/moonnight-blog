@@ -8,6 +8,7 @@ use Illuminate\View\Component;
 class PopularArticlesSideBox extends Component
 {
     private ArticleRepository $articleRepository;
+    public $articles;
 
     /**
      * Create a new component instance.
@@ -17,6 +18,7 @@ class PopularArticlesSideBox extends Component
     public function __construct(ArticleRepository $articleRepository)
     {
         $this->articleRepository = $articleRepository;
+        $this->articles = $this->articleRepository->getPopularArticles();
     }
 
     /**
@@ -26,8 +28,6 @@ class PopularArticlesSideBox extends Component
      */
     public function render()
     {
-        $articles = $this->articleRepository->getPopularArticles();
-
-        return view('components.articles.popular-articles-side-box', ['articles' => $articles]);
+        return view('components.articles.popular-articles-side-box');
     }
 }
