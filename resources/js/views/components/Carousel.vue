@@ -29,11 +29,11 @@
                 <div class="flex justify-center">
                     <img
                         :data-src="product.thumbnail"
-                        class="object-contain w-36 h-24 grayscale transition duration-200 delay-75 swiper-lazy group-hover:grayscale-0"
+                        class="object-contain w-36 h-24 grayscale transition duration-200 ease-in-out delay-75 swiper-lazy group-hover:grayscale-0"
                     >
                 </div>
                 <div class="mt-1">
-                    <p class="leading-normal text-center truncate text-gray-400 group-hover:text-black">
+                    <p class="leading-normal text-center text-gray-400 truncate transition duration-200 ease-in-out delay-75 group-hover:text-black">
                         {{ product.name }}
                     </p>
                 </div>
