@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\TagsController;
 use Illuminate\Support\Facades\Route;
 
+
 Route::get('/', function () {
     return view('frontend.index');
 })->name('root');
@@ -15,7 +16,7 @@ Route::get('/', function () {
 Route::get('/articles', [ArticlesController::class, 'index'])->name('articles.index');
 Route::get('/articles/{article}', [ArticlesController::class, 'show'])->name('articles.show');
 
-Route::apiResource('/comments', CommentsController::class)->except('index','show');
+Route::apiResource('/comments', CommentsController::class)->except('index', 'show');
 
 Route::get('/products', [ProductsController::class, 'index'])->name('products.index');
 
@@ -47,8 +48,8 @@ Route::middleware(['verified'])->group(function () {
                 Route::get('/articles/restore/{trashed_article}', [ArticlesController::class, 'restore'])->name('restore');
                 Route::delete('/articles/forceDelete/{trashed_article}', [ArticlesController::class, 'forceDelete'])->name('force-delete');
 
-                Route::get('/articles/likes',[LikesController::class,'index'])->name('likes');
-                Route::get('/comments',[CommentsController::class,'index'])->name('comments');
+                Route::get('/articles/likes', [LikesController::class, 'index'])->name('likes');
+                Route::get('/comments', [CommentsController::class, 'index'])->name('comments');
             });
 
             Route::resource('/tags', TagsController::class)->except('index', 'show');
@@ -61,4 +62,6 @@ Route::middleware(['verified'])->group(function () {
     });
 });
 
-
+Route::fallback(function () {
+    return view('errors.404');
+});
