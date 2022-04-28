@@ -2,19 +2,19 @@
 
 namespace App\View\Components\Articles;
 
-use Carbon\Carbon;
+use App\Models\Article;
 use Illuminate\View\Component;
 
 class ArticlesCard extends Component
 {
-    public $article;
+    public Article $article;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($article)
+    public function __construct(Article $article)
     {
         $this->article = $article;
     }
@@ -27,10 +27,5 @@ class ArticlesCard extends Component
     public function render()
     {
         return view('components.articles.articles-card');
-    }
-
-    public function fromNow($date)
-    {
-        return Carbon::parse($date)->diffForHumans();
     }
 }

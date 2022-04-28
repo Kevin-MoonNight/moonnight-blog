@@ -1,3 +1,5 @@
+@inject('carbon','Illuminate\Support\Carbon')
+
 <x-layouts.articles-layout
     :title="$article->title"
     :description="$article->excerpt"
@@ -14,7 +16,7 @@
                 >
                 <div class="text-sm break-words">
                     <p class="leading-none text-gray-900">{{$article->author->name}}</p>
-                    <p class="text-gray-600">{{$article->created_at}}</p>
+                    <p class="text-gray-600">{{ $carbon->parse($article->created_at)->toFormattedDateString() }}</p>
                 </div>
             </a>
 

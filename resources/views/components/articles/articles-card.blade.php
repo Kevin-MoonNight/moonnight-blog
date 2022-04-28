@@ -1,3 +1,5 @@
+@inject('carbon','Illuminate\Support\Carbon')
+
 <div
     class="overflow-hidden w-full max-w-full bg-white rounded-sm transition duration-300 ease-in-out hover:shadow-lg md:flex">
     <div
@@ -28,7 +30,7 @@
                 >
                 <div class="text-sm break-words">
                     <p class="leading-none text-gray-900">{{$article->author->name}}</p>
-                    <p class="text-gray-600">{{$fromNow($article->created_at)}}</p>
+                    <p class="text-gray-600">{{ $carbon->parse($article->created_at)->diffForHumans()}}</p>
                 </div>
             </a>
 
