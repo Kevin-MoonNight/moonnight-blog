@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors')
+
 module.exports = {
     content: [
         "./resources/**/*.blade.php",
@@ -6,6 +8,12 @@ module.exports = {
     ],
     theme: {
         extend: {
+            colors: {
+                danger: colors.rose,
+                primary: "#6366f1",
+                success: colors.green,
+                warning: colors.yellow,
+            },
             minHeight: {
                 table: '36rem',
                 1: '0.25rem',
@@ -50,5 +58,7 @@ module.exports = {
             },
         },
     },
-    plugins: [],
+    plugins: [
+        
+    ],
 }

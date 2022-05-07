@@ -2,10 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Article;
-use App\Models\Product;
-use App\Observers\ArticleObserver;
-use App\Observers\ProductObserver;
+use Filament\Facades\Filament;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -17,7 +14,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        Filament::serving(function () {
+            Filament::registerNavigationGroups([
+                'Blog',
+                'Business',
+                'Setting',
+            ]);
 
+            Filament::registerTheme(mix('css/backend.css'));
+        });
     }
 
     /**
@@ -27,7 +32,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Article::observe(ArticleObserver::class);
-        Product::observe(ProductObserver::class);
+
     }
 }

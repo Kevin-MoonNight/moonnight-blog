@@ -3,6 +3,7 @@
 namespace App\View\Components\Homes;
 
 use App\Models\Product;
+use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class Products extends Component
@@ -14,12 +15,7 @@ class Products extends Component
         $this->products = Product::latest()->take(15)->get()->toJson();
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     *
-     * @return \Illuminate\Contracts\View\View|\Closure|string
-     */
-    public function render()
+    public function render(): View
     {
         return view('components.homes.products');
     }

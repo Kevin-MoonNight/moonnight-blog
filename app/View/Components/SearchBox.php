@@ -2,25 +2,21 @@
 
 namespace App\View\Components;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class SearchBox extends Component
 {
-    public $name;
-    public $link;
+    public string $name;
+    public string $link;
 
-    /**
-     * Create a new component instance.
-     *
-     * @return void
-     */
-    public function __construct($name, $link)
+    public function __construct(string $name, string $link)
     {
         $this->name = $name;
         $this->link = $link;
     }
 
-    public function render()
+    public function render(): View
     {
         return view('components.search-box');
     }

@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Articles;
 
 use App\Models\Article;
 use App\Models\Like;
+use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -83,7 +84,7 @@ class LikeButton extends Component
         ];
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.articles.like-button');
     }

@@ -2,18 +2,21 @@
 
 namespace App\Models;
 
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, FilamentUser, HasAvatar
 {
     use HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
-     *
      * @var array
      */
     protected $fillable = [
@@ -25,8 +28,6 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
-     * The attributes that should be hidden for arrays.
-     *
      * @var array
      */
     protected $hidden = [
@@ -34,7 +35,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'username',
         'email',
         'email_verified_at',
-        'is_admin',
         'password',
         'remember_token',
         'created_at',
@@ -42,8 +42,6 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
-     * The attributes that should be cast to native types.
-     *
      * @var array
      */
     protected $casts = [
@@ -65,7 +63,7 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @return bool
      */
-    public function markEmailAsVerified()
+    public function markEmailAsVerified(): bool
     {
         $this->roles()->attach(4);
 
@@ -74,43 +72,52 @@ class User extends Authenticatable implements MustVerifyEmail
         ])->save();
     }
 
+    public function canAccessFilament(): bool
+    {
+        return Auth::check() && $this->isNormalUser();
+    }
+
+    public function getFilamentAvatarUrl(): ?string
+    {
+        return $this->profile_photo_url;
+    }
 
     public function isAdmin(): bool
     {
-        return $this->roles()->where('slug', '=', 'administrator')->count() > 0;
+        return $this->roles->where('slug', '=', 'administrator')->count() > 0;
     }
 
     public function isAuthor(): bool
     {
-        return $this->roles()->where('slug', '=', 'author')->count() > 0;
+        return $this->roles->where('slug', '=', 'author')->count() > 0;
     }
 
     public function isCustomerService(): bool
     {
-        return $this->roles()->where('slug', '=', 'customer-service')->count() > 0;
+        return $this->roles->where('slug', '=', 'customer-service')->count() > 0;
     }
 
     public function isNormalUser(): bool
     {
-        return $this->roles()->where('slug', '=', 'user')->count() > 0;
+        return $this->hasVerifiedEmail() || $this->roles->where('slug', '=', 'user')->count() > 0;
     }
 
-    public function articles()
+    public function articles(): HasMany
     {
         return $this->hasMany(Article::class);
     }
 
-    public function roles()
+    public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class);
     }
 
-    public function likes()
+    public function likes(): BelongsToMany
     {
         return $this->belongsToMany(Article::class, 'likes');
     }
 
-    public function comments()
+    public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);
     }

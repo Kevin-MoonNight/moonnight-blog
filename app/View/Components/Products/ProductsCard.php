@@ -2,28 +2,20 @@
 
 namespace App\View\Components\Products;
 
+use App\Models\Product;
+use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class ProductsCard extends Component
 {
-    public $product;
+    public Product $product;
 
-    /**
-     * Create a new component instance.
-     *
-     * @return void
-     */
-    public function __construct($product)
+    public function __construct(Product $product)
     {
         $this->product = $product;
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     *
-     * @return \Illuminate\Contracts\View\View|\Closure|string
-     */
-    public function render()
+    public function render(): View
     {
         return view('components.products.products-card');
     }

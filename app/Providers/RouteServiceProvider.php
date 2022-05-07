@@ -49,11 +49,6 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
         });
-
-        //顯式綁定
-        Route::bind('trashed_article', function ($slug) {
-            return (new ArticleRepository())->findTrashed($slug);
-        });
     }
 
     /**

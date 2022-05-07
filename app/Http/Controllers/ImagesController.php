@@ -17,12 +17,7 @@ class ImagesController extends Controller
         });
     }
 
-    /**
-     *
-     * @param $image
-     * @return string
-     */
-    public function create($image)
+    public static function create($image)
     {
         $resizeImage = Image::make($image)->resize(300, null, function ($constraint) {
             $constraint->aspectRatio();
@@ -36,14 +31,16 @@ class ImagesController extends Controller
         return $s3->url($imagePath);
     }
 
-    /**
-     * delete image
-     *
-     * @return boolean
-     */
-    public function destroy($imageUrl)
+    public static function destroy($imageUrl)
     {
         $imagePath = parse_url($imageUrl);
         return Storage::disk('s3')->delete($imagePath);
+    }
+
+    public static function getS3Url(string $path)
+    {
+        $s3 = Storage::disk('s3');
+
+        return $s3->url($path);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\View\Components\Homes;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class ServicesItem extends Component
@@ -15,12 +16,7 @@ class ServicesItem extends Component
         $this->imgLink = $imgLink;
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     *
-     * @return \Illuminate\Contracts\View\View|\Closure|string
-     */
-    public function render()
+    public function render(): View
     {
         return view('components.homes.services-item');
     }

@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Articles\Comments;
 
 use App\Models\Article;
 use App\Models\Comment;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class CommentBox extends Component
@@ -29,7 +30,7 @@ class CommentBox extends Component
         $this->replyComment = null;
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.articles.comments.comment-box');
     }

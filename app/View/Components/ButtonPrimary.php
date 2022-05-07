@@ -2,28 +2,19 @@
 
 namespace App\View\Components;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class ButtonPrimary extends Component
 {
-    public $link;
+    public string $link;
 
-    /**
-     * Create a new component instance.
-     *
-     * @return void
-     */
-    public function __construct($link)
+    public function __construct(string $link)
     {
         $this->link = $link;
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     *
-     * @return \Illuminate\Contracts\View\View|\Closure|string
-     */
-    public function render()
+    public function render(): View
     {
         return view('components.button-primary');
     }

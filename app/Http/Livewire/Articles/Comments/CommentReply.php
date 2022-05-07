@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Articles\Comments;
 
 use App\Models\Comment;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class CommentReply extends Component
@@ -26,7 +27,7 @@ class CommentReply extends Component
         $this->openReplies = false;
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.articles.comments.comment-reply');
     }

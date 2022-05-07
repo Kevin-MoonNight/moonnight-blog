@@ -5,14 +5,19 @@ namespace App\Policies;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Http\RedirectResponse;
 
 class TagPolicy
 {
     use HandlesAuthorization;
 
-    public function before(?User $user, $ability): ?bool
+    public function before(?User $user, $ability): bool|RedirectResponse
     {
-        if (optional($user)->isAdmin() || optional($user)->isAuthor()) {
+        if (is_null($user)) {
+            return redirect()->guest(route('login'));
+        }
+
+        if ($user->isAdmin() || $user->isAuthor()) {
             return true;
         }
 
@@ -20,11 +25,6 @@ class TagPolicy
     }
 
     public function viewAny(User $user): bool
-    {
-        return false;
-    }
-
-    public function dashboard(User $user): bool
     {
         return false;
     }

@@ -4,18 +4,19 @@ namespace App\Policies;
 
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Http\RedirectResponse;
 
 class LikePolicy
 {
     use HandlesAuthorization;
 
-    public function before(?User $user, $ability)
+    public function before(?User $user, $ability): bool|RedirectResponse
     {
         if (is_null($user)) {
             return redirect()->guest(route('login'));
         }
 
-        if (optional($user)->isNormalUser()) {
+        if ($user->isNormalUser()) {
             return true;
         }
 

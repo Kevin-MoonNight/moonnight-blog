@@ -5,14 +5,33 @@ namespace App\Repositories;
 use App\Models\Article;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use \Illuminate\Database\Eloquent\Builder;
 
 class ArticleRepository
 {
-    private Model $article;
+    private Builder $article;
 
     public function __construct()
     {
-        $this->article = app(Article::class);
+        $this->article = Article::query();
+    }
+
+    public static function getUserArticleQuery(User $user): Builder
+    {
+        if ($user->isAdmin()) {
+            return Article::query();
+        }
+
+        return $user->articles()->getQuery();
+    }
+
+    public static function getUserTrashArticleQuery(User $user): Builder
+    {
+        if ($user->isAdmin()) {
+            return Article::onlyTrashed();
+        }
+
+        return $user->articles()->onlyTrashed()->getQuery();
     }
 
     public function getUserPublishedArticles(User $user, array $filters)

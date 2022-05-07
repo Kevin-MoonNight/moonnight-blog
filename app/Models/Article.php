@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Article extends Model
@@ -29,6 +32,10 @@ class Article extends Model
         'created_at',
         'updated_at',
         'deleted_at'
+    ];
+
+    protected $casts = [
+        'state' => 'boolean',
     ];
 
     public function scopeFilter($query, array $filters)
@@ -64,27 +71,27 @@ class Article extends Model
         $query->orderBy('views', 'desc');
     }
 
-    public function getRouteKeyName()
+    public function getRouteKeyName(): string
     {
         return 'slug';
     }
 
-    public function author()
+    public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function tags()
+    public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
     }
 
-    public function likes()
+    public function likes(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'likes');
     }
 
-    public function comments()
+    public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);
     }
