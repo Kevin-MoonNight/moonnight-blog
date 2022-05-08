@@ -5,26 +5,26 @@ namespace App\Policies;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Http\RedirectResponse;
 
 class ProductPolicy
 {
     use HandlesAuthorization;
 
-    public function before(?User $user, $ability): ?bool
+    public function before(?User $user, $ability): bool|RedirectResponse|null
     {
-        if (optional($user)->isAdmin()) {
+        if (is_null($user)) {
+            return redirect()->guest(route('login'));
+        }
+
+        if ($user->isAdmin()) {
             return true;
         }
 
         return null;
     }
 
-    public function viewAny(?User $user): bool
-    {
-        return true;
-    }
-
-    public function dashboard(User $user): bool
+    public function viewAny(User $user): bool
     {
         return false;
     }

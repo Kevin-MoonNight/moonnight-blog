@@ -5,14 +5,19 @@ namespace App\Policies;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Http\RedirectResponse;
 
 class MessagePolicy
 {
     use HandlesAuthorization;
 
-    public function before(?User $user, $ability): ?bool
+    public function before(?User $user, $ability): bool|RedirectResponse|null
     {
-        if (optional($user)->isAdmin() || optional($user)->isCustomerService()) {
+        if (is_null($user)) {
+            return redirect()->guest(route('login'));
+        }
+
+        if ($user->isAdmin() || $user->isCustomerService()) {
             return true;
         }
 
@@ -29,9 +34,9 @@ class MessagePolicy
         return false;
     }
 
-    public function create(?User $user): bool
+    public function create(User $user): bool
     {
-        return true;
+        return false;
     }
 
     public function update(User $user, Message $message): bool

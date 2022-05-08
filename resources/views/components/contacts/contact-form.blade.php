@@ -40,12 +40,9 @@
                 委託類型
                 <x-slot name="options">
                     <option selected disabled value="">請選擇委託類型</option>
-                    <option value="演算法程式開發">演算法程式開發</option>
-                    <option value="電腦應用軟體開發">電腦應用軟體開發</option>
-                    <option value="網站開發">網站開發</option>
-                    <option value="主機託管">主機託管</option>
-                    <option value="網站維護">網站維護</option>
-                    <option value="其他客製化需求">其他客製化需求</option>
+                    @foreach(explode(',', env('APP_SERVICES')) as $service)
+                        <option value="{{$service}}">{{$service}}</option>
+                    @endforeach
                 </x-slot>
             </x-form.select>
 
