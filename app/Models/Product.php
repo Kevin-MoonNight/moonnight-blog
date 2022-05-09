@@ -10,7 +10,6 @@ class Product extends Model
     use HasFactory;
 
     protected $fillable = [
-        'id',
         'name',
         'slug',
         'excerpt',
@@ -18,8 +17,9 @@ class Product extends Model
     ];
 
     protected $hidden = [
+        'id',
         'created_at',
-        'updated_at',
+        'updated_at'
     ];
 
     public function scopeFilter($query, array $filter)

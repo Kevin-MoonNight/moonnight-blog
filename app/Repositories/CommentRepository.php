@@ -8,13 +8,6 @@ use \Illuminate\Database\Eloquent\Builder;
 
 class CommentRepository
 {
-    private Builder $comment;
-
-    public function __construct()
-    {
-        $this->comment = Comment::query();
-    }
-
     public static function getUserCommentQuery(User $user): Builder
     {
         if ($user->isAdmin()) {

@@ -9,11 +9,11 @@ use \Illuminate\Database\Eloquent\Builder;
 
 class ArticleRepository
 {
-    private Builder $article;
+    private Model $article;
 
     public function __construct()
     {
-        $this->article = Article::query();
+        $this->article = app(Article::class);
     }
 
     public static function getUserArticleQuery(User $user): Builder
@@ -34,51 +34,9 @@ class ArticleRepository
         return $user->articles()->onlyTrashed()->getQuery();
     }
 
-    public function getUserPublishedArticles(User $user, array $filters)
-    {
-        if ($user->isAdmin()) {
-            return $this->getPublishedArticles($filters);
-        }
-
-        return $user->articles()->published()->filter($filters)->latest()->paginate(10)->withQueryString();
-    }
-
-    public function getUserDraftArticles(User $user, array $filters)
-    {
-        if ($user->isAdmin()) {
-            return $this->getDraftArticles($filters);
-        }
-
-        return $user->articles()->draft()->filter($filters)->latest()->paginate(10)->withQueryString();
-    }
-
-    public function getUserTrashedArticles(User $user, array $filters)
-    {
-        if ($user->isAdmin()) {
-            return $this->getTrashedArticles($filters);
-        }
-
-        return $user->articles()->onlyTrashed()->filter($filters)->latest()->paginate(10)->withQueryString();
-    }
-
     public function getPublishedArticles(array $filters)
     {
         return $this->article->published()->filter($filters)->with(['author', 'likes'])->latest()->paginate(10)->withQueryString();
-    }
-
-    public function getDraftArticles(array $filters)
-    {
-        return $this->article->draft()->filter($filters)->latest()->paginate(10)->withQueryString();
-    }
-
-    public function getTrashedArticles(array $filters)
-    {
-        return $this->article->onlyTrashed()->filter($filters)->latest()->paginate(10)->withQueryString();
-    }
-
-    public function findTrashed($slug)
-    {
-        return $this->article->onlyTrashed()->where('slug', $slug)->firstOrFail();
     }
 
     public function getPopularArticles()

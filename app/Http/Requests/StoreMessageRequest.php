@@ -11,7 +11,7 @@ class StoreMessageRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -26,7 +26,7 @@ class StoreMessageRequest extends FormRequest
         return [
             'name' => ['required', 'max:255'],
             'email' => ['required', 'email', 'max:255'],
-            'message' => ['max:500'],
+            'message' => [],
             'type' => ['required']
         ];
     }

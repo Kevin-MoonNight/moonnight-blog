@@ -18,6 +18,12 @@ class Comment extends Model
         'parent_id'
     ];
 
+    protected $hidden = [
+        'id',
+        'created_at',
+        'updated_at',
+    ];
+
     public function article(): BelongsTo
     {
         return $this->belongsTo(Article::class);

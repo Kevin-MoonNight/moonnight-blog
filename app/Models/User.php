@@ -16,9 +16,6 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
 {
     use HasFactory, Notifiable;
 
-    /**
-     * @var array
-     */
     protected $fillable = [
         'name',
         'username',
@@ -27,9 +24,6 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
         'profile_photo_url',
     ];
 
-    /**
-     * @var array
-     */
     protected $hidden = [
         'id',
         'username',
@@ -41,22 +35,9 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
         'updated_at'
     ];
 
-    /**
-     * @var array
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    public function scopeFilter($query, array $filters)
-    {
-        $query->when($filters['search'] ?? false, function ($query, $search) {
-            $query->where(function ($query) use ($search) {
-                $query->where('name', 'like', '%' . $search . '%')
-                    ->orWhere('username', 'like', '%' . $search . '%');
-            });
-        });
-    }
 
     /**
      * Mark the given user's email as verified.
