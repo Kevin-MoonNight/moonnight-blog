@@ -5,6 +5,7 @@ namespace App\Filament\Resources\ArticleResource\Pages;
 use App\Filament\Resources\ArticleResource;
 use App\Http\Controllers\ImagesController;
 use Filament\Resources\Pages\EditRecord;
+use Illuminate\Support\Str;
 
 class EditArticle extends EditRecord
 {
@@ -12,6 +13,8 @@ class EditArticle extends EditRecord
 
     protected function mutateFormDataBeforeSave(array $data): array
     {
+        $data['slug'] = Str::slug($data['slug']);
+
         $oldPath = reset($data['thumbnail']);
 
         //determine has new thumbnail or not

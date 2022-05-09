@@ -18,7 +18,7 @@ class CreateArticle extends CreateRecord
 
         $data['slug'] = Str::slug($data['slug']);
 
-        $data['thumbnail'] = ImagesController::getS3Url(reset($data['thumbnail']));
+        $data['thumbnail'] = ImagesController::getS3Url(end($data['thumbnail']));
 
         return $data;
     }
