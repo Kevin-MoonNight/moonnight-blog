@@ -7,7 +7,6 @@ use App\Models\User;
 use Auth;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\Card;
-use Filament\Forms\Components\Group;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -45,7 +44,7 @@ class Profile extends Page implements HasForms
     {
         return [
             ButtonAction::make('UpdatePassword')
-                ->url('/'),
+                ->url(route('filament.pages.update-password')),
         ];
     }
 

@@ -50,8 +50,6 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 'profile_photo_url' => $input['profile_photo_url'],
             ])->save();
         }
-
-        return redirect()->to('/dashboard')->with('status', 'success');
     }
 
     /**

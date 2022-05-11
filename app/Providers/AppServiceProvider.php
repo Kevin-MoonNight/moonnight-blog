@@ -2,10 +2,8 @@
 
 namespace App\Providers;
 
-use App\Filament\Pages\Profile;
 use Filament\Facades\Filament;
 use Illuminate\Support\ServiceProvider;
-use Livewire\Livewire;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -34,6 +32,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Livewire::component(Profile::getName(), Profile::class);
+
     }
 }
