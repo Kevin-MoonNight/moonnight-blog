@@ -2,6 +2,8 @@ const colors = require('tailwindcss/colors')
 
 module.exports = {
     content: [
+        "./resources/**/avatar-selector.js",
+        "./resources/**/AvatarSelector.vue",
         "./resources/**/*.blade.php",
         './vendor/filament/**/*.blade.php',
     ],

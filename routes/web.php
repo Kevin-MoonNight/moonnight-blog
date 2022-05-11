@@ -17,15 +17,9 @@ Route::get('/products', [ProductsController::class, 'index'])->name('products.in
 Route::get('/contact', [MessagesController::class, 'create'])->name('contact');
 Route::post('/messages', [MessagesController::class, 'store'])->name('messages.store');
 
-//Route::middleware(['verified'])->group(function () {
 //    Route::get('/user/password', function () {
 //        return view('users.update-password', ['user' => auth()->user()]);
 //    });
-//
-//    Route::get('user/profile-information', function () {
-//        return view('users.update-profile-information', ['user' => auth()->user()]);
-//    });
-//});
 
 Route::redirect('dashboard/login', '/login', 301);
 

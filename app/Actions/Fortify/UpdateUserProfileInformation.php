@@ -25,7 +25,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 'string',
                 'max:255'
             ],
-            'avatar' => [
+            'profile_photo_url' => [
                 'required',
                 'string',
                 'url',
@@ -47,11 +47,11 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $user->forceFill([
                 'name' => $input['name'],
                 'email' => $input['email'],
-                'profile_photo_url' => $input['avatar'],
+                'profile_photo_url' => $input['profile_photo_url'],
             ])->save();
         }
 
-        return redirect()->route('dashboard');
+        return redirect()->to('/dashboard')->with('status', 'success');
     }
 
     /**
