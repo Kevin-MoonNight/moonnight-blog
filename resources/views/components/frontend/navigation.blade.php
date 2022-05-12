@@ -42,6 +42,10 @@
                 </a>
             @endguest
             @auth()
+                <a href="{{route('filament.pages.dashboard')}}"
+                   class="mx-2 font-semibold tracking-wide text-gray-600 transition-all sm:mx-4 hover:text-indigo-500">
+                    後台
+                </a>
                 <form method="post" action="{{route('logout')}}">
                     @csrf
                     <button

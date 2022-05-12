@@ -38,11 +38,6 @@ class CreateRolesTable extends Migration
                     'name' => '筆者',
                     'slug' => 'author',
                     'description' => '擁有寫文章的權限'
-                ],
-                [
-                    'name' => '使用者',
-                    'slug' => 'user',
-                    'description' => '普通使用者'
                 ]
             )
         );

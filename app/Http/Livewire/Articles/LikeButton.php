@@ -37,6 +37,14 @@ class LikeButton extends Component
 
     public function buttonClick()
     {
+        if (!Auth::check()) {
+            return redirect()->guest(route('login'));
+        }
+
+        if (!Auth::user()->hasVerifiedEmail()) {
+            return redirect()->route('verification.notice');
+        }
+
         if ($this->isLiked) {
             $this->unlike();
         } else {

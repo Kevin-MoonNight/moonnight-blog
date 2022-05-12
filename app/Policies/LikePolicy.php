@@ -2,22 +2,18 @@
 
 namespace App\Policies;
 
+use App\Models\Like;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Illuminate\Http\RedirectResponse;
 
 class LikePolicy
 {
     use HandlesAuthorization;
 
-    public function before(?User $user, $ability): bool|RedirectResponse
+    public function before(?User $user, $ability): bool|null
     {
-        if (is_null($user)) {
-            return redirect()->guest(route('login'));
-        }
-
-        if ($user->isNormalUser()) {
-            return true;
+        if ($user->hasVerifiedEmail()) {
+            return null;
         }
 
         return false;
@@ -28,13 +24,18 @@ class LikePolicy
         return true;
     }
 
+    public function view(User $user, Like $like): bool
+    {
+        return $user->id === $like->user_id;
+    }
+
     public function create(User $user): bool
     {
         return true;
     }
 
-    public function delete(User $user): bool
+    public function delete(User $user, Like $like): bool
     {
-        return true;
+        return $user->id === $like->user_id;
     }
 }

@@ -4,18 +4,13 @@ namespace App\Policies;
 
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Illuminate\Http\RedirectResponse;
 
 class UserPolicy
 {
     use HandlesAuthorization;
 
-    public function before(?User $user, $ability): bool|RedirectResponse|null
+    public function before(?User $user, $ability): bool
     {
-        if (is_null($user)) {
-            return redirect()->guest(route('login'));
-        }
-
         if ($user->isAdmin()) {
             return true;
         }

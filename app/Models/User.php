@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable implements MustVerifyEmail, FilamentUser, HasAvatar
 {
@@ -33,23 +32,9 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
         'updated_at'
     ];
 
-    /**
-     * Mark the given user's email as verified.
-     *
-     * @return bool
-     */
-    public function markEmailAsVerified(): bool
-    {
-        $this->roles()->attach(4);
-
-        return $this->forceFill([
-            'email_verified_at' => $this->freshTimestamp()
-        ])->save();
-    }
-
     public function canAccessFilament(): bool
     {
-        return Auth::check() && $this->isNormalUser();
+        return $this->hasVerifiedEmail();
     }
 
     public function getFilamentAvatarUrl(): ?string
@@ -70,11 +55,6 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
     public function isCustomerService(): bool
     {
         return $this->roles->where('slug', '=', 'customer-service')->count() > 0;
-    }
-
-    public function isNormalUser(): bool
-    {
-        return $this->hasVerifiedEmail() || $this->roles->where('slug', '=', 'user')->count() > 0;
     }
 
     public function articles(): HasMany

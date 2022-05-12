@@ -5,18 +5,13 @@ namespace App\Policies;
 use App\Models\Article;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Illuminate\Http\RedirectResponse;
 
 class ArticlePolicy
 {
     use HandlesAuthorization;
 
-    public function before(?User $user, $ability): bool|RedirectResponse|null
+    public function before(?User $user, $ability): bool|null
     {
-        if (is_null($user)) {
-            return redirect()->guest(route('login'));
-        }
-
         if ($user->isAdmin()) {
             return true;
         }
@@ -49,6 +44,16 @@ class ArticlePolicy
     }
 
     public function delete(User $user, Article $article): bool
+    {
+        return $user->id === $article->user_id;
+    }
+
+    public function restore(User $user, Article $article): bool
+    {
+        return $user->id === $article->user_id;
+    }
+
+    public function forceDelete(User $user, Article $article): bool
     {
         return $user->id === $article->user_id;
     }
