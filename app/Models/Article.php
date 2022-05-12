@@ -27,7 +27,6 @@ class Article extends Model
 
     protected $hidden = [
         'id',
-        'state',
         'created_at',
         'updated_at',
         'deleted_at'

@@ -22,21 +22,15 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
         'email',
         'password',
         'profile_photo_url',
+        'email_verified_at',
     ];
 
     protected $hidden = [
         'id',
-        'username',
-        'email',
-        'email_verified_at',
         'password',
         'remember_token',
         'created_at',
         'updated_at'
-    ];
-
-    protected $casts = [
-        'email_verified_at' => 'datetime',
     ];
 
     /**

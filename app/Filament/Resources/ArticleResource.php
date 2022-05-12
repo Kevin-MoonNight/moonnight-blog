@@ -4,7 +4,6 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ArticleResource\Pages;
 use App\Filament\Resources\ArticleResource\RelationManagers\CommentsRelationManager;
-use App\Filament\Resources\ArticleResource\RelationManagers\TagsRelationManager;
 use App\Models\Article;
 use App\Repositories\ArticleRepository;
 use Closure;
@@ -186,8 +185,8 @@ class ArticleResource extends Resource
         return [
             SelectFilter::make('state')
                 ->options([
-                    false => 'Draft',
                     true => 'Published',
+                    false => 'Draft',
                 ]),
             Filter::make('created_at')
                 ->form([
@@ -222,7 +221,6 @@ class ArticleResource extends Resource
     public static function getRelations(): array
     {
         return [
-            TagsRelationManager::class,
             CommentsRelationManager::class,
         ];
     }

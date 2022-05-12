@@ -27,7 +27,7 @@ class CommentResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema(self::getFormSchema());
+            ->schema(self::getFormSchema(Forms\Components\Card::class));
     }
 
     public static function table(Table $table): Table
@@ -37,29 +37,33 @@ class CommentResource extends Resource
             ->filters(self::getFilter());
     }
 
-    public static function getFormSchema(): array
+    public static function getFormSchema(string $layout = Forms\Components\Grid::class): array
     {
         return [
             Forms\Components\Grid::make([
                 'default' => 1,
                 'xl' => 3,
             ])->schema([
-                Forms\Components\Card::make([
+                $layout::make()->schema([
                     Forms\Components\Textarea::make('comment')
                         ->maxLength(255)
-                        ->required(),
+                        ->required()
+                        ->columnSpan([
+                            'default' => 1,
+                            'xl' => 2,
+                        ]),
                 ])->columnSpan([
                     'default' => 1,
                     'xl' => 2,
                 ]),
-                Forms\Components\Card::make([
+                $layout::make()->schema([
                     Forms\Components\Placeholder::make('created_at')
                         ->label('Created at')
                         ->content(fn(?Comment $record): string => $record ? $record->created_at->diffForHumans() : '-'),
                     Forms\Components\Placeholder::make('updated_at')
                         ->label('Last modified at')
                         ->content(fn(?Comment $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
-                ])->columnSpan(1)
+                ])->columnSpan(1),
             ]),
 
         ];

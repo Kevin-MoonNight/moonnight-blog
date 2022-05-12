@@ -25,7 +25,6 @@ class TrashArticleResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-trash';
     protected static ?string $navigationLabel = 'Trashed Articles';
     protected static ?int $navigationSort = 2;
-    protected static ?string $recordRouteKeyName = 'trashed-articles';
     protected static ?string $pluralLabel = 'Trashed Articles';
     protected static ?string $slug = 'trashed-articles';
 

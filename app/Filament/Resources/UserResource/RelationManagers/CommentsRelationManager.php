@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\ArticleResource\RelationManagers;
+namespace App\Filament\Resources\UserResource\RelationManagers;
 
 use App\Filament\Resources\CommentResource;
 use Filament\Resources\Form;
@@ -12,7 +12,7 @@ class CommentsRelationManager extends HasManyRelationManager
 {
     protected static string $relationship = 'comments';
 
-    protected static ?string $recordTitleAttribute = 'comment';
+    protected static ?string $recordTitleAttribute = 'id';
 
     public static function form(Form $form): Form
     {
@@ -30,11 +30,6 @@ class CommentsRelationManager extends HasManyRelationManager
     protected function canCreate(): bool
     {
         return false;
-    }
-
-    protected function canEdit(Model $record): bool
-    {
-        return true;
     }
 
     protected function canDelete(Model $record): bool

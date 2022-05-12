@@ -19,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
                 'Blog',
                 'Business',
                 'Account',
+                'Administrator'
             ]);
 
             Filament::registerTheme(mix('css/backend.css'));
