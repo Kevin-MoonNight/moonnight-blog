@@ -10,7 +10,7 @@ use Illuminate\View\Component;
 
 class AvatarSelector extends Component
 {
-    public String $name, $default;
+    public ?String $name, $default;
     public Collection $avatars;
 
     public function __construct($name)

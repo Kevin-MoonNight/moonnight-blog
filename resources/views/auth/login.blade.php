@@ -57,15 +57,26 @@
                     </div>
 
                     <div class="text-center">
-                        <button
-                            class="inline-flex items-center px-4 py-2 mr-1 mb-1 text-xs font-normal font-bold uppercase bg-white rounded shadow transition-all duration-150 ease-linear outline-none active:bg-gray-50 text-gray-700 focus:outline-none hover:shadow-md">
-                            <img
-                                src="{{mix('/images/google.svg')}}"
-                                alt="..."
-                                class="mr-1 w-5"
-                            />
-                            Google
-                        </button>
+                        <a href="{{route('auth.google.redirect')}}">
+                            <button
+                                class="inline-flex items-center px-4 py-2 mr-1 mb-1 text-xs font-normal font-bold uppercase bg-white rounded shadow transition-all duration-150 ease-linear outline-none active:bg-gray-50 text-gray-700 focus:outline-none hover:shadow-md">
+                                <img
+                                    src="{{mix('/images/google.svg')}}"
+                                    class="mr-1 w-5"
+                                />
+                                Google
+                            </button>
+                        </a>
+                        <a href="{{route('auth.github.redirect')}}">
+                            <button
+                                class="inline-flex items-center px-4 py-2 mr-1 mb-1 text-xs font-normal font-bold uppercase bg-white rounded shadow transition-all duration-150 ease-linear outline-none active:bg-gray-50 text-gray-700 focus:outline-none hover:shadow-md">
+                                <img
+                                    src="{{mix('/images/github.svg')}}"
+                                    class="mr-1 w-5"
+                                />
+                                GitHub
+                            </button>
+                        </a>
                     </div>
                 </div>
             </div>
