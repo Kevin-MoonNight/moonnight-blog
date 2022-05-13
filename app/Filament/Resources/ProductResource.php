@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductResource\Pages;
+use App\Http\Controllers\ImagesController;
 use App\Models\Product;
 use Closure;
 use Filament\Facades\Filament;
@@ -18,7 +19,6 @@ use Filament\Tables\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Livewire\TemporaryUploadedFile;
-use function Livewire\str;
 
 class ProductResource extends Resource
 {
@@ -93,6 +93,7 @@ class ProductResource extends Resource
                     Forms\Components\Card::make()
                         ->schema([
                             FileUpload::make('thumbnail')
+                                ->helperText('Please wait for the file to be uploaded')
                                 ->required()
                                 ->image()
                                 ->imagePreviewHeight('150')
@@ -100,9 +101,9 @@ class ProductResource extends Resource
                                 ->imageResizeTargetWidth('640')
                                 ->imageResizeTargetHeight('360')
                                 ->disk('s3')
-                                ->directory('images')
+                                ->directory('products')
                                 ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
-                                    return (string)str($file->getClientOriginalName())->prepend(uniqid(date('YmdHis')) . '_');
+                                    return ImagesController::generateRandomFileName();
                                 })->multiple(),
                         ])
                 ])->columns(1)

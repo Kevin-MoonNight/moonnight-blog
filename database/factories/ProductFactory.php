@@ -30,14 +30,14 @@ class ProductFactory extends Factory
             'name' => $name,
             'slug' => Str::slug($name),
             'excerpt' => $this->faker->sentence,
-            'thumbnail' => UploadedFile::fake()->image('thumbnail.jpg', 100, 100)->size(100),
+            'thumbnail' => UploadedFile::fake()->image('thumbnail.jpg'),
         ];
     }
 
     public function configure()
     {
         return $this->afterCreating(function (Product $product) {
-            $imagePath = (new ImagesController())->create(UploadedFile::fake()->image('thumbnail.jpg', 100, 100)->size(100));
+            $imagePath = ImagesController::create(UploadedFile::fake()->image('thumbnail.jpg'));
             $product->setAttribute('thumbnail', $imagePath);
             $product->save();
         });

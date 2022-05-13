@@ -33,7 +33,7 @@ class ArticleFactory extends Factory
             'excerpt' => $this->faker->sentence,
             'content' => $this->faker->realTextBetween(160, 200),
             'views' => $this->faker->numberBetween(100, 500),
-            'thumbnail' => UploadedFile::fake()->image('thumbnail.jpg', 100, 100)->size(100),
+            'thumbnail' => UploadedFile::fake()->image('thumbnail.jpg'),
             'state' => $this->faker->boolean,
             'user_id' => User::factory()
         ];
@@ -42,7 +42,7 @@ class ArticleFactory extends Factory
     public function configure()
     {
         return $this->afterCreating(function (Article $article) {
-            $imagePath = (new ImagesController())->create(UploadedFile::fake()->image('thumbnail.jpg', 100, 100)->size(100));
+            $imagePath = ImagesController::create(UploadedFile::fake()->image('thumbnail.jpg'));
             $article->setAttribute('thumbnail', $imagePath);
             $article->save();
         });

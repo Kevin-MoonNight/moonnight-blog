@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ArticleResource\Pages;
 use App\Filament\Resources\ArticleResource\RelationManagers\CommentsRelationManager;
+use App\Http\Controllers\ImagesController;
 use App\Models\Article;
 use App\Repositories\ArticleRepository;
 use Closure;
@@ -26,7 +27,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Livewire\TemporaryUploadedFile;
-use function Livewire\str;
 
 class ArticleResource extends Resource
 {
@@ -126,6 +126,7 @@ class ArticleResource extends Resource
                     $layout::make()
                         ->schema([
                             FileUpload::make('thumbnail')
+                                ->helperText('Please wait for the file to be uploaded')
                                 ->required()
                                 ->image()
                                 ->imagePreviewHeight('150')
@@ -133,9 +134,9 @@ class ArticleResource extends Resource
                                 ->imageResizeTargetWidth('640')
                                 ->imageResizeTargetHeight('360')
                                 ->disk('s3')
-                                ->directory('images')
+                                ->directory('articles')
                                 ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
-                                    return (string)str($file->getClientOriginalName())->prepend(uniqid(date('YmdHis')) . '_');
+                                    return ImagesController::generateRandomFileName();
                                 })->multiple(),
                             Forms\Components\BelongsToManyMultiSelect::make('tag_id')
                                 ->relationship('tags', 'name')

@@ -2,11 +2,11 @@
 
 namespace App\Mail;
 
+use App\Http\Controllers\ImagesController;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Http;
 use Lang;
 
 class Contacted extends Mailable
@@ -31,9 +31,7 @@ class Contacted extends Mailable
             '我們盡快會有專人向您聯絡!'
         ];
 
-        $response = Http::get('https://api.thecatapi.com/v1/images/search');
-
-        $this->catImage = $response->json()[0]['url'];
+        $this->catImage = ImagesController::getRandomCatImageUrl();
     }
 
     /**
