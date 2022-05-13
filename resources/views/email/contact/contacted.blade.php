@@ -1,12 +1,17 @@
 @component('mail::message')
-# Introduction
+# @lang('Hello')
 
-感謝您註冊慕耐會員
+@foreach ($introLines as $line)
+{{ $line }}
 
-@component('mail::button', ['url' => 'https://moonnight.me'])
-前往網站
+@endforeach
+
+@component('mail::button', ['url' => $actionUrl])
+{{$actionText}}
 @endcomponent
 
-Thanks,<br>
+![可愛貓咪]({{$catImage}})
+
+@lang('Regards'),<br>
 {{ config('app.name') }}
 @endcomponent
