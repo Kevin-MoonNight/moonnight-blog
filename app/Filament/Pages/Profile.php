@@ -32,6 +32,7 @@ class Profile extends Page implements HasForms
 
         $this->form->fill([
             'name' => $this->user->name,
+            'username' => $this->user->username,
             'email' => $this->user->email,
         ]);
 
@@ -61,6 +62,10 @@ class Profile extends Page implements HasForms
             Card::make([
                 TextInput::make('name')
                     ->extraInputAttributes(['name' => 'name'])
+                    ->required(),
+                TextInput::make('username')
+                    ->extraInputAttributes(['name' => 'username'])
+                    ->disabled()
                     ->required(),
                 TextInput::make('email')
                     ->label('Email Address')
