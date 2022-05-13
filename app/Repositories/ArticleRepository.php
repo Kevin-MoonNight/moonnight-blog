@@ -41,6 +41,6 @@ class ArticleRepository
 
     public function getPopularArticles()
     {
-        return $this->article->Popular()->take(10)->get();
+        return $this->article->Published()->Popular()->take(10)->get();
     }
 }
