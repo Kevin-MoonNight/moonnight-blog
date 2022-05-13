@@ -37,7 +37,7 @@ class ProductFactory extends Factory
     public function configure()
     {
         return $this->afterCreating(function (Product $product) {
-            $imagePath = ImagesController::create(UploadedFile::fake()->image('thumbnail.jpg'));
+            $imagePath = ImagesController::create('products', UploadedFile::fake()->image('thumbnail.jpg'));
             $product->setAttribute('thumbnail', $imagePath);
             $product->save();
         });

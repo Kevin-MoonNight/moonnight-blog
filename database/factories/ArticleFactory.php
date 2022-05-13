@@ -27,6 +27,10 @@ class ArticleFactory extends Factory
     {
         $title = $this->faker->unique()->realText(100);
 
+        if (User::count() === 0) {
+            User::factory(10)->create();
+        }
+
         return [
             'title' => $title,
             'slug' => Str::slug($title),
@@ -35,14 +39,14 @@ class ArticleFactory extends Factory
             'views' => $this->faker->numberBetween(100, 500),
             'thumbnail' => UploadedFile::fake()->image('thumbnail.jpg'),
             'state' => $this->faker->boolean,
-            'user_id' => User::factory()
+            'user_id' => User::all()->random()
         ];
     }
 
     public function configure()
     {
         return $this->afterCreating(function (Article $article) {
-            $imagePath = ImagesController::create(UploadedFile::fake()->image('thumbnail.jpg'));
+            $imagePath = ImagesController::create('articles', UploadedFile::fake()->image('thumbnail.jpg'));
             $article->setAttribute('thumbnail', $imagePath);
             $article->save();
         });
