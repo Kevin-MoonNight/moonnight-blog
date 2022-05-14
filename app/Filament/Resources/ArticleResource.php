@@ -12,7 +12,6 @@ use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -59,19 +58,15 @@ class ArticleResource extends Resource
     public static function getFormSchema(string $layout = Forms\Components\Grid::class): array
     {
         return [
-            Grid::make([
+            Forms\Components\Grid::make([
                 'default' => 1,
-                'xl' => 3,
+                'md' => 2,
             ])->schema([
                 $layout::make()
                     ->schema([
                         TextInput::make('title')
                             ->maxLength(255)
-                            ->required()
-                            ->columnSpan([
-                                'default' => 1,
-                                'xl' => 2,
-                            ]),
+                            ->required(),
                         Forms\Components\Group::make([
                             TextInput::make('slug')
                                 ->maxLength(255)
@@ -92,62 +87,54 @@ class ArticleResource extends Resource
                                         }
                                     }
                                 })->inline()
-                        ])->columnSpan([
-                            'default' => 1,
-                            'xl' => 2,
                         ]),
                         Forms\Components\Textarea::make('excerpt')
                             ->maxLength(255)
-                            ->required()
-                            ->columnSpan([
-                                'default' => 1,
-                                'xl' => 2,
-                            ]),
+                            ->required(),
                         Forms\Components\MarkdownEditor::make('content')
                             ->required()
-                            ->columnSpan([
-                                'default' => 1,
-                                'xl' => 2,
-                            ])
-                    ])->columnSpan([
+                            ->fileAttachmentsDisk('s3')
+                            ->fileAttachmentsDirectory('attachments'),
+                    ])
+                    ->columnSpan([
                         'default' => 1,
-                        'xl' => 2,
+                        'md' => 2,
                     ]),
-                Forms\Components\Group::make([
-                    $layout::make()
-                        ->schema([
-                            Forms\Components\Placeholder::make('created_at')
-                                ->label('Created at')
-                                ->content(fn(?Article $record): string => $record ? $record->created_at->diffForHumans() : '-'),
-                            Forms\Components\Placeholder::make('updated_at')
-                                ->label('Last modified at')
-                                ->content(fn(?Article $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
-                        ])->columns(1),
-                    $layout::make()
-                        ->schema([
-                            FileUpload::make('thumbnail')
-                                ->helperText('Please wait for the file to be uploaded')
-                                ->required()
-                                ->image()
-                                ->imagePreviewHeight('150')
-                                ->imageCropAspectRatio('16:9')
-                                ->imageResizeTargetWidth('640')
-                                ->imageResizeTargetHeight('360')
-                                ->disk('s3')
-                                ->directory('articles')
-                                ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
-                                    return ImagesController::generateRandomFileName();
-                                })->multiple(),
-                            Forms\Components\BelongsToManyMultiSelect::make('tag_id')
-                                ->relationship('tags', 'name')
-                                ->preload(),
-                            Forms\Components\Toggle::make('state')
-                                ->required()
-                                ->label('Published')
-                                ->helperText('Every can see this article'),
-                        ])->columns(1)
-                ])
-            ])
+                $layout::make()
+                    ->schema([
+                        FileUpload::make('thumbnail')
+                            ->helperText('Please wait for the file to be uploaded')
+                            ->required()
+                            ->image()
+                            ->imagePreviewHeight('150')
+                            ->imageCropAspectRatio('16:9')
+                            ->imageResizeTargetWidth('640')
+                            ->imageResizeTargetHeight('360')
+                            ->disk('s3')
+                            ->directory('articles')
+                            ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
+                                return ImagesController::generateRandomFileName();
+                            })->multiple(),
+                        Forms\Components\BelongsToManyMultiSelect::make('tag_id')
+                            ->relationship('tags', 'name')
+                            ->preload(),
+                        Forms\Components\Toggle::make('state')
+                            ->required()
+                            ->label('Published')
+                            ->helperText('Every can see this article'),
+                    ])
+                    ->columnSpan(1),
+                $layout::make()
+                    ->schema([
+                        Forms\Components\Placeholder::make('created_at')
+                            ->label('Created at')
+                            ->content(fn(?Article $record): string => $record ? $record->created_at->diffForHumans() : '-'),
+                        Forms\Components\Placeholder::make('updated_at')
+                            ->label('Last modified at')
+                            ->content(fn(?Article $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
+                    ])
+                    ->columnSpan(1),
+            ]),
         ];
     }
 

@@ -1,4 +1,5 @@
 @inject('carbon','Illuminate\Support\Carbon')
+@inject('markdown','\Illuminate\Support\Str')
 
 <x-layouts.articles-layout
     :title="$article->title"
@@ -38,10 +39,8 @@
 
                 <hr class="my-5 border-slate-300"/>
 
-                <div id="markdown-preview">
-                    <preview-markdown
-                        text="{{$article->content}}"
-                    ></preview-markdown>
+                <div id="content" class="prose prose-indigo lg:prose-xl">
+                    {!! $markdown::markdown($article->content) !!}
                 </div>
             </div>
 
@@ -74,4 +73,3 @@
         :article="$article"
     />
 </x-layouts.articles-layout>
-<script src="{{ mix('/js/markdown-preview/markdown-preview.js') }}" defer></script>
