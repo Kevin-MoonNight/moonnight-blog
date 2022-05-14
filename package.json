@@ -26,31 +26,19 @@
         "sass": "^1.43.4",
         "sass-loader": "^11.0.1",
         "tailwindcss": "^3.0.24",
+        "tippy.js": "^6.3.7",
         "vue": "^3.2.21",
         "vue-loader": "^16.8.3"
     },
     "dependencies": {
         "@googlemaps/js-api-loader": "^1.12.9",
         "@kangc/v-md-editor": "^2.3.14",
-        "@popperjs/core": "^2.10.2",
         "@soerenmartius/vue3-clipboard": "^0.1.2",
-        "async-mutex": "^0.3.2",
-        "canvas-nest.js": "^2.0.4",
         "codemirror": "^5.65.1",
-        "headroom.js": "^0.12.0",
         "highlight.js": "^11.4.0",
-        "moment": "^2.29.1",
-        "popper.js": "^1.16.1",
         "postcss-nested": "^5.0.6",
-        "scrollreveal": "^4.0.9",
-        "secure-ls": "^1.2.6",
         "spinkit": "^2.0.1",
         "swiper": "^7.2.0",
-        "vanilla-tilt": "^1.7.2",
-        "vue-router": "^4.0.12",
-        "vue-writer": "^1.2.0",
-        "vue3-lazyload": "^0.2.2-beta",
-        "vuex": "^4.0.2",
-        "vuex-persistedstate": "^4.1.0"
+        "vue-writer": "^1.2.0"
     }
 }
