@@ -2,20 +2,18 @@
 
 namespace App\View\Components\Articles;
 
-use App\Repositories\ArticleRepository;
+use App\Models\Article;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\Component;
 
 class PopularArticlesSideBox extends Component
 {
-    private ArticleRepository $articleRepository;
     public Collection $articles;
 
-    public function __construct(ArticleRepository $articleRepository)
+    public function __construct()
     {
-        $this->articleRepository = $articleRepository;
-        $this->articles = $this->articleRepository->getPopularArticles();
+        $this->articles = Article::published()->Popular()->take(10)->get();
     }
 
     public function render(): View

@@ -15,7 +15,7 @@
 
                 <div class="mt-10">
                     <x-button-primary
-                        :link="'#service'"
+                        :link="'#services'"
                     >
                         查看服務
                     </x-button-primary>

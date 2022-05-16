@@ -197,7 +197,13 @@ class ArticleResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return ArticleRepository::getUserArticleQuery(Auth::user());
+        $user = Auth::user();
+
+        if ($user->isAdmin()) {
+            return Article::query();
+        }
+
+        return $user->articles()->getQuery();
     }
 
     public static function canEdit(Model $record): bool

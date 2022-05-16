@@ -3,21 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
-use App\Repositories\ArticleRepository;
 use Illuminate\Http\Request;
 
 class ArticlesController extends Controller
 {
-    private ArticleRepository $articleRepository;
-
-    public function __construct(ArticleRepository $articleRepository)
-    {
-        $this->articleRepository = $articleRepository;
-    }
-
     public function index(Request $request)
     {
-        $articles = $this->articleRepository->getPublishedArticles($request->all());
+        $articles = Article::published()->filter($request->all())->with(['author', 'likes'])->latest()->paginate(10)->withQueryString();
 
         return view('frontend.articles', ['articles' => $articles]);
     }

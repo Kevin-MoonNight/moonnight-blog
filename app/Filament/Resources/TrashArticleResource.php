@@ -116,7 +116,13 @@ class TrashArticleResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return ArticleRepository::getUserTrashArticleQuery(Auth::user());
+        $user = Auth::user();
+
+        if ($user->isAdmin()) {
+            return Article::onlyTrashed();
+        }
+
+        return $user->articles()->onlyTrashed()->getQuery();
     }
 
     public static function getRelations(): array
