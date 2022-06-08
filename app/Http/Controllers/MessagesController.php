@@ -18,10 +18,13 @@ class MessagesController extends Controller
     {
         $validated = $request->validated();
 
-        Message::create($validated);
-
-        Mail::to($validated['email'])->send(new Contacted());
-
-        return redirect()->route('contact')->with('message', '訊息傳送成功，我們會盡快回覆您!');
+        $domain = last(explode('@', $validated['email']));
+        if ($domain !== "gmail.com") {
+            return redirect()->route('contact')->with('message', '訊息傳送失敗，請使用Gmail帳號!');
+        } else {
+            Message::create($validated);
+            Mail::to($validated['email'])->send(new Contacted());
+            return redirect()->route('contact')->with('message', '訊息傳送成功，我們會盡快回覆您!');
+        }
     }
 }
