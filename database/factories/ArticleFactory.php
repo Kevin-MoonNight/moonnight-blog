@@ -7,6 +7,7 @@ use App\Models\Article;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -36,7 +37,7 @@ class ArticleFactory extends Factory
             'title' => $title,
             'slug' => Str::slug($title),
             'excerpt' => $this->faker->sentence,
-            'content' => $this->faker->realTextBetween(160, 200),
+            'content' => $this->faker->realTextBetween(500, 1000),
             'views' => $this->faker->numberBetween(100, 500),
             'thumbnail' => UploadedFile::fake()->image('thumbnail.jpg'),
             'state' => $this->faker->boolean,
@@ -47,7 +48,7 @@ class ArticleFactory extends Factory
     public function configure()
     {
         return $this->afterCreating(function (Article $article) {
-            $imagePath = ImagesController::create('articles', UploadedFile::fake()->image('thumbnail.jpg'));
+            $imagePath = ImagesController::getRandomCatImageUrl();
             $article->setAttribute('thumbnail', $imagePath);
             $article->save();
         });

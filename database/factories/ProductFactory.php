@@ -6,6 +6,7 @@ use App\Http\Controllers\ImagesController;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
 class ProductFactory extends Factory
@@ -29,7 +30,7 @@ class ProductFactory extends Factory
         return [
             'name' => $name,
             'slug' => Str::slug($name),
-            'excerpt' => $this->faker->sentence,
+            'excerpt' => $this->faker->realTextBetween(),
             'thumbnail' => UploadedFile::fake()->image('thumbnail.jpg'),
         ];
     }
@@ -37,7 +38,7 @@ class ProductFactory extends Factory
     public function configure()
     {
         return $this->afterCreating(function (Product $product) {
-            $imagePath = ImagesController::create('products', UploadedFile::fake()->image('thumbnail.jpg'));
+            $imagePath = ImagesController::getRandomCatImageUrl();
             $product->setAttribute('thumbnail', $imagePath);
             $product->save();
         });
