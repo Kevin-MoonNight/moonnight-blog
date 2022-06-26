@@ -41,16 +41,16 @@ class ImagesController extends Controller
         return uniqid(date('YmdHis'));
     }
 
-    public static function resizeImage(UploadedFile $image)
+    private static function resizeImage(UploadedFile $image)
     {
         return Image::make($image)->resize(640, 360, function ($constraint) {
             $constraint->aspectRatio('16:9');
         })->encode('jpg', 60)->stream()->detach();
     }
 
-    public static function create(string $directory, UploadedFile $image)
+    public static function create(UploadedFile $image, string $directory = null)
     {
-        $imagePath = $directory . '/' . self::generateRandomFileName();
+        $imagePath = $directory ? $directory . '/' : "" . self::generateRandomFileName();
 
         $s3 = Storage::disk('s3');
 
