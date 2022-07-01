@@ -27,15 +27,13 @@ class ArticleFactory extends Factory
      */
     public function definition(): array
     {
-        $title = $this->faker->unique()->realText(100);
-
         if (User::count() === 0) {
             User::factory(10)->create();
         }
 
         return [
-            'title' => $title,
-            'slug' => Str::slug($title),
+            'title' => $this->faker->unique()->realText(100),
+            'slug' => $this->faker->unique()->slug(20),
             'excerpt' => $this->faker->sentence,
             'content' => $this->faker->realTextBetween(500, 1000),
             'views' => $this->faker->numberBetween(100, 500),

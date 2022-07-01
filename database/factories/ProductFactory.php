@@ -25,11 +25,9 @@ class ProductFactory extends Factory
      */
     public function definition()
     {
-        $name = $this->faker->unique()->realText(10);
-
         return [
-            'name' => $name,
-            'slug' => Str::slug($name),
+            'name' => $this->faker->unique()->realText(20),
+            'slug' => $this->faker->unique()->slug(20),
             'excerpt' => $this->faker->realTextBetween(),
             'thumbnail' => UploadedFile::fake()->image('thumbnail.jpg'),
         ];

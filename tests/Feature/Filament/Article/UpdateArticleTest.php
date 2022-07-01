@@ -59,7 +59,6 @@ class UpdateArticleTest extends TestCase
             ->set('data.slug', $newData->slug)
             ->set('data.excerpt', $newData->excerpt)
             ->set('data.content', $newData->content)
-            ->set('data.thumbnail', $newData->thumbnail)
             ->set('data.state', $newData->state)
             ->set('data.user_id', $newData->user_id)
             ->call('save')
@@ -74,11 +73,5 @@ class UpdateArticleTest extends TestCase
             'state' => $newData->state,
             'user_id' => $newData->user_id,
         ]);
-
-        //thumbnail is updated
-        $path = str_replace('/articles', '', $article->thumbnail);
-        Storage::disk('s3')->assertMissing($path);
-        $newPath = str_replace('/storage', '', $article->refresh()->thumbnail);
-        Storage::disk('s3')->assertExists($newPath);
     }
 }
