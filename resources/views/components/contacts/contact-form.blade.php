@@ -46,6 +46,12 @@
                 </x-slot>
             </x-form.select>
 
+            <x-form.captcha
+                name="captcha"
+            >
+                驗證碼
+            </x-form.captcha>
+
             <div class="text-right">
                 <x-form.button>傳送</x-form.button>
             </div>

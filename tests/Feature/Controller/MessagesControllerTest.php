@@ -6,6 +6,7 @@ use App\Mail\Contacted;
 use App\Models\Message;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mail;
+use Tests\CaptchaFake;
 use Tests\TestCase;
 
 class MessagesControllerTest extends TestCase
@@ -24,6 +25,9 @@ class MessagesControllerTest extends TestCase
         $message = Message::factory()->make();
         $message->email = "test@gmail.com";
 
+        $message['captcha'] = "123456";
+        CaptchaFake::fake('123456');
+
         $this->post(route('messages.store'), $message->toArray())
             ->assertRedirect(route('contact'));
 
@@ -34,8 +38,10 @@ class MessagesControllerTest extends TestCase
 
     public function test_message_can_not_created()
     {
-        $this->post(route('messages.store'), [])
-            ->assertInvalid(['name', 'email', 'type']);
+        CaptchaFake::fake('123456');
+
+        $this->post(route('messages.store'), ['captcha' => '654321'])
+            ->assertInvalid(['name', 'email', 'type', 'captcha']);
 
         Mail::assertNothingSent();
     }

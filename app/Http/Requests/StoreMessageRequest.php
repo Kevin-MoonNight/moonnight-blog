@@ -27,7 +27,8 @@ class StoreMessageRequest extends FormRequest
             'name' => ['required', 'max:255'],
             'email' => ['required', 'email', 'max:255'],
             'message' => [],
-            'type' => ['required']
+            'type' => ['required'],
+            'captcha' => ['required', 'captcha'],
         ];
     }
 }
