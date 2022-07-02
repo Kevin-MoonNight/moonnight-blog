@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Article extends Model
@@ -24,25 +27,14 @@ class Article extends Model
 
     protected $hidden = [
         'id',
-        'state',
-        'user_id',
+        'created_at',
         'updated_at',
         'deleted_at'
     ];
 
-    protected $with = [
-        'tags', 'author'
+    protected $casts = [
+        'state' => 'boolean',
     ];
-
-    public function scopePublished($query)
-    {
-        $query->where('state', true);
-    }
-
-    public function scopeDraft($query)
-    {
-        $query->where('state', false);
-    }
 
     public function scopeFilter($query, array $filters)
     {
@@ -62,23 +54,43 @@ class Article extends Model
         });
     }
 
-    public function scopePopular($query)
+    public function scopeDraft($query)
     {
-        return $query->orderBy('views', 'desc');
+        $query->where('state', false);
     }
 
-    public function getRouteKeyName()
+    public function scopePublished($query)
+    {
+        $query->where('state', true);
+    }
+
+    public function scopePopular($query)
+    {
+        $query->orderBy('views', 'desc');
+    }
+
+    public function getRouteKeyName(): string
     {
         return 'slug';
     }
 
-    public function author()
+    public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function tags()
+    public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function likes(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'likes');
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
     }
 }

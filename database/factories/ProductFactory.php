@@ -2,9 +2,12 @@
 
 namespace Database\Factories;
 
+use App\Http\Controllers\ImagesController;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 
 class ProductFactory extends Factory
 {
@@ -22,13 +25,20 @@ class ProductFactory extends Factory
      */
     public function definition()
     {
-        $image = new UploadedFile(storage_path('app/test-files/thumbnail.jpg'), 'thumbnail.jpg', null, null, true);
-        $imagePath = "storage/" . $image->store('thumbnail');
-
         return [
-            'name'=> $this->faker->sentence,
-            'excerpt'=> $this->faker->sentence,
-            'thumbnail'=> $imagePath,
+            'name' => $this->faker->unique()->realText(20),
+            'slug' => $this->faker->unique()->slug(20),
+            'excerpt' => $this->faker->realTextBetween(),
+            'thumbnail' => UploadedFile::fake()->image('thumbnail.jpg'),
         ];
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function (Product $product) {
+            $imagePath = ImagesController::getRandomCatImageUrl();
+            $product->setAttribute('thumbnail', $imagePath);
+            $product->save();
+        });
     }
 }

@@ -1,12 +1,17 @@
 @component('mail::message')
-# Introduction
+# @lang('Hello')
 
-The body of your message.
+@foreach ($introLines as $line)
+{{ $line }}
 
-@component('mail::button', ['url' => ''])
-Button Text
+@endforeach
+
+@component('mail::button', ['url' => $actionUrl])
+{{$actionText}}
 @endcomponent
 
-Thanks,<br>
+![可愛貓咪]({{$catImage}})
+
+@lang('Regards'),<br>
 {{ config('app.name') }}
 @endcomponent

@@ -22,7 +22,7 @@ class TagFactory extends Factory
      */
     public function definition()
     {
-        $name = $this->faker->sentence;
+        $name = $this->faker->unique()->sentence();
 
         return [
             'name'=> $name,

@@ -2,56 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreProductRequest;
-use App\Http\Requests\UpdateProductRequest;
-use App\Models\Product;
+use App\Repositories\ProductRepository;
+use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
-    public function __construct()
+    private ProductRepository $productRepository;
+
+    public function __construct(ProductRepository $productRepository)
     {
-        $this->middleware(['auth:sanctum', 'can:admin'])->except('index');
+        $this->productRepository = $productRepository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return Product::latest()->paginate(10);
-    }
+        $products = $this->productRepository->getProducts($request->all());
 
-    public function store(StoreProductRequest $request)
-    {
-        $validated = $request->validated();
-
-        $validated['thumbnail'] = $this->saveThumbnail($validated['thumbnail']);
-
-        return Product::create($validated);
-    }
-
-    public function show(Product $product)
-    {
-        return $product;
-    }
-
-    public function update(UpdateProductRequest $request, Product $product)
-    {
-        $validated = $request->validated();
-
-        $validated['thumbnail'] = isset($validated['thumbnail']) ? $this->saveThumbnail($validated['thumbnail'], $product) : $product->thumbnail;
-
-        return $product->update($validated);
-    }
-
-    public function destroy(Product $product)
-    {
-        return $product->delete();
-    }
-
-    private function saveThumbnail($thumbnail, $product = null)
-    {
-        if (isset($product)) {
-            (new ImagesController)->destroy($product->thumbnail);
-        }
-
-        return (new ImagesController)->create($thumbnail);
+        return view('frontend.products', ['products' => $products]);
     }
 }

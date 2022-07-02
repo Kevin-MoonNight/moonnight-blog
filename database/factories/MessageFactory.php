@@ -22,10 +22,10 @@ class MessageFactory extends Factory
     public function definition()
     {
         return [
-            'name'=>$this->faker->name,
-            'email'=>$this->faker->email,
-            'remark'=>$this->faker->sentence,
-            'caseType'=>$this->faker->text
+            'name' => $this->faker->name,
+            'email' => $this->faker->email,
+            'message' => $this->faker->sentence,
+            'type' => $this->faker->text
         ];
     }
 }

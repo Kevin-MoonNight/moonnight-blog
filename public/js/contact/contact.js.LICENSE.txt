@@ -1,0 +1,18 @@
+/*!
+  * @soerenmartius/vue3-clipboard v0.1.2
+  * (c) 2021 Soeren Martius
+  * @license MIT
+  */
+
+/*!
+ * clipboard.js v2.0.6
+ * https://clipboardjs.com/
+ * 
+ * Licensed MIT © Zeno Rocha
+ */
+
+/*!
+ * vuex v4.0.2
+ * (c) 2021 Evan You
+ * @license MIT
+ */

@@ -3,43 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreMessageRequest;
-use App\Http\Requests\UpdateMessageRequest;
+use App\Mail\Contacted;
 use App\Models\Message;
-use Illuminate\Http\Request;
+use Mail;
 
 class MessagesController extends Controller
 {
-    public function __construct()
+    public function create()
     {
-        $this->middleware(['auth:sanctum', 'can:admin'])->except('store');
-    }
-
-    public function index(Request $request)
-    {
-        return Message::filter($request->all())->latest()->paginate(10)->withQueryString();
+        return view('frontend.contact');
     }
 
     public function store(StoreMessageRequest $request)
     {
         $validated = $request->validated();
 
-        return Message::Create($validated);
-    }
-
-    public function show(Message $message)
-    {
-        return $message;
-    }
-
-    public function update(UpdateMessageRequest $request, Message $message)
-    {
-        $validated = $request->validated();
-
-        return  $message->update($validated);
-    }
-
-    public function destroy(Message $message)
-    {
-        return $message->delete();
+        $domain = last(explode('@', $validated['email']));
+        if ($domain !== "gmail.com") {
+            return redirect()->route('contact')->with('message', '訊息傳送失敗，請使用Gmail帳號!');
+        } else {
+            Message::create($validated);
+            Mail::to($validated['email'])->send(new Contacted());
+            return redirect()->route('contact')->with('message', '訊息傳送成功，我們會盡快回覆您!');
+        }
     }
 }

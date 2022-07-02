@@ -2,67 +2,78 @@
 
 namespace App\Models;
 
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail, FilamentUser, HasAvatar
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'name',
         'username',
         'email',
         'password',
         'profile_photo_url',
+        'email_verified_at',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'id',
-        'username',
-        'email',
-        'email_verified_at',
-        'is_admin',
         'password',
         'remember_token',
         'created_at',
         'updated_at'
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
-    public function scopeFilter($query, array $filters)
+    public function canAccessFilament(): bool
     {
-        $query->when($filters['search'] ?? false, function ($query, $search) {
-            $query->where(function ($query) use ($search) {
-                $query->where('name', 'like', '%' . $search . '%')
-                    ->orWhere('username', 'like', '%' . $search . '%');
-            });
-        });
+        return $this->hasVerifiedEmail();
     }
 
-    public function articles()
+    public function getFilamentAvatarUrl(): ?string
+    {
+        return $this->profile_photo_url;
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->roles->where('slug', '=', 'administrator')->count() > 0;
+    }
+
+    public function isAuthor(): bool
+    {
+        return $this->roles->where('slug', '=', 'author')->count() > 0;
+    }
+
+    public function isCustomerService(): bool
+    {
+        return $this->roles->where('slug', '=', 'customer-service')->count() > 0;
+    }
+
+    public function articles(): HasMany
     {
         return $this->hasMany(Article::class);
+    }
+
+    public function roles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function likes(): BelongsToMany
+    {
+        return $this->belongsToMany(Article::class, 'likes');
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
     }
 }

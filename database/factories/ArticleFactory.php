@@ -2,10 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Http\Controllers\ImagesController;
 use App\Models\Article;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ArticleFactory extends Factory
@@ -22,22 +25,30 @@ class ArticleFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
-        $title = $this->faker->sentence;
-
-        $image = new UploadedFile(storage_path('app/test-files/thumbnail.jpg'), 'thumbnail.jpg', null, null, true);
-        $imagePath = "storage/" . $image->store('thumbnail');
+        if (User::count() === 0) {
+            User::factory(10)->create();
+        }
 
         return [
-            'title' => $this->faker->realText(10),
-            'slug' => Str::slug($title),
+            'title' => $this->faker->unique()->realText(100),
+            'slug' => $this->faker->unique()->slug(20),
             'excerpt' => $this->faker->sentence,
-            'content' => $this->faker->realTextBetween(160, 200),
+            'content' => $this->faker->realTextBetween(500, 1000),
             'views' => $this->faker->numberBetween(100, 500),
-            'thumbnail' => $imagePath,
+            'thumbnail' => UploadedFile::fake()->image('thumbnail.jpg'),
             'state' => $this->faker->boolean,
-            'user_id' => User::factory()
+            'user_id' => User::all()->random()
         ];
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function (Article $article) {
+            $imagePath = ImagesController::getRandomCatImageUrl();
+            $article->setAttribute('thumbnail', $imagePath);
+            $article->save();
+        });
     }
 }
