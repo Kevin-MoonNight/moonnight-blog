@@ -9,8 +9,8 @@ volumes:
     driver: local
 
 services:
-  backend:
-    container_name: backend
+  moonnight-blog-backend:
+    container_name: moonnight-blog-backend
     build:
       context: ./
       dockerfile: ./.docker/php/Dockerfile
@@ -24,8 +24,8 @@ services:
     networks:
       - moonnight-blog-network
 
-  db:
-    container_name: db
+  moonnight-blog-db:
+    container_name: moonnight-blog-db
     image: postgres:15-alpine
     environment:
       POSTGRES_DB: ${DB_DATABASE}
@@ -36,8 +36,8 @@ services:
     networks:
       - moonnight-blog-network
 
-  nginx:
-    container_name: nginx
+  moonnight-blog-nginx:
+    container_name: moonnight-blog-nginx
     build:
       context: ./
       dockerfile: ./.docker/nginx/Dockerfile

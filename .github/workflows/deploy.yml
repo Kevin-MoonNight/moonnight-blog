@@ -34,7 +34,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           # 執行部屬的指令
           script: |
-            cd /var/www/html/moonnight-blog
+            cd /var/www/moonnight-blog
             echo '使用 git pull 更新專案'
             sudo -u www-data git pull --ff-only
             sudo -u www-data docker-compose exec backend /bin/bash -c "
