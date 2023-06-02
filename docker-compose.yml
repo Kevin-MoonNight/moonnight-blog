@@ -1,0 +1,52 @@
+version: '3.8'
+
+networks:
+  moonnight-blog-network:
+    driver: bridge
+
+volumes:
+  moonnight-blog-data:
+    driver: local
+
+services:
+  backend:
+    container_name: backend
+    build:
+      context: ./
+      dockerfile: ./.docker/php/Dockerfile
+    volumes:
+      - /var/www/moonnight-blog/vendor
+      - /var/www/moonnight-blog/node_modules
+      - ./:/var/www/moonnight-blog
+      - ./.docker/php.ini:/usr/local/etc/php/conf.d/local.ini
+    stdin_open: true
+    tty: true
+    networks:
+      - moonnight-blog-network
+
+  db:
+    container_name: db
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+        - "5432:5432"
+    networks:
+      - moonnight-blog-network
+
+  nginx:
+    container_name: nginx
+    build:
+      context: ./
+      dockerfile: ./.docker/nginx/Dockerfile
+    tty: true
+    ports:
+      - "${APP_PORT}:80"
+    volumes:
+      - ./:/var/www/moonnight-blog
+      - ./.docker/nginx:/etc/nginx/conf.d
+    networks:
+      - moonnight-blog-network
+
