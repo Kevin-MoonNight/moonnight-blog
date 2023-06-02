@@ -1,4 +1,4 @@
-<x-layouts.backend-layout
+<x-layouts.frontend-layout
     title="確認密碼"
 >
     <div class="flex justify-center items-center min-h-screen bg-gray-100">
@@ -31,4 +31,4 @@
             </div>
         </div>
     </div>
-</x-layouts.backend-layout>
+</x-layouts.frontend-layout>
