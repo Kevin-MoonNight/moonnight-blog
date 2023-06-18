@@ -37,7 +37,7 @@ jobs:
             cd /var/www/moonnight-blog
             echo '使用 git pull 更新專案'
             sudo -u www-data git pull --ff-only
-            sudo -u www-data docker-compose exec backend /bin/bash -c "
+            sudo -u www-data docker-compose exec moonnight-blog-backend /bin/bash -c "
               composer install --no-interaction \
               && npm run production \
               && php artisan view:cache \
