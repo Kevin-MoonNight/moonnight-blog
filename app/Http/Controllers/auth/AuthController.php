@@ -24,7 +24,7 @@ class AuthController extends Controller
         try {
             $user = Socialite::driver($this->driverType)->stateless()->user();
 
-            $userExisted = User::where('email', $user->email)->first();
+            $userExisted = User::whereRaw('lower(email) = ? ', Str::lower($user->email))->first();
 
             if (!$userExisted) {
                 $userExisted = User::create([
