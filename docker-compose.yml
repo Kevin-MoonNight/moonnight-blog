@@ -38,15 +38,15 @@ services:
 
   moonnight-blog-nginx:
     container_name: moonnight-blog-nginx
-    build:
-      context: ./
-      dockerfile: ./.docker/nginx/Dockerfile
+    image: nginx:alpine
+    restart: unless-stopped
     tty: true
     ports:
-      - "${APP_PORT}:80"
+      - "80:80"
+      - "443:443"
     volumes:
       - ./:/var/www/moonnight-blog
-      - ./.docker/nginx:/etc/nginx/conf.d
+      - ./.docker/nginx/conf/:/etc/nginx/conf.d/
+      - ./.docker/nginx/ssl/:/etc/nginx/ssl/
     networks:
       - moonnight-blog-network
-
