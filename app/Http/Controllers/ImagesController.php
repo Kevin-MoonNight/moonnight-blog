@@ -9,6 +9,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use mysql_xdevapi\Exception;
 
 class ImagesController extends Controller
 {
@@ -31,9 +32,13 @@ class ImagesController extends Controller
 
     public static function getRandomCatImageUrl(): string
     {
-        $response = Http::get('https://api.thecatapi.com/v1/images/search');
+        try{
+            $response = Http::get('https://api.thecatapi.com/v1/images/search');
 
-        return $response->json()[0]['url'];
+            return $response->json()[0]['url'];
+        }catch (\ErrorException $exception){
+            return 'https://cdn2.thecatapi.com/images/bb7.jpg';
+        }
     }
 
     public static function generateRandomFileName(): string
