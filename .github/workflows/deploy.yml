@@ -38,12 +38,12 @@ jobs:
           script: |
             cd /var/www/moonnight-blog
             echo '使用 git pull 更新專案'
-            sudo -u www-data git pull --ff-only
-            sudo -u www-data docker compose exec moonnight-blog-backend /bin/bash -c "
+            git pull --ff-only
+            docker compose exec moonnight-blog-backend /bin/bash -c "
               composer install --no-interaction \
               && npm run production \
               && php artisan view:cache \
               && php artisan route:cache \
               && php artisan migrate"
             echo '重啟服務'
-            sudo -u www-data docker compose restart
+            docker compose restart
